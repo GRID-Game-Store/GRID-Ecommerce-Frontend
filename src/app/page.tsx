@@ -10,7 +10,7 @@ type Repo = {
 
 
 async function getData(url:string) {
-  const res = await fetch(url, { cache: 'force-cache' })
+  const res = await fetch(url, { cache: 'no-store' })
   if (!res.ok) {
     throw new Error('Failed to fetch data')
   }
@@ -19,7 +19,7 @@ async function getData(url:string) {
 }
 
 export default async function Home() {
-  const slides = await getData(`http://localhost:8082/api/v1/games/popular?qty=${AMOUNT_SLIDES}`)
+  const slides = await getData(`${process.env.URL}games/popular?qty=${AMOUNT_SLIDES}`)
   return (
     <main className={styles.main}>
         <Main slides={slides} />

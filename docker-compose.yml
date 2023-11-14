@@ -3,9 +3,11 @@ services:
   app:
     image: frontend
     container_name: frontend
+    env_file:
+    - docker.env
     build:
       context: ./
-      target: builder
+      target: dev
       dockerfile: Dockerfile
     volumes:
         - .:/app
