@@ -8,11 +8,11 @@ import {
   Typography,
   
 } from "@mui/material";
-import { ResponseGame } from "./../types/Response.d";
 import React from "react";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { changeCurrentSlide } from "./sliderNavigation";
 import { AMOUNT_SLIDES } from "@/app/constants/slider";
+import { ResponseGamePopular } from "../types/Response";
 
 
 
@@ -26,7 +26,7 @@ interface IPricingProps {
   prise: number;
 }
 type TSlierItemsProps = {
-  slides: ResponseGame;
+  slides: ResponseGamePopular;
   current: number,
   setCurrent: (i: number) => void;
   setIsTouched: (value: boolean) => void;
@@ -59,7 +59,8 @@ const Description: React.FC<IDescriptionProps> = ({ description }) => {
 };
 
 const Pricing: React.FC<IPricingProps> = ({ prise }) => {
-  
+  //! move out
+  const price = prise ? prise + "" : "free"
   return (
     <Container
       sx={{
@@ -69,7 +70,7 @@ const Pricing: React.FC<IPricingProps> = ({ prise }) => {
         width: "max-content",
       }}
     >
-      <Typography fontSize={"21px"}>{prise ? prise + "" : "free"}</Typography>
+      <Typography fontSize={"21px"}>{price}</Typography>
     </Container>
   );
 };

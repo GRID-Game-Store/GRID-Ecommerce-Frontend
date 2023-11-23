@@ -1,34 +1,26 @@
 "use client";
 import Box from "@mui/material/Box";
 import {
-  MutableRefObject,
-  ReactHTMLElement,
   useEffect,
-  useRef,
   useState,
 } from "react";
 import {
-  Button,
   Container,
-  MobileStepper,
-  Stack,
   SxProps,
-  Typography,
 } from "@mui/material";
 import style from "./slider.module.css";
 import { SliderActions } from "./sliderActions";
 import { SliderNavigation } from "./sliderNavigation";
 import { useColorFromImg } from "@/app/hooks/useColorFromImg";
-import { IMainProps, ResponseGame } from "./../types/Response.d";
+import { IMostPopularProps, ResponseGamePopular } from "./../types/Response.d";
 import {
   TransitionGroup,
   CSSTransition,
 } from "react-transition-group";
-const query = "capsule_616x353.jpg?t=1692054815";
 
 
 type SlierItemsProps = {
-  slides: ResponseGame;
+  slides: ResponseGamePopular;
   current: number,
   setCurrent: (i: number) => void;
   setIsTouched: (value: boolean) => void;
@@ -63,9 +55,10 @@ const SliderItems: React.FC<SlierItemsProps> = ({ slides, current, setCurrent, s
   
 };
 
-const MostPopular: React.FC<IMainProps> = ({ slides }) => {
+const MostPopular: React.FC<IMostPopularProps> = ({ slides }) => {
   const [current, setCurrent] = useState(0);
   const [isTouched, setIsTouched] = useState(false);
+  
   const slidesWrapInSec = 14
 
   useEffect(() => {

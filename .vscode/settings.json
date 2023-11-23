@@ -1,0 +1,5 @@
+{
+    "scm.autoReveal": false,
+    "scm.diffDecorationsGutterVisibility": "hover",
+    "git.autofetchPeriod": 300000
+}

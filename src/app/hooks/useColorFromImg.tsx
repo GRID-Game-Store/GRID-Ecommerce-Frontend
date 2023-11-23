@@ -38,9 +38,7 @@ const analyzeImage = (img: HTMLImageElement) => {
   let g = imageData.data[index + 1];
   let b = imageData.data[index + 2];
   
-
-
-  return `rgba(${r},${g},${b},0.50)`;
+   return `rgba(${r},${g},${b},0.50)`;
 }
 
 

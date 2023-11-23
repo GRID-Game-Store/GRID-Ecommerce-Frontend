@@ -1,6 +1,11 @@
 import { createTheme } from "@mui/material/styles";
 
 export const mainTheme = createTheme({
+  palette: {
+    primary: {
+      main:  '#08AD2C'
+    },
+  },
   typography: {
     fontFamily:  'Ropa Sans',
     
@@ -51,6 +56,23 @@ export const mainTheme = createTheme({
           background:"none",
           border:"#08AD2C 1px solid",
           borderRadius:"5px"
+        }
+      }
+    },
+    MuiTab: {
+      styleOverrides:{
+        root:{
+          color: "#ffff",
+          background:"none",
+          borderRadius:"5px",
+          "&.Mui-selected":{
+            color: "#ffff",
+            
+          },
+          "&.Mui-indicator":{
+            background:"#08AD2C",
+            
+          }
         }
       }
     }
