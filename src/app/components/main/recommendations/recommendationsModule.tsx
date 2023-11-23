@@ -45,8 +45,8 @@ const RecommendationsModule: React.FC<IRecommendationsProps> = ({
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-  useEffect(()=> {
-    axios("http://localhost:8082/api/v1/genres").then(res => {
+  useEffect(()=> { 
+    axios("http://grid-backend:8082/api/v1/genres").then(res => {
       console.log(res)
     })
   })
