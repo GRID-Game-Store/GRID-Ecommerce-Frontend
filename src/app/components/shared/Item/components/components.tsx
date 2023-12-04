@@ -5,7 +5,7 @@ import { Box, Button, Chip, Stack, Tooltip } from '@mui/material'
 import { Typography } from '@mui/material';
 
 import { ICoverItemProps, IListTagsOrGenresProps, ITypographyItemProps } from '../types/item';
-import Link from 'next/link';
+import Link from 'next/link'
 
 
 //! TODO FIX WARN WITH REF
@@ -21,7 +21,7 @@ export const CoverItem: React.FC<ICoverItemProps> = ({linkCoverImg, width, hover
 
 export const TypographyItem: React.FC<ITypographyItemProps>  = ({fontSize, whiteSpace, text, mt, ml, p, link }) => {
   if(link){
-    return <Link href={link}>
+    return <Link href={`${link}`}>
         <Typography sx={{whiteSpace:whiteSpace, textOverflow:"ellipsis", overflow:"hidden"}} mt={mt} ml={ml} p={p}  fontSize={fontSize}>{text}</Typography>
     </Link>
   } else {

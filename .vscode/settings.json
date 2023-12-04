@@ -1,8 +1,0 @@
-{
-    "scm.autoReveal": false,
-    "scm.diffDecorationsGutterVisibility": "hover",
-    "git.autofetchPeriod": 777700000,
-    "git.autorefresh": false,
-    "git.enableStatusBarSync": false,
-    "git.confirmSync": false
-}

@@ -24,7 +24,8 @@ export interface ITypographyItemProps {
   mt?: string;
   ml?: string;
   p?: string;
-  isLink?: string | boolean;
+  link?: string | boolean;
+
 }
 
 export interface IListTagsOrGenresProps {

@@ -18,9 +18,7 @@ export const ItemSmallColumn: React.FC<IItem> = ({game, setActiveHover}) => {
     return  <Box width={"95%"} onMouseEnter={() =>  setActiveHover && setActiveHover()}  key={game.id}  borderRadius={"5px"}  display={"flex"}  sx={{marginLeft:"10px !important", backgroundColor:"#000",marginBottom:"20px !important"}} >
     <CoverItem width={170} linkCoverImg={game.cover_image_url}/>
     <Box>
-      <Link href={`/game/${game.id}`}>
-      <TypographyItem mt={"10px"} ml={"10px"} fontSize="17px" whiteSpace="nowrap" text={game.title}  />
-      </Link>
+      <TypographyItem mt={"10px"} ml={"10px"} fontSize="17px" whiteSpace="nowrap" text={game.title} link={`/game/${game.id}`}  />
       <Box width={"280px"}>
         <TypographyItem  mt={"5px"} ml={"10px"} fontSize="10px" whiteSpace="nowrap" text={game.description}  />
       </Box>
