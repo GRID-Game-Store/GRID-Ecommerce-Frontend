@@ -31,6 +31,6 @@ CMD npm start
 FROM base as dev
 ENV NODE_ENV=development
 RUN rm -rf node_modules
-RUN npm install --legacy-peer-deps
+RUN npm install --force
 COPY . .
 CMD npm run dev

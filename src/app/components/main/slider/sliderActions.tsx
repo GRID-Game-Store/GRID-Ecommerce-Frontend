@@ -2,7 +2,6 @@ import {
   Button,
   Chip,
   Container,
-  MobileStepper,
   Stack,
   SxProps,
   Typography,
@@ -12,31 +11,11 @@ import React from "react";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { changeCurrentSlide } from "./sliderNavigation";
 import { AMOUNT_SLIDES } from "@/app/constants/slider";
-import { ResponseGamePopular } from "../types/Response";
+import { IButtonsNavigate, IDescriptionProps, IPricingProps, ITitleProps, TSlierItemsProps } from "./types/slider.d";
 
 
 
-interface ITitleProps {
-  title: string;
-}
-interface IDescriptionProps {
-  description: string;
-}
-interface IPricingProps {
-  prise: number;
-}
-type TSlierItemsProps = {
-  slides: ResponseGamePopular;
-  current: number,
-  setCurrent: (i: number) => void;
-  setIsTouched: (value: boolean) => void;
-};
 
-type IButtonsNavigate = {
-  current: number,
-  setCurrent: (i: number) => void;
-  setIsTouched: (value: boolean) => void;
-};
 
 const Title: React.FC<ITitleProps> = ({ title }) => {
   return (
