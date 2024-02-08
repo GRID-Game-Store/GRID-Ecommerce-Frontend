@@ -2,9 +2,11 @@ import { MetaData, ResponseGameFullInfo, ResponseGameRandom } from "@/app/compon
 
 export interface IItemsProps {
   game: ResponseGameFullInfo | ResponseGameRandom ;
-  variant?: string;
+  variant?: "row" | "column" | "preview";
+  width?: string 
   setActiveHover?: () => void
 }
+
 
 export interface ICoverItemProps {
   linkCoverImg: string;
@@ -12,7 +14,7 @@ export interface ICoverItemProps {
   width: number;
   variant?: string;
   hover?: number;
-  ref?: MutableRefObject<null>;
+  minHeight?: number;
 }
 
 type TFontSizeForTypography = string;
@@ -41,12 +43,17 @@ export interface IItem{
     game : ResponseGameRandom
     setActiveHover?: () => void
 
+
 }
 
 export interface IItemLargePreview {
-  game: ResponseGameFullInfo 
+  game: ResponseGameFullInfo  
+  width?: string
 
 }
-
+export interface IButtonBuyProps{
+  href: string;
+  price: string | number;
+}
 
 export type THover = 0 | 1 

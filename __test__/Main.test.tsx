@@ -1,8 +1,9 @@
 import { Main } from "@/app/components/main/main";
-import { ResponseGame } from "@/app/components/main/types/Response";
+import { ResponseGamePopular } from "@/app/components/main/types/Response";
 import { getAllByLabelText, getByLabelText, getByText, render, screen } from "@testing-library/react";
 import '@testing-library/jest-dom'
-export const mockSlides: Array<ResponseGame> = [
+import { MostPopular } from "@/app/components/main/slider/slider";
+export const mockSlides: Array<ResponseGamePopular> = [
   {
     id: 9,
     title: "Dead by Daylight",
@@ -156,13 +157,15 @@ export const mockSlides: Array<ResponseGame> = [
 
 describe("Test component Main on minimal functional ", () => {
   it("check main information in main page slider component", () => {
-    const {container} = render(<Main slides={mockSlides} />);
+    const {container} = render(<MostPopular slides={mockSlides} />);
     expect(getByText(container, mockSlides[0].title)).toBeInTheDocument()
+   
+    
     expect(getByText(container, mockSlides[0].description)).toBeInTheDocument()
     expect(getByText(container, mockSlides[0].genres[0].name)).toBeInTheDocument()
   });
   it("check amount navigations dots for slider", () => {
-    const {container} = render(<Main slides={mockSlides} />);
+    const {container} = render(<MostPopular slides={mockSlides}  />);
     expect(getAllByLabelText(container,'navigation dots').length).toBe(5)
   });
 

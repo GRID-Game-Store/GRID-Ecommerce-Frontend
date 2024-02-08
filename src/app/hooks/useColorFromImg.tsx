@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 
 
-const loadImage = (src: string): Promise<HTMLImageElement> => {
+export const loadImage = (src: string): Promise<HTMLImageElement> => {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.addEventListener("load", () => {
@@ -20,8 +20,9 @@ const loadImage = (src: string): Promise<HTMLImageElement> => {
   });
 };
 
-const analyzeImage = (img: HTMLImageElement) => {
+export const analyzeImage = (img: HTMLImageElement) => {
   const { width, height } = img;
+ 
   const canvas = document.createElement("canvas");
   canvas.height = height;
   canvas.width = width;
@@ -33,6 +34,7 @@ const analyzeImage = (img: HTMLImageElement) => {
   const imageData = context.getImageData(0, 0, width, height);
  
 
+  
   const index = 10600;
   let r = imageData.data[index];
   let g = imageData.data[index + 1];
@@ -45,12 +47,11 @@ const analyzeImage = (img: HTMLImageElement) => {
 
 
 
-export const useColorFromImg = (link:string) => { 
+export const useColorFromImg = (link:string | undefined) => { 
 
   const [color, setColor] = useState<string | undefined>("");
   useEffect(() => {
-    
-    loadImage(link).then((img) => {
+    link && loadImage(link).then((img) => {
       setColor(analyzeImage(img));
     });
   }, [link]);

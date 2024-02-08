@@ -1,25 +1,29 @@
+
+"use client"
 import React from 'react'
 import Box from '@mui/material/Box';
-import Logo from './logo';
-import Navigation from './navigation';
-import Search from './search';
-import Avatar from './avatar';
-import { Stack } from '@mui/material';
-import { SPACING } from '../../constants/header';
+import Logo from './components/logo/logo';
+import {SxProps } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import {NavigationMenuDesktop, NavigationMenuMobile} from './components/navigationMenu/navigationMenu';
 
-const Header: React.FC  = () => {
+const Header = () => {
+  const matches = useMediaQuery('(min-width:1200px)');
+  const wrapperRowStyle: SxProps = { display:"flex", flexDirection:"row", justifyContent: matches === false ? "center" : "space-between",  width:"100%", pl:"20px", pr:"20px" }
+
   return (
     <Box sx={wrapperStyle}>
-      <Stack direction="row" spacing={SPACING} >
+      <Box sx={wrapperRowStyle}  >
         <Logo/>
-        <Navigation/>
-        <Search/>
-        <Avatar/>
-        </Stack>
+        {matches ? <NavigationMenuDesktop/> : <NavigationMenuMobile/> }
+        </Box>
     </Box>
   )
 }
 export default Header
 
 
-const wrapperStyle = { height:"55px", margin:"10px", display:"flex", marginLeft:"30px", marginTop:"20px" }
+const wrapperStyle: SxProps = { display:"flex", paddingTop:"20px", paddingBottom:"10px", position:"fixed", background: "#000", zIndex: "20", width:"100%" }
+
+
+

@@ -7,6 +7,7 @@ import {
 import {
   Container,
   SxProps,
+  useMediaQuery,
 } from "@mui/material";
 import style from "./slider.module.css";
 import { SliderActions } from "./sliderActions";
@@ -26,7 +27,7 @@ import { useTimeChangeSlide } from "@/app/hooks/useTimeChangeSlide";
 const SliderItems: React.FC<TSlierItemsProps> = ({ slides, current, setCurrent, setIsTouched }) => {
   const color =  useColorFromImg(slides.cover_image_url);
   const Link = slides.cover_image_url
-
+  const matches = useMediaQuery('(min-width:1200px)');
   const styleItemSlider: SxProps  = {
       background: `url(${Link}) 0 0px / 100% no-repeat `,
       borderRadius: "20px",
@@ -35,7 +36,7 @@ const SliderItems: React.FC<TSlierItemsProps> = ({ slides, current, setCurrent, 
 
   return (
     <Box
-      width={"900px"}
+      width={!matches ? "350px" : "900px" }
       height={"453px"}
       className={style.SliderItem}
       sx={styleItemSlider}
@@ -50,19 +51,29 @@ const SliderItems: React.FC<TSlierItemsProps> = ({ slides, current, setCurrent, 
 };
 
 const MostPopular: React.FC<IMostPopularProps> = ({ slides }) => {
+  
   const [current, setCurrent] = useState(0);
   const [isTouched, setIsTouched] = useState(false);
   useTimeChangeSlide(isTouched, current, setCurrent)
-
+  const matches = useMediaQuery('(min-width:1200px)');
+  const styleWrapSlider: SxProps = {
+    width: !matches ? "300px" : "900px" ,
+    height: "500px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+  };
+  
   return (
     <Container>
       <Container sx={styleWrapSlider}>
         <TransitionGroup>
           <CSSTransition key={current} timeout={500} classNames="messageout">
-            <SliderItems slides={slides[current]}  
+             <SliderItems slides={slides[current] }  
                 setCurrent={setCurrent} 
                 setIsTouched={setIsTouched}
-                current={current}  
+                current={current}   
             />
           </CSSTransition>
         </TransitionGroup>
@@ -76,12 +87,4 @@ const MostPopular: React.FC<IMostPopularProps> = ({ slides }) => {
   );
 };
 export { MostPopular };
-
-const styleWrapSlider: SxProps = {
-  width: "900px",
-  height: "500px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  position: "relative",
-};
+// 900

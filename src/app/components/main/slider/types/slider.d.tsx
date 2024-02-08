@@ -1,5 +1,5 @@
-import { ResponseGamePopular } from "../../types/Response";
 
+import { PopularResponse } from "@/app/types/types";
 
 export interface ITitleProps {
   title: string;
@@ -11,7 +11,7 @@ export interface IPricingProps {
   prise: number;
 }
 export type TSlierItemsProps = {
-  slides: ResponseGamePopular;
+  slides: PopularResponse[0];
   current: number;
   setCurrent: (i: number) => void;
   setIsTouched: (value: boolean) => void;

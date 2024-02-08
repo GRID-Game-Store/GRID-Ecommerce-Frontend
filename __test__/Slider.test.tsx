@@ -1,5 +1,5 @@
 import { MostPopular } from "@/app/components/main/slider/slider";
-import { act, fireEvent, getAllByLabelText, getByLabelText, getByText, render, screen } from "@testing-library/react";
+import { act, fireEvent, getAllByLabelText, getByLabelText, getByText, render, screen, waitFor } from "@testing-library/react";
 import { mockSlides } from "./Main.test";
 
 
@@ -61,4 +61,7 @@ describe("Test component Slider ", () => {
     expect(nonNext).toEqual(true);
   }, 500);
   });
+
+
+
 });

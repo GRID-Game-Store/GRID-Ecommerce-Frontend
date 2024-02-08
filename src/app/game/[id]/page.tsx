@@ -4,6 +4,7 @@ import styles from './page.module.css'
 import { Info } from './components/info'
 import { ResponseGameFullInfo } from '@/app/components/main/types/Response'
 import { SysReq } from './components/sysReq'
+import { WrapperGamePage } from './components/wrapper'
 
 
 //, { cache: 'no-store' }
@@ -17,18 +18,11 @@ export async function getData(url:string) {
 }
 
 export default async function Home(props: { params: { id: number } }) {
-
-  console.log(props.params.id);
-  
   const fullInfo : ResponseGameFullInfo  = await getData(`${process.env.URL}games/${props.params.id}`)
  
   return (
-    <main  style={{display:"flex", justifyContent:"center", marginTop:"70px", flexDirection:"column"}}>
-        <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
-          <Gallery gameMedia={fullInfo.game_media}/>
-          <Info fullInfo={fullInfo}/>
-        </Box>
-        <SysReq sysReq={fullInfo.system_requirements}/>
+    <main  style={{display:"flex", justifyContent:"start", marginTop:"100px", flexDirection:"column"}}>
+        <WrapperGamePage fullInfo={fullInfo}/>
     </main>
   )
 }

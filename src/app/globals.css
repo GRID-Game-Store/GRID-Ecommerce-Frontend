@@ -78,7 +78,28 @@ mark{
   -ms-transition: opacity 600ms ease-in;
   -o-transition: opacity 600ms ease-in;
 }
+/*----------------------------------------------------------------*/
 
+.search-enter {
+  position: absolute;
+  opacity: 0;
+  
+}
+.search-enter-active {
+  opacity: 1;
+  transition: opacity 250ms ease-in;
+
+}
+.search-exit {
+  opacity: 1;
+  position: absolute;
+}
+.search-exit-active {
+  opacity: 0;
+  transition: opacity 250ms ease-in;
+ 
+  
+}
 
 
 
@@ -122,17 +143,11 @@ button, input[type="submit"], input[type="reset"] {
 } 
 
 
-
-
-
-
-
-
-
-
-
 .changeSlide-exit-active:nth-child(2) {
   opacity: 0;
   position: absolute;
   top: 0px;
 } 
+
+
+

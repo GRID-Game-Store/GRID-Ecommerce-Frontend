@@ -1,6 +1,16 @@
 import { createTheme } from "@mui/material/styles";
+import parser from 'ua-parser-js';
+import mediaQuery from 'css-mediaquery';
 
-export const mainTheme = createTheme({
+
+// const ssrMatchMedia = (deviceType: string) => (query: string) => ({
+//   matches: mediaQuery.match(query, {
+//     width: deviceType === 'mobile' ? '0px' : '1024px',
+//   })
+// })
+
+
+export const mainTheme = (deviceType: string) => createTheme({
   palette: {
     primary: {
       main:  '#08AD2C'
@@ -11,6 +21,16 @@ export const mainTheme = createTheme({
     
   },
   components:{
+    MuiUseMediaQuery: {
+      defaultProps: {
+        ssrMatchMedia: (query) => ({
+          matches: mediaQuery.match(query, {
+            // The estimated CSS width of the browser.
+            width: deviceType === 'desktop' ? '1900px' : '900px', // Add this default prop
+          }),
+        }),
+      }
+    },
     MuiTextField:{
       styleOverrides:{
         root: {
@@ -73,6 +93,20 @@ export const mainTheme = createTheme({
             background:"#08AD2C",
             
           }
+        }
+      }
+    },
+    MuiCheckbox:{
+      styleOverrides:{
+        root:{
+          color: "#ffff",
+        }
+      }
+    },
+    MuiDivider:{
+      styleOverrides:{
+        root:{
+          borderColor: "#ffffff38",
         }
       }
     }

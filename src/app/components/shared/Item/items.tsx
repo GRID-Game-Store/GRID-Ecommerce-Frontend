@@ -6,13 +6,13 @@ import { ResponseGameFullInfo } from '../../main/types/Response';
 
 
 
-const Items: React.FC<IItemsProps> = ({game, variant = "row", setActiveHover}) => {
+const Items: React.FC<IItemsProps> = ({game, variant = "row", setActiveHover, width}) => {
   if(variant === "row"){
     return game && <ItemSmallRow game={game}/>
   } else if(variant === "column"){
     return game && <ItemSmallColumn game={game} setActiveHover={setActiveHover}/>
   } else if(variant === "preview"){
-    return game && <ItemLargePreview game={game as ResponseGameFullInfo} />
+    return game && <ItemLargePreview width={width} game={game as ResponseGameFullInfo} />
   } else {
     return null
   }  

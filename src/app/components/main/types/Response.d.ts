@@ -1,59 +1,18 @@
-interface MetaData {
-  id : number,
-  name: string
-}
-
-export interface ResponseGameRandom {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  cover_image_url: string;
-  genres: Array<MetaData>;
-}
-
-
-export interface ResponseGamePopular extends ResponseGameRandom {
-  platforms: Array<MetaData>;
-}
-
-export type gameMedia =  {
-  banner_url: string;
-  screenshot_url: string;
-  trailer: string;
-  trailer_screenshot: string;
-}
-export interface ResponseGameFullInfo extends ResponseGameRandom{
-  release_date: string;
-  system_requirements: string
-  discount: number;
-  permit_age: string;
-  publisher : MetaData;
-  developer : MetaData;
-  tags : Array<MetaData>
-  platforms : Array<MetaData>
-  game_media : gameMedia
-}
-export interface IAllGenres {
-  id: number,
-  name: string
-}
-
-
+import { FullInfoResponse } from "./../../../types/types";
+import { RandomResponse } from "../../../types/types";
+export type gameMedia = FullInfoResponse["gameMedia"]
 export interface IMainProps {
-  slides: Array<ResponseGamePopular>;
-  recommendations: Array<ResponseGameRandom>;
-  byGenre: Array<ResponseGameRandom>;
+  slides: RandomResponse;
+  recommendations: RandomResponse;
+  byGenre: RandomResponse;
   genreTitle: string
-
 }
-
 
 export interface IMostPopularProps {
-  slides: Array<ResponseGamePopular>;
+  slides: RandomResponse;
 }
 export interface IRecommendationsProps {
   title: string;
-  data: Array<ResponseGameRandom>;
+  data: RandomResponse;
 }
 
