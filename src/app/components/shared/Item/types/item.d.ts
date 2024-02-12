@@ -1,7 +1,9 @@
-import { MetaData, ResponseGameFullInfo, ResponseGameRandom } from "@/app/components/main/types/Response";
+import { RandomResponse } from "./../../../../types/types";
+import { FullInfoResponse } from "@/app/types/types";
+import { MetaData} from "@/app/components/main/types/Response";
 
 export interface IItemsProps {
-  game: ResponseGameFullInfo | ResponseGameRandom ;
+  game: FullInfoResponse | RandomResponse[0] ;
   variant?: "row" | "column" | "preview";
   width?: string 
   setActiveHover?: () => void
@@ -9,7 +11,7 @@ export interface IItemsProps {
 
 
 export interface ICoverItemProps {
-  linkCoverImg: string;
+  linkCoverImg?: string;
   linkCoverVideo?: string;
   width: number;
   variant?: string;
@@ -22,7 +24,7 @@ type TWhiteSpaceForTypography = "nowrap" | "normal";
 export interface ITypographyItemProps {
   fontSize: TFontSizeForTypography;
   whiteSpace: TWhiteSpaceForTypography;
-  text: string;
+  text?: string;
   mt?: string;
   ml?: string;
   p?: string;
@@ -31,7 +33,7 @@ export interface ITypographyItemProps {
 }
 
 export interface IListTagsOrGenresProps {
-  arrayElements: Array<MetaData>;
+  arrayElements?: Array<MetaData>;
   mt?: string;
   ml?: string;
   spacing?: number;
@@ -40,14 +42,12 @@ export interface IListTagsOrGenresProps {
 }
 
 export interface IItem{
-    game : ResponseGameRandom
+    game : RandomResponse[0]
     setActiveHover?: () => void
-
-
 }
 
 export interface IItemLargePreview {
-  game: ResponseGameFullInfo  
+  game: FullInfoResponse  
   width?: string
 
 }

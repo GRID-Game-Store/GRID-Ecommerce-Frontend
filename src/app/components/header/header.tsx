@@ -3,9 +3,10 @@
 import React from 'react'
 import Box from '@mui/material/Box';
 import Logo from './components/logo/logo';
-import {SxProps } from '@mui/material';
+import { SxProps } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {NavigationMenuDesktop, NavigationMenuMobile} from './components/navigationMenu/navigationMenu';
+
 
 const Header = () => {
   const matches = useMediaQuery('(min-width:1200px)');

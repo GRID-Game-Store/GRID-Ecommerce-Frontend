@@ -25,8 +25,8 @@ import { useTimeChangeSlide } from "@/app/hooks/useTimeChangeSlide";
 
 
 const SliderItems: React.FC<TSlierItemsProps> = ({ slides, current, setCurrent, setIsTouched }) => {
-  const color =  useColorFromImg(slides.cover_image_url);
-  const Link = slides.cover_image_url
+  const color =  useColorFromImg(slides.coverImageUrl);
+  const Link = slides.coverImageUrl
   const matches = useMediaQuery('(min-width:1200px)');
   const styleItemSlider: SxProps  = {
       background: `url(${Link}) 0 0px / 100% no-repeat `,

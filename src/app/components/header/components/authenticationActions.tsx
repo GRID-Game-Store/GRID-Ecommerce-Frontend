@@ -1,7 +1,11 @@
 "use client"
-import { Button, Stack, useMediaQuery } from "@mui/material"
 import { useRouter } from 'next/navigation';
 
+import {
+  Button,
+  Stack,
+  useMediaQuery,
+} from '@mui/material';
 
 const Login:React.FC<IAuthenticationActionsProps>  = ({setShowMenu}) => {
     const { push } = useRouter();
@@ -12,7 +16,7 @@ const Login:React.FC<IAuthenticationActionsProps>  = ({setShowMenu}) => {
     return <Button onClick={handleChange} sx={{height:"37px"}}>Login</Button>
 }
 const Registrations:React.FC<IAuthenticationActionsProps>  = ({setShowMenu}) => {
-    const { push } = useRouter();   
+    const { push } = useRouter();    
     const handleChange = () => {
         push('/registrations')
         setShowMenu && setShowMenu(false)
@@ -30,6 +34,4 @@ const AuthenticationActions:React.FC<IAuthenticationActionsProps> = ({setShowMen
     </Stack>
 }
 
-
-
-export {AuthenticationActions} ;
+export { AuthenticationActions };

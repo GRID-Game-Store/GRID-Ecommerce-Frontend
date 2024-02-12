@@ -4,6 +4,40 @@
  */
 
 export interface paths {
+    "/api/v1/users/test": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get test */
+        get: operations["showTest"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/users/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get user */
+        get: operations["showAllGamesByPage"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/genres": {
         parameters: {
             query?: never;
@@ -29,7 +63,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get all games */
-        get: operations["showAllGamesByPage"];
+        get: operations["showAllGamesByPage_1"];
         put?: never;
         post?: never;
         delete?: never;
@@ -144,6 +178,15 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        FullUserInfoDTO: {
+            externalId: string;
+            email: string;
+            birthdate?: string;
+            givenName: string;
+            familyName: string;
+            gender: string;
+            balance?: number;
+        };
         Genre: {
             /** Format: int64 */
             id?: number;
@@ -160,6 +203,7 @@ export interface components {
             platforms?: string;
             tags?: string;
             developers?: string;
+            publishers?: string;
             sort?: string[];
         };
         GeneralGame: {
@@ -204,10 +248,10 @@ export interface components {
             gameMedia?: components["schemas"]["GameMedia"];
         };
         GameMedia: {
-            banner_url?: string;
-            screenshot_url?: string;
+            bannerUrl?: string;
+            screenshotUrl?: string;
             trailer?: string;
-            trailer_screenshot?: string;
+            trailerScreenshot?: string;
         };
         Platform: {
             /** Format: int32 */
@@ -230,7 +274,7 @@ export interface components {
             title?: string;
             description?: string;
             price?: number;
-            cover_image_url?: string;
+            coverImageUrl?: string;
             genres?: components["schemas"]["Genre"][];
         };
         PopularGameModel: {
@@ -239,7 +283,7 @@ export interface components {
             title?: string;
             description?: string;
             price?: number;
-            cover_image_url?: string;
+            coverImageUrl?: string;
             genres?: components["schemas"]["Genre"][];
         };
     };
@@ -251,6 +295,46 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    showTest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string;
+                };
+            };
+        };
+    };
+    showAllGamesByPage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FullUserInfoDTO"];
+                };
+            };
+        };
+    };
     showAllGenres: {
         parameters: {
             query?: never;
@@ -271,7 +355,7 @@ export interface operations {
             };
         };
     };
-    showAllGamesByPage: {
+    showAllGamesByPage_1: {
         parameters: {
             query: {
                 gameCriteria: components["schemas"]["GameCriteria"];

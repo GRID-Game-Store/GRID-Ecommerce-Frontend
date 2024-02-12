@@ -8,3 +8,4 @@ export const getGameFullInfo = async (activeHover: number) =>  {
     const game = res.json()
     return game;
 }
+

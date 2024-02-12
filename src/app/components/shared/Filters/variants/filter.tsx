@@ -96,7 +96,7 @@ const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({checkboxes}) 
    const checkboxesItems = checkboxes.map((checkbox)=> {
     const handleCheckboxChange = (event: React.SyntheticEvent, checked: boolean) => {
       if(window.location.href.includes("tags")){
-        
+        window.location.href += `,${checkbox.id}`
       } else { 
         push(`?tags=${checkbox.id}`)
       }

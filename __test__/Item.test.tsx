@@ -252,9 +252,11 @@ describe("check all item variation", () => {
     })
 
     it("should check Items render variant is not valid", () => {
+        // @ts-ignore
         const {container, debug} =  render(<Items game={gameFullInfoMock} variant="test" setActiveHover={() => console.log(1)}/>);
         expect(container.querySelector("img")?.src).toBe(undefined);
     })
     
+
     
 })
