@@ -1,19 +1,16 @@
 "use client"
 import { useRouter } from 'next/navigation';
-
 import {
   Button,
   Stack,
   useMediaQuery,
 } from '@mui/material';
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const Login:React.FC<IAuthenticationActionsProps>  = ({setShowMenu}) => {
     const { push } = useRouter();
-    const handleChange = () => {
-        push('http://localhost:8084/realms/GRID/protocol/openid-connect/auth?response_type=code&client_id=login-app&scope=openid&redirect_uri=http://localhost:3000')
-        setShowMenu && setShowMenu(false)
-    }
-    return <Button onClick={handleChange} sx={{height:"37px"}}>Login</Button>
+  
+    return <Button onClick={() => signIn("keycloak")} sx={{height:"37px"}}>Login</Button>
 }
 const Registrations:React.FC<IAuthenticationActionsProps>  = ({setShowMenu}) => {
     const { push } = useRouter();    

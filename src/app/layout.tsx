@@ -1,11 +1,14 @@
-import "./globals.css";
-import type { Metadata } from "next";
-import {Header} from "./components/header";
-import ThemeRegistry from "./theme/ThemeRegistry";
-import { Providers } from "./reactQuery/providers";
-import { Footer } from "./components/footer/footer";
+import './globals.css';
+
+import type { Metadata } from 'next';
 import { headers } from 'next/headers';
 import parser from 'ua-parser-js';
+
+import { Footer } from './components/footer/footer';
+import { Header } from './components/header';
+import { Providers } from './reactQuery/providers';
+import ThemeRegistry from './theme/ThemeRegistry';
+import SessionProviderWrapper from './utils/sessionProviderWrapper';
 
 export const metadata: Metadata = {
   title: "GRID",
@@ -28,11 +31,14 @@ export default function RootLayout({
       <body suppressHydrationWarning={true}>
         <ThemeRegistry deviceType={parsed}>
         <Providers>
+        <SessionProviderWrapper>
           <Header />
           {children}
           <Footer />
+        </SessionProviderWrapper>
         </Providers>
         </ThemeRegistry>
+        
       </body>
     </html>
   );

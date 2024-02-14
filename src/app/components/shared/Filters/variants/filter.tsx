@@ -2,7 +2,9 @@
 import { Box, Checkbox, Divider, FormControlLabel, Slider, TextField, Typography } from "@mui/material";
 import { ICheckboxFilterGroupProps, ITitleFilterGroupProps, IWrapperFilterGroupProps } from "../types/filters";
 import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useState } from "react";
+import { useSearchParams } from 'next/navigation'
 const mockCheckBoxSlider = [
     {
         id: 0,
@@ -43,7 +45,7 @@ const mockCheckBoxCheckbox = [
       "name": "Strategy",
       "value": 57
     },
-   
+
   ]
 
 const WrapperFilterGroup : React.FC<IWrapperFilterGroupProps> = ({children}) => {
@@ -61,8 +63,8 @@ const WrapperFilterGroup : React.FC<IWrapperFilterGroupProps> = ({children}) => 
   >
     {children}
   </Box>
-    
-   
+
+
 }
 
 const TitleFilterGroup: React.FC<ITitleFilterGroupProps> = ({name}) => {
@@ -70,17 +72,18 @@ const TitleFilterGroup: React.FC<ITitleFilterGroupProps> = ({name}) => {
         <Typography pl={"12px"} fontSize={"20px"} fontWeight={"600"}>{name}</Typography>
         <Divider  />
     </>
-    
-   
+
+
 }
 
 const SliderFilterGroup: React.FC = () => {
     const {push} = useRouter()
     const handleSliderChange = (event: Event, newValue: number | number[]) => {
-      push(`?maxPrice=${newValue}`)
+
+      !window.location.search || window.location.search.includes("maxPrice") && push(`?maxPrice=${newValue}`)
+      window.location.search && !window.location.search.includes("maxPrice") && push(`${window.location.search}&maxPrice=${newValue}`)
     };
-  
-    
+
     return <>
             <Box p={"20px"} pb={"10px"} >
                 <Slider  onChange={handleSliderChange} aria-label="Temperature" defaultValue={30} valueLabelDisplay="auto" step={10} marks min={10} max={110}/>
@@ -92,15 +95,29 @@ const SliderFilterGroup: React.FC = () => {
 
 const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({checkboxes}) => {
   const {push} = useRouter()
-  
+  const searchParams = useSearchParams()
+
+  const tags = searchParams.get('tags')
+
+
    const checkboxesItems = checkboxes.map((checkbox)=> {
+    const url = decodeURI(searchParams.toString())
+    console.log(url);
+    
     const handleCheckboxChange = (event: React.SyntheticEvent, checked: boolean) => {
+      const url = searchParams.toString()
       if(window.location.href.includes("tags")){
-        window.location.href += `,${checkbox.id}`
-      } else { 
-        push(`?tags=${checkbox.id}`)
+        
+        
+        // checked && push(`${window.location.search},${checkbox.id}`)
+        
+        // !checked && tags?.length !== 1 && push(`${window.location.search.replace(`,${checkbox.id}`,'')}`)
+        // !checked && tags?.length === 1 && push(`${window.location.search.replace(`tags=${checkbox.id}`,'')}`)
+        
+      } else {
+        // !window.location.search && push(`?tags=${checkbox.id}`)
+        // window.location.search && push(`${window.location.search}&tags=${checkbox.id}`)
       }
-      
     };
         return <FormControlLabel key={checkbox.id} onChange={handleCheckboxChange} sx={{pl:"10px"}} control={<Checkbox sx={{width:'50px', height:"50px"}} />} label={checkbox.name} />
    })

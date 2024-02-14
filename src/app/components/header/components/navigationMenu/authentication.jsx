@@ -1,31 +1,37 @@
 import React, { useEffect } from 'react';
+
+import {
+  signOut,
+  useSession,
+} from 'next-auth/react';
+
 import { useQuery } from '@tanstack/react-query';
-import Avatar from '../avatar';
+
 import { AuthenticationActions } from '../authenticationActions';
-
-
-
+import Avatar from '../avatar';
 
 const Authentication = () => {
-    // const { data, isSuccess, isLoading, isFetched, isError } = useQuery({
-    //     queryKey: ["auth"],
-    //     queryFn: () => fetch("http://localhost:8082/api/v1/users/test", {
-    //         include: "true"
-    //     })
-    //   });
-    useEffect(() => {
-        fetch("http://localhost:8082/api/v1/users/test", {
-                        credentials: "include",
-                })
-    }, [])
-      
-    return (
-        <div>
+  const { data: session, status } = useSession();
+  
+  const { data, isSuccess, isLoading, isFetched, isError } = useQuery({
+      queryKey: ["auth"],
+      queryFn: async () => await fetch(`/api/user`, { method: "GET" })
+    });
+  useEffect(() => {
+    if (
+      status != "loading" &&
+      session &&
+      session?.error === "RefreshAccessTokenError"
+    ) {
+      signOut({ callbackUrl: "/" });
+    }
+  }, [session, status]);
 
-            {false ? <Avatar name='Kirill'/> : <AuthenticationActions/>}
+ 
 
-        </div>
-    );
-}
+  return (
+    <div>{session ? <Avatar name={session.user.name} /> : <AuthenticationActions />}</div>
+  );
+};
 
 export { Authentication };
