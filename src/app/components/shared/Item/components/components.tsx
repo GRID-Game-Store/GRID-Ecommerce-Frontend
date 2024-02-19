@@ -1,15 +1,31 @@
-import React, { Dispatch, SetStateAction, forwardRef, useState } from "react";
-import { Box, Button, Chip, Stack, Tooltip } from "@mui/material";
-import { Typography } from "@mui/material";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useState,
+} from 'react';
+
+import Link from 'next/link';
+import {
+  CSSTransition,
+  TransitionGroup,
+} from 'react-transition-group';
+
+import {
+  Box,
+  Button,
+  Chip,
+  Stack,
+  Tooltip,
+  Typography,
+} from '@mui/material';
+
 import {
   IButtonBuyProps,
   ICoverItemProps,
   IListTagsOrGenresProps,
   ITypographyItemProps,
   THover,
-} from "../types/item";
-import Link from "next/link";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+} from '../types/item';
 
 //! TODO FIX WARN WITH REF
 export const CoverItem: React.FC<ICoverItemProps> = ({
@@ -149,6 +165,7 @@ export const ListTagsOrGenres: React.FC<IListTagsOrGenresProps> = ({
             </div>
           );
         })}
+        
     </Stack>
   );
 };

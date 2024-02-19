@@ -4,6 +4,23 @@
  */
 
 export interface paths {
+    "/api/v1/cart/add/{game-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add item to user's cart */
+        post: operations["addToCart"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/users/test": {
         parameters: {
             query?: never;
@@ -11,7 +28,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get test */
+        /** Controller to test the authorization of user */
         get: operations["showTest"];
         put?: never;
         post?: never;
@@ -28,8 +45,59 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get user */
-        get: operations["showAllGamesByPage"];
+        /** Get user's information */
+        get: operations["showUserInformation"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/tags": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all tags */
+        get: operations["showAllTags"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/publishers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all publishers */
+        get: operations["showAllPublishers"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platforms": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all platforms */
+        get: operations["showAllPlatforms"];
         put?: never;
         post?: never;
         delete?: never;
@@ -63,7 +131,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get all games */
-        get: operations["showAllGamesByPage_1"];
+        get: operations["showAllGamesByPage"];
         put?: never;
         post?: never;
         delete?: never;
@@ -174,10 +242,85 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/developers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all developers */
+        get: operations["showAllDevelopers"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cart": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all items in user's cart */
+        get: operations["getCartItems"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cart/delete/{cart-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete item from user's cart */
+        delete: operations["deleteCartItem"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cart/cleanup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Cleanup whole user's cart */
+        delete: operations["deleteAllCartItems"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        CartResponse: {
+            response?: string;
+        };
+        ErrorMessage: {
+            message?: string;
+            invalidValue?: Record<string, never>;
+        };
         FullUserInfoDTO: {
             externalId: string;
             email: string;
@@ -186,6 +329,21 @@ export interface components {
             familyName: string;
             gender: string;
             balance?: number;
+        };
+        Tag: {
+            /** Format: int32 */
+            id?: number;
+            name: string;
+        };
+        Publisher: {
+            /** Format: int32 */
+            id?: number;
+            name: string;
+        };
+        Platform: {
+            /** Format: int32 */
+            id?: number;
+            name: string;
         };
         Genre: {
             /** Format: int64 */
@@ -253,21 +411,6 @@ export interface components {
             trailer?: string;
             trailerScreenshot?: string;
         };
-        Platform: {
-            /** Format: int32 */
-            id?: number;
-            name: string;
-        };
-        Publisher: {
-            /** Format: int32 */
-            id?: number;
-            name: string;
-        };
-        Tag: {
-            /** Format: int32 */
-            id?: number;
-            name: string;
-        };
         GameModelWithGenreLimit: {
             /** Format: int64 */
             id?: number;
@@ -286,6 +429,16 @@ export interface components {
             coverImageUrl?: string;
             genres?: components["schemas"]["Genre"][];
         };
+        CartDTO: {
+            cartItems?: components["schemas"]["CartItemDto"][];
+            totalCost?: number;
+        };
+        CartItemDto: {
+            /** Format: int64 */
+            cartId?: number;
+            userId: string;
+            game: components["schemas"]["ShortGameModel"];
+        };
     };
     responses: never;
     parameters: never;
@@ -295,6 +448,28 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    addToCart: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "game-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CartResponse"];
+                };
+            };
+        };
+    };
     showTest: {
         parameters: {
             query?: never;
@@ -310,12 +485,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": string;
+                    "*/*": components["schemas"]["ErrorMessage"];
                 };
             };
         };
     };
-    showAllGamesByPage: {
+    showUserInformation: {
         parameters: {
             query?: never;
             header?: never;
@@ -331,6 +506,66 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["FullUserInfoDTO"];
+                };
+            };
+        };
+    };
+    showAllTags: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Tag"][];
+                };
+            };
+        };
+    };
+    showAllPublishers: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Publisher"][];
+                };
+            };
+        };
+    };
+    showAllPlatforms: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Platform"][];
                 };
             };
         };
@@ -355,7 +590,7 @@ export interface operations {
             };
         };
     };
-    showAllGamesByPage_1: {
+    showAllGamesByPage: {
         parameters: {
             query: {
                 gameCriteria: components["schemas"]["GameCriteria"];
@@ -508,6 +743,88 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["GameModelWithGenreLimit"][];
+                };
+            };
+        };
+    };
+    showAllDevelopers: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Developer"][];
+                };
+            };
+        };
+    };
+    getCartItems: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CartDTO"];
+                };
+            };
+        };
+    };
+    deleteCartItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "cart-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CartResponse"];
+                };
+            };
+        };
+    };
+    deleteAllCartItems: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CartResponse"];
                 };
             };
         };

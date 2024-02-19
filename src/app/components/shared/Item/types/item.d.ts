@@ -1,12 +1,14 @@
-import { RandomResponse } from "./../../../../types/types";
-import { FullInfoResponse } from "@/app/types/types";
-import { MetaData} from "@/app/components/main/types/Response";
+import { MetaData } from '@/app/components/main/types/Response';
+import { FullInfoResponse } from '@/app/types/types';
+
+import { RandomResponse } from '../../../../types/types';
 
 export interface IItemsProps {
   game: FullInfoResponse | RandomResponse[0] ;
   variant?: "row" | "column" | "preview";
   width?: string 
   setActiveHover?: () => void
+  isCart?: boolean
 }
 
 
@@ -44,6 +46,8 @@ export interface IListTagsOrGenresProps {
 export interface IItem{
     game : RandomResponse[0]
     setActiveHover?: () => void
+    isCart ?: boolean
+
 }
 
 export interface IItemLargePreview {

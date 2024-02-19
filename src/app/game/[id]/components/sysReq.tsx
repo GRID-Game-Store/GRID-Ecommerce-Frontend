@@ -1,9 +1,18 @@
 "use client"
-import { Box, Tab, Tabs, Typography } from "@mui/material";
-import { useState } from "react";
-import { ISysReqItemsProps, ISysReqProps, TabPanelProps } from "../types/game";
+import { useState } from 'react';
 
+import {
+  Box,
+  Tab,
+  Tabs,
+  Typography,
+} from '@mui/material';
 
+import {
+  ISysReqItemsProps,
+  ISysReqProps,
+  TabPanelProps,
+} from '../types/game';
 
 function CustomTabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
@@ -72,8 +81,11 @@ const SysReqItems: React.FC<ISysReqItemsProps> = ({activeTab, sysReq, type}) => 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setActiveTab(newValue);
     }
-    const MinimumORRecommended: string[] =  sysReq.split(/\MINIMUM|\RECOMMENDED:/)
-
+    
+    
+    const MinimumORRecommended: "" | string[]  = sysReq && sysReq.split(/\MINIMUM|\RECOMMENDED:/)
+    console.log(MinimumORRecommended);
+    
     return <Box mt={"70px"} >
             <Tabs value={activeTab} onChange={handleChange} aria-label="tabs">
                 {MinimumORRecommended[1] && MinimumORRecommended[1].includes("OS: ") && <Tab disableRipple sx={{ fontSize: "20px" }} label={"MINIMUM"} {...a11yProps(0)} />}
@@ -84,4 +96,4 @@ const SysReqItems: React.FC<ISysReqItemsProps> = ({activeTab, sysReq, type}) => 
           </Box>
 }
 
-export {SysReq}
+export { SysReq };

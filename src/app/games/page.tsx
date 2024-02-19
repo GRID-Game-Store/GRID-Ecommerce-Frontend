@@ -1,8 +1,11 @@
-import { Container, Typography } from "@mui/material";
-import { RecommendationsModuleForFilterAndSorting } from "../components/main/recommendations/recommendationsModule";
+import {
+  Container,
+  Typography,
+} from '@mui/material';
 
-
-
+import {
+  RecommendationsModuleForFilterAndSorting,
+} from '../components/main/recommendations/recommendationsModule';
 
 export default async function Home() {
     return (
@@ -11,7 +14,7 @@ export default async function Home() {
         <Typography fontSize={"28px"} fontWeight={"600"}>TOP SELLERS</Typography>
         <Typography fontSize={"20px"} fontWeight={"300"}>All Products</Typography>
         </Container>
-        <RecommendationsModuleForFilterAndSorting />
+        <RecommendationsModuleForFilterAndSorting  />
       </main>
     )
   }

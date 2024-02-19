@@ -7,7 +7,7 @@ declare module 'next-auth' {
    */
   interface Session {
     access_token?: string;
-    id_token?: number;
+    id_token?: number | string;
     roles?: any;
     error?: any;
 
@@ -21,7 +21,7 @@ declare module 'next-auth/jwt' {
   interface DefaultJWT extends DefaultJWT {
     decoded?: {
       realm_access: {
-        roles: string[];
+        roles: any[];
       };
     }
 

@@ -1,9 +1,29 @@
-import { Box, Button, useMediaQuery } from "@mui/material"
-import { ButtonBuy, CoverItem, ItemLargePreviewAnimation, ItemLargePreviewWrapper, ListTagsOrGenres, TypographyItem } from "../components/components"
-import { useState } from "react"
-import {IItem, IItemLargePreview, THover } from "../types/item";
-import Link from "next/link";
+import { useState } from 'react';
 
+import Link from 'next/link';
+
+import {
+  Box,
+  Button,
+  Chip,
+  Stack,
+  useMediaQuery,
+} from '@mui/material';
+
+import {
+  ButtonBuy,
+  CoverItem,
+  ItemLargePreviewAnimation,
+  ItemLargePreviewWrapper,
+  ListTagsOrGenres,
+  TypographyItem,
+} from '../components/components';
+import {
+  IItem,
+  IItemLargePreview,
+  THover,
+} from '../types/item';
+import { ActionsButtons } from '@/app/cart/components/actionsButton';
 
 const getPrice = (price: number | undefined) => {
     const currency = ""
@@ -46,20 +66,22 @@ export const ItemSmallColumnForSearch: React.FC<IItem> = ({game, setActiveHover}
 
 
 
-export const ItemSmallColumn: React.FC<IItem> = ({game, setActiveHover}) => {
+export const ItemSmallColumn: React.FC<IItem> = ({game, setActiveHover, isCart}) => {
   const matches = useMediaQuery('(min-width:1200px)');
   const price = getPrice(game.price)
+  const widthBlockInCart = !isCart ? "280px" : "650px"
     return  <Box width={"95%"}  onMouseEnter={() =>  setActiveHover && setActiveHover()}  key={game.id}  borderRadius={"5px"}  display={"flex"}  sx={{marginLeft:"10px !important", backgroundColor:"#000",marginBottom:"20px !important",}} >
     <CoverItem width={170} linkCoverImg={game.coverImageUrl}/>
     <Box position={"relative"} >
       <TypographyItem mt={"10px"} ml={"10px"} fontSize="17px" whiteSpace="normal" text={game.title} link={`/game/${game.id}`}  />
       {matches && 
       <>
-      <Box width={"280px"}>
+      <Box width={widthBlockInCart}>
         <TypographyItem  mt={"5px"} ml={"10px"} fontSize="10px" whiteSpace="nowrap" text={game.description}  />
       </Box>
-      {matches && <Box mt={"5px"} ml={"10px"}>
+      {matches && <Box width={"100%"}  mt={"5px"} ml={"10px"} display={"flex"} justifyContent={"space-between"} flexDirection={"row"} alignItems={"flex-start"}>
         <ListTagsOrGenres arrayElements={game.genres && game.genres.slice(game.genres.length-3)} />
+        {isCart && <ActionsButtons cost={game.price}/>}
       </Box>}
       </>
       }

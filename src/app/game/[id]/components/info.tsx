@@ -1,11 +1,14 @@
 "use client"
 
-import { ResponseGameFullInfo } from "@/app/components/main/types/Response"
+
 import { ListTagsOrGenres } from "@/app/components/shared/Item/components/components"
+import { FullInfoResponse } from "@/app/types/types"
 import { Box, Button, Chip, Stack, Typography, useMediaQuery } from "@mui/material"
+import { useQuery } from "@tanstack/react-query"
+import { useRouter } from "next/navigation"
 
 interface Info {
-   fullInfo:  ResponseGameFullInfo
+   fullInfo:  FullInfoResponse
 }
 
 const Rating = ({permit_age}: {permit_age : string} ) => {
@@ -20,16 +23,28 @@ const Rating = ({permit_age}: {permit_age : string} ) => {
 export const Info: React.FC<Info> = ({fullInfo}) => {
     //! move to shared constant
     const matches = useMediaQuery('(min-width:1200px)');
+    const router = useRouter()
+    const {status, data, error, refetch} = useQuery({
+        queryKey: ["gameAddToCart", fullInfo.id],
+        queryFn: () => fetch(`/api/cart?id=${fullInfo.id}`, {method: "POST"}),
+        refetchOnWindowFocus: false,
+        enabled: false // disable this query from automatically running
+    });
+    const onAddToCart = () => {
+        refetch()
+        router.refresh()
+    }
+
     const ml = matches ? "20px" : "5px"
     const mr = matches ? "0px" : "5px"
     const mt = matches ? "0px" : "20px"
     const price = fullInfo && fullInfo.price ? fullInfo.price + "" : "free"
     const developerAndPublisher = fullInfo  && fullInfo.developer.name === fullInfo.publisher.name ?  fullInfo.developer.name : fullInfo  && `${fullInfo.developer.name} & ${fullInfo.publisher.name}`
     let platforms = ""
-    fullInfo.platforms.map(platform => {
+    fullInfo.platforms && fullInfo.platforms.map((platform: { name: string }) => {
         platforms += " " + platform.name.toLowerCase()
     });
-    const ganres = `${ fullInfo.genres[0] ?  fullInfo.genres[0].name : ""} ${fullInfo.genres[1] ?  fullInfo.genres[1].name : ""}`
+    const ganres = `${fullInfo.genres && fullInfo.genres[0] ?  fullInfo.genres[0].name : ""} ${fullInfo.genres[1] && fullInfo.genres[1] ?  fullInfo.genres[1].name : ""}`
 
     return <Box ml={ml} mt={mt} mr={mr}>
         <Typography fontWeight={"600"} variant="h3">{fullInfo.title}</Typography>
@@ -40,6 +55,6 @@ export const Info: React.FC<Info> = ({fullInfo}) => {
         <Typography fontWeight={"600"} variant="h6">{`Genre : ${ganres}`}</Typography>
         <ListTagsOrGenres mt='0px' ml='-5px' spacing={0} arrayElements={fullInfo.tags.sort().slice(0, 4)}/>
        {fullInfo.permit_age && <Rating permit_age={fullInfo.permit_age}/>}
-        <Button sx={{width:"100%", fontSize:"20px"}}>{price}</Button>
+        <Button onClick={onAddToCart} sx={{width:"100%", fontSize:"20px"}}>{price}</Button>
     </Box>
 }

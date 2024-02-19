@@ -1,5 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Ropa+Sans:ital@0;1&display=swap');
+@font-face {
+  font-family: 'Ropa Sans';
+  src: url('../../public/fonts/RopaSansSCPro-Regular.eot');
+  src: local('Ropa Sans'), local('RopaSansPro-Regular'),
+      url('../../public/fonts/RopaSansSCPro-Regular.eot') format('embedded-opentype'),
+      url('../../public/fonts/RopaSansSCPro-Regular.woff2') format('woff2'),
+      url('../../public/fonts/RopaSansSCPro-Regular.woff') format('woff'),
+      url('../../public/fonts/RopaSansSCPro-Regular.ttf') format('truetype');
 
+
+  
+  font-weight: normal;
+  font-style: normal;
+}
 * {
   box-sizing: border-box;
   padding: 0;

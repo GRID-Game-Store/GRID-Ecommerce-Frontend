@@ -1,3 +1,9 @@
+import React from 'react';
+
+import Link from 'next/link';
+
+import { AMOUNT_SLIDES } from '@/app/constants/slider';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import {
   Button,
   Chip,
@@ -6,18 +12,16 @@ import {
   SxProps,
   Typography,
   useMediaQuery,
-  
-} from "@mui/material";
-import React from "react";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import { changeCurrentSlide } from "./sliderNavigation";
-import { AMOUNT_SLIDES } from "@/app/constants/slider";
-import { IButtonsNavigate, IDescriptionProps, IPricingProps, ITitleProps, TSlierItemsProps } from "./types/slider.d";
-import Link from "next/link";
+} from '@mui/material';
 
-
-
-
+import { changeCurrentSlide } from './sliderNavigation';
+import {
+  IButtonsNavigate,
+  IDescriptionProps,
+  IPricingProps,
+  ITitleProps,
+  TSlierItemsProps,
+} from './types/slider.d';
 
 const Title: React.FC<ITitleProps> = ({ title }) => {
   const matches = useMediaQuery('(min-width:1200px)');
@@ -66,7 +70,7 @@ const Pricing: React.FC<IPricingProps> = ({ prise }) => {
   );
 };
 
-const ButtonBuy = ({price}: {price: number}) => {
+const ButtonBuy = ({price}: {price: number | undefined}) => {
   const priceOrFree = price && price ? price + "" : "free"
   return (
     <Button size="large" sx={{ minWidth: "280px", marginRight: "4px" }}>
@@ -160,7 +164,7 @@ const SliderActions: React.FC<TSlierItemsProps> = ({ slides, current, setCurrent
     </Stack>
       <Container disableGutters sx={StyleWrapInfo}>
       <Link href={`/game/${slides.id}`} style={{color:"#fff"}}>
-          {slides.price && <ButtonBuy price={slides.price} />}
+           <ButtonBuy price={slides.price} />
       </Link>
       </Container>
     </Container>

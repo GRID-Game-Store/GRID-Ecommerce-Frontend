@@ -1,4 +1,14 @@
 "use client";
+import React, {
+  useEffect,
+  useState,
+} from 'react';
+
+import { ErrorUILayer } from '@/app/error';
+import {
+  FullInfoResponse,
+  RandomResponse,
+} from '@/app/types/types';
 import {
   Box,
   Checkbox,
@@ -11,28 +21,33 @@ import {
   Tabs,
   Typography,
   useMediaQuery,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
+} from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 
-import { Items } from "../../shared/Item/items";
-import { useQuery } from "@tanstack/react-query";
-import { getGameFullInfo, getGamesOfferByTab } from "./api/getGames";
-import { Filters } from "../../shared/Filters/filters";
-import { FullInfoResponse, RandomResponse } from "@/app/types/types";
+import { Filters } from '../../shared/Filters/filters';
+import { Items } from '../../shared/Item/items';
+import {
+  getGameFullInfo,
+  getGamesOfferByTab,
+} from './api/getGames';
+import { useRouter } from 'next/navigation'
 
 interface IListGames {
+  isCart?: boolean;
   data?: RandomResponse;
-  setActiveHover: (id: number) => void;
+  setActiveHover?: (id: number) => void;
   width?: string;
   height?: string;
 }
 
-const ListGames: React.FC<IListGames> = ({
+export const ListGames: React.FC<IListGames> = ({
   data,
   setActiveHover,
   width = "500px",
   height = "650px",
+  isCart = false,
 }) => {
+  const { push } = useRouter()
   return (
     <Box
       width={width}
@@ -47,14 +62,28 @@ const ListGames: React.FC<IListGames> = ({
         {data &&
           data.map((game: RandomResponse[0]) => {
             return (
-                  <Items
-                    key={game.id}
-                    game={game}
-                    variant={"column"}
-                    setActiveHover={() => game.id && setActiveHover(game.id)}
-                  />
+              <Items
+                key={game.id}
+                game={game}
+                variant={"column"}
+                isCart={isCart}
+                setActiveHover={() =>
+                  game.id && setActiveHover && setActiveHover(game.id)
+                }
+              />
             );
           })}
+        
+        { isCart && data?.length === 0 &&  <Box
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          textAlign={"center"}
+          height={"100vh"}
+          flexDirection={"column"}
+        >
+          <ErrorUILayer message={'There is nothing in the cart'} buttonTitle={'Go to the store'} buttonCallback={() => push('/')}  />
+        </Box>}
       </Stack>
     </Box>
   );
@@ -194,12 +223,7 @@ const RecommendationsModuleForFilterAndSorting = ({}) => {
   return (
     <Container sx={{ marginTop: "20px", width: "1000px" }}>
       <Box sx={{ display: "flex", width: "1000px" }}>
-        <ListGames
-          data={data}
-          width="700px"
-          height="auto"
-          setActiveHover={setActiveHover}
-        />
+        <ListGames data={data} width="700px" height="auto" />
         <Box>
           <Filters variant="slider" />
           <Filters variant="checkbox" />

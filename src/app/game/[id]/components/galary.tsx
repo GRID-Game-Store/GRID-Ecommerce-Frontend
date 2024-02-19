@@ -1,10 +1,22 @@
 
 "use client"
-import { gameMedia } from "@/app/components/main/types/Response"
-import { Box, Stack, Tab, Tabs, Typography, useMediaQuery } from "@mui/material"
-import Image from "next/image"
-import { useRef, useState } from "react"
-import { CSSTransition, TransitionGroup } from "react-transition-group"
+import {
+  useRef,
+  useState,
+} from 'react';
+
+import Image from 'next/image';
+import {
+  CSSTransition,
+  TransitionGroup,
+} from 'react-transition-group';
+
+import { gameMedia } from '@/app/components/main/types/Response';
+import {
+  Box,
+  Stack,
+  useMediaQuery,
+} from '@mui/material';
 
 interface IGalleryProps  {
     gameMedia: gameMedia
@@ -53,9 +65,9 @@ export const Gallery: React.FC<IGalleryProps> = ({gameMedia}) => {
           </CSSTransition>
       </TransitionGroup>
         {gameMedia && <Stack direction={"row"} spacing={1} sx={{position:"relative"}} >
-            <Item src={gameMedia.banner_url} setIsPreview={setIsPreview} index={0}/>
-            <Item src={gameMedia.trailer_screenshot} additionSrc={gameMedia.trailer} setIsPreview={setIsPreview} index={1} isVideo/>
-            <Item src={gameMedia.screenshot_url} setIsPreview={setIsPreview} index={2}/>
+            <Item src={gameMedia.bannerUrl} setIsPreview={setIsPreview} index={0}/>
+            <Item src={gameMedia.trailerScreenshot} additionSrc={gameMedia.trailer} setIsPreview={setIsPreview} index={1} isVideo/>
+            <Item src={gameMedia.screenshotUrl} setIsPreview={setIsPreview} index={2}/>
             <span className="MuiTabs-indicator mui-1u4qj0q-MuiTabs-indicator" style={{width:`${widthItem}px`, position:"absolute", left:`${positionIndicator}px`, bottom:"-10px"}} ></span>
         </Stack>}
     </Box>
