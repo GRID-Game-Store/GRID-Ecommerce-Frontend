@@ -1,12 +1,11 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import Link from 'next/link';
 
 import {
   Box,
   Button,
-  Chip,
-  Stack,
+
   useMediaQuery,
 } from '@mui/material';
 
@@ -24,15 +23,15 @@ import {
   THover,
 } from '../types/item';
 import { ActionsButtons } from '@/app/cart/components/actionsButton';
+import { UAH } from '../../currency/UAH';
 
-const getPrice = (price: number | undefined) => {
-    const currency = ""
-    return price != undefined && price ? price + currency : "free"
+export const getPrice = (price: number | undefined) => {
+    return price != undefined && price ? <div style={{display:"flex",alignItems:"center"}}>{price}<UAH/></div> : "free"
 }
 
 
 export const ItemSmallRow: React.FC<IItem> = ({game}) => {
-    const price = game.price ? game.price + "" : "free"
+    const price = getPrice(game.price)
     const matches = useMediaQuery('(min-width:1200px)');
     const width = matches ? "150px" : "132px"
     return <Box key={game.id} width={width} height={"220px"} mt={"20px"} sx={{marginRight:"40px !important"}} >
@@ -66,7 +65,7 @@ export const ItemSmallColumnForSearch: React.FC<IItem> = ({game, setActiveHover}
 
 
 
-export const ItemSmallColumn: React.FC<IItem> = ({game, setActiveHover, isCart}) => {
+export const ItemSmallColumn: React.FC<IItem> = ({game, setActiveHover, isCart, cartId}) => {
   const matches = useMediaQuery('(min-width:1200px)');
   const price = getPrice(game.price)
   const widthBlockInCart = !isCart ? "280px" : "650px"
@@ -81,7 +80,7 @@ export const ItemSmallColumn: React.FC<IItem> = ({game, setActiveHover, isCart})
       </Box>
       {matches && <Box width={"100%"}  mt={"5px"} ml={"10px"} display={"flex"} justifyContent={"space-between"} flexDirection={"row"} alignItems={"flex-start"}>
         <ListTagsOrGenres arrayElements={game.genres && game.genres.slice(game.genres.length-3)} />
-        {isCart && <ActionsButtons cost={game.price}/>}
+        {isCart && <ActionsButtons cost={game.price}  cartId={cartId} />}
       </Box>}
       </>
       }

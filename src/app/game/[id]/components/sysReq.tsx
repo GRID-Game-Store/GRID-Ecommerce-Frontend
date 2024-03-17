@@ -1,6 +1,5 @@
 "use client"
-import { useState } from 'react';
-
+import React, { useState } from 'react';
 import {
   Box,
   Tab,
@@ -13,8 +12,9 @@ import {
   ISysReqProps,
   TabPanelProps,
 } from '../types/game';
+import { checkSysReqItem, getSysReq } from '../utils/sysReq';
 
-function CustomTabPanel(props: TabPanelProps) {
+const CustomTabPanel = (props: TabPanelProps) => {
     const { children, value, index, ...other } = props;
   
     return (
@@ -33,33 +33,14 @@ function CustomTabPanel(props: TabPanelProps) {
         )}
       </div>
     );
-  }
+}
   
-function a11yProps(index: number) {
+const a11yProps = (index: number) => {
     return {
       id: `simple-tab-${index}`,
       'aria-controls': `simple-tabpanel-${index}`,
     };
-  }
-
-
-
-const getSysReq = (string: string, type : number, expString: string)  => {
-  const re = new RegExp(expString.slice(0, -1), "");
-  return string[type] && string.split(/\MINIMUM|\RECOMMENDED:/)[type]
-  .split(re)
 }
-
-const checkSysReqItem = (sysReqTitle: string[], sysReq: string) => {
-  let expString = ""
-  sysReqTitle.map((title) => {
-    if(sysReq.includes(title)){
-      expString += ` ${title}: |`
-    }
-  })
-  return expString
-} 
-
 
 const SysReqItems: React.FC<ISysReqItemsProps> = ({activeTab, sysReq, type}) => {
   const sysReqTitle = ["OS","Processor","Memory","Graphics","DirectX","Network","Storage" ,"Sound Card", "Additional Notes", "Attention"]
@@ -67,7 +48,7 @@ const SysReqItems: React.FC<ISysReqItemsProps> = ({activeTab, sysReq, type}) => 
   const SysReqItems = expString.split(" |").filter(item => item)
   const index =  type == "MINIMUM" ? 0 : 1
   return <>
-      {sysReq.split(/\MINIMUM|\RECOMMENDED:/)[index+1] && <CustomTabPanel value={activeTab} index={index}>
+      {sysReq.split(/MINIMUM|RECOMMENDED:/)[index+1] && <CustomTabPanel value={activeTab} index={index}>
               {SysReqItems.map((item, itemIndex) => {
                   return  <Typography width={600} key={`${index}_${item}`} fontSize={"19px"}>{item} {getSysReq(sysReq,index+1, expString)[itemIndex+1]}</Typography>
               })}
@@ -75,16 +56,12 @@ const SysReqItems: React.FC<ISysReqItemsProps> = ({activeTab, sysReq, type}) => 
         </>
 } 
 
-
  const SysReq: React.FC<ISysReqProps> = ({sysReq}) => {
     const [activeTab, setActiveTab] = useState(0);
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setActiveTab(newValue);
     }
-    
-    
-    const MinimumORRecommended: "" | string[]  = sysReq && sysReq.split(/\MINIMUM|\RECOMMENDED:/)
-    console.log(MinimumORRecommended);
+    const MinimumORRecommended: "" | string[]  = sysReq && sysReq.split(/MINIMUM|RECOMMENDED:/)
     
     return <Box mt={"70px"} >
             <Tabs value={activeTab} onChange={handleChange} aria-label="tabs">

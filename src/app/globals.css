@@ -17,7 +17,9 @@
   padding: 0;
   margin: 0;
 }
-
+.mui-1nsodkh-MuiFormControlLabel-root .MuiFormControlLabel-label.Mui-disabled {
+  color: rgb(255 255 255 / 58%) !important;
+}
 html,
 body {
   max-width: 100vw;
@@ -160,6 +162,21 @@ button, input[type="submit"], input[type="reset"] {
   position: absolute;
   top: 0px;
 } 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #08AD2C #202020;
+}
+*::-webkit-scrollbar {
+  width: 20px;
+}
 
+*::-webkit-scrollbar-track {
+  background-color: #e4e4e4;
+  border-radius: 100px;
+}
 
+*::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+}
 

@@ -171,7 +171,7 @@ export const ListTagsOrGenres: React.FC<IListTagsOrGenresProps> = ({
 };
 
 export const ButtonBuy: React.FC<IButtonBuyProps> = ({ price, href }) => {
-  const FreeORPrice = price ? price + "" : "free";
+  
   return (
     <Link href={href}>
       <Button
@@ -182,7 +182,7 @@ export const ButtonBuy: React.FC<IButtonBuyProps> = ({ price, href }) => {
           height: "100%",
         }}
       >
-        {FreeORPrice}
+        {price}
       </Button>
     </Link>
   );

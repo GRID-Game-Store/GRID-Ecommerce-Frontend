@@ -1,5 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
-
+import dns from 'node:dns'
+dns.setDefaultResultOrder('ipv4first')
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -10,7 +11,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './tests',
+  testDir: './e2e',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */

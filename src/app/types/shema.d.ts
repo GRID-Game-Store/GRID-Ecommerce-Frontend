@@ -4,6 +4,125 @@
  */
 
 export interface paths {
+    "/api/v1/checkout/stripe/create-payment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Stripe endpoint to create session */
+        post: operations["checkoutStripe"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/checkout/stripe/capture-payment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Stripe capture to place the order */
+        post: operations["placeStripeOrder"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/checkout/recharge/stripe/create-payment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Stripe endpoint to create session for balance recharging */
+        post: operations["balanceRechargeStripe"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/checkout/recharge/paypal/create-payment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Paypal endpoint to create session for balance recharge */
+        post: operations["balanceRechargePayPal"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/checkout/paypal/create-payment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Paypal endpoint to create session */
+        post: operations["checkoutPayPal"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/checkout/paypal/capture-payment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** PaypalService capture to place the order */
+        post: operations["placePayPalOrder"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/checkout/balance/create-payment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Local endpoint to create payment */
+        post: operations["checkoutLocal"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/cart/add/{game-id}": {
         parameters: {
             query?: never;
@@ -21,23 +140,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/users/test": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Controller to test the authorization of user */
-        get: operations["showTest"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/v1/users/profile": {
         parameters: {
             query?: never;
@@ -47,6 +149,40 @@ export interface paths {
         };
         /** Get user's information */
         get: operations["showUserInformation"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/users/games": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get user's games */
+        get: operations["showUserGames"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transactions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all transactions for user */
+        get: operations["getAllTransactions"];
         put?: never;
         post?: never;
         delete?: never;
@@ -314,12 +450,15 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        PaymentResponseObject: {
+            status?: string;
+            message?: string;
+            /** Format: int32 */
+            httpStatus?: number;
+            data?: Record<string, never>;
+        };
         CartResponse: {
             response?: string;
-        };
-        ErrorMessage: {
-            message?: string;
-            invalidValue?: Record<string, never>;
         };
         FullUserInfoDTO: {
             externalId: string;
@@ -329,6 +468,50 @@ export interface components {
             familyName: string;
             gender: string;
             balance?: number;
+        };
+        LocalTime: {
+            /** Format: int32 */
+            hour?: number;
+            /** Format: int32 */
+            minute?: number;
+            /** Format: int32 */
+            second?: number;
+            /** Format: int32 */
+            nano?: number;
+        };
+        ShortGameModel: {
+            /** Format: int64 */
+            id?: number;
+            title?: string;
+            description?: string;
+            price?: number;
+            coverImageUrl?: string;
+        };
+        UserShortGamesDTO: {
+            game?: components["schemas"]["ShortGameModel"];
+            /** Format: date-time */
+            purchaseDate?: string;
+            playtime?: components["schemas"]["LocalTime"];
+        };
+        TransactionDTO: {
+            transactionId?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+            totalAmount?: number;
+            paymentMethods?: string;
+            paid?: boolean;
+            transactionGames?: components["schemas"]["TransactionGamesDTO"][];
+            redirectUrl?: string;
+            /** @enum {string} */
+            balanceAction?: "BALANCE_RECHARGE" | "PAYMENT_WITH_BALANCE" | "NO_ACTION";
+        };
+        TransactionGamesDTO: {
+            /** Format: int64 */
+            id?: number;
+            games?: components["schemas"]["ShortGameModel"];
+            priceOnPay?: number;
         };
         Tag: {
             /** Format: int32 */
@@ -357,9 +540,9 @@ export interface components {
             size?: number;
             title?: string;
             maxPrice?: number;
+            tags?: number[];
             genres?: string;
             platforms?: string;
-            tags?: string;
             developers?: string;
             publishers?: string;
             sort?: string[];
@@ -372,14 +555,6 @@ export interface components {
             totalPages?: number;
             /** Format: int32 */
             currentPage?: number;
-        };
-        ShortGameModel: {
-            /** Format: int64 */
-            id?: number;
-            title?: string;
-            description?: string;
-            price?: number;
-            coverImageUrl?: string;
         };
         Developer: {
             /** Format: int32 */
@@ -448,6 +623,158 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    checkoutStripe: {
+        parameters: {
+            query: {
+                balanceAction: "BALANCE_RECHARGE" | "PAYMENT_WITH_BALANCE" | "NO_ACTION";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PaymentResponseObject"];
+                };
+            };
+        };
+    };
+    placeStripeOrder: {
+        parameters: {
+            query: {
+                sessionId: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PaymentResponseObject"];
+                };
+            };
+        };
+    };
+    balanceRechargeStripe: {
+        parameters: {
+            query: {
+                amount: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PaymentResponseObject"];
+                };
+            };
+        };
+    };
+    balanceRechargePayPal: {
+        parameters: {
+            query: {
+                amount: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PaymentResponseObject"];
+                };
+            };
+        };
+    };
+    checkoutPayPal: {
+        parameters: {
+            query: {
+                balanceAction: "BALANCE_RECHARGE" | "PAYMENT_WITH_BALANCE" | "NO_ACTION";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PaymentResponseObject"];
+                };
+            };
+        };
+    };
+    placePayPalOrder: {
+        parameters: {
+            query: {
+                sessionId: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PaymentResponseObject"];
+                };
+            };
+        };
+    };
+    checkoutLocal: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PaymentResponseObject"];
+                };
+            };
+        };
+    };
     addToCart: {
         parameters: {
             query?: never;
@@ -470,26 +797,6 @@ export interface operations {
             };
         };
     };
-    showTest: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ErrorMessage"];
-                };
-            };
-        };
-    };
     showUserInformation: {
         parameters: {
             query?: never;
@@ -506,6 +813,46 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["FullUserInfoDTO"];
+                };
+            };
+        };
+    };
+    showUserGames: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["UserShortGamesDTO"][];
+                };
+            };
+        };
+    };
+    getAllTransactions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TransactionDTO"][];
                 };
             };
         };

@@ -1,6 +1,6 @@
 
 "use client"
-import {
+import React, {
   useRef,
   useState,
 } from 'react';
@@ -34,6 +34,7 @@ const Preview = ({isVideo, src, ref} : {isVideo: number, src: string | undefined
     }
 }
 
+// eslint-disable-next-line no-unused-vars
 const Item = ({src, setIsPreview, index, additionSrc = src, isVideo} : {src: string | undefined, setIsPreview: (object: any) => void , index: number, additionSrc?: string, isVideo?: boolean  }) => {
     const matches = useMediaQuery('(min-width:1200px)');
     const widthItem = matches ? 180 : 120
@@ -48,12 +49,12 @@ const Item = ({src, setIsPreview, index, additionSrc = src, isVideo} : {src: str
 export const Gallery: React.FC<IGalleryProps> = ({gameMedia}) => {
     const matches = useMediaQuery('(min-width:1200px)');
     const widthItem = matches ? 180 : 120
-
     const [isPreview, setIsPreview ] = useState({
         src: gameMedia?.trailer,
         isVideo: 1
     })
-
+  
+    
     const positionIndicator = isPreview.isVideo === 0 ? -8 : isPreview.isVideo * widthItem + (isPreview.isVideo-1) * 8
     const nodeRef = useRef(null)
     return <Box  position={"relative"}>
@@ -64,7 +65,7 @@ export const Gallery: React.FC<IGalleryProps> = ({gameMedia}) => {
             </Box>   
           </CSSTransition>
       </TransitionGroup>
-        {gameMedia && <Stack direction={"row"} spacing={1} sx={{position:"relative"}} >
+        {gameMedia?.bannerUrl && <Stack direction={"row"} spacing={1} sx={{position:"relative"}} >
             <Item src={gameMedia.bannerUrl} setIsPreview={setIsPreview} index={0}/>
             <Item src={gameMedia.trailerScreenshot} additionSrc={gameMedia.trailer} setIsPreview={setIsPreview} index={1} isVideo/>
             <Item src={gameMedia.screenshotUrl} setIsPreview={setIsPreview} index={2}/>

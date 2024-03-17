@@ -1,13 +1,11 @@
-import { getServerSession } from "next-auth";
-
 import { Box, Typography } from "@mui/material";
-
-import { authOptions } from "../api/auth/[...nextauth]/route";
-import { FullInfoUserResponse } from "../types/types";
+import { AllGamesInAccountResponse, FullInfoUserResponse } from "../types/types";
 import { getAccessToken } from "../utils/sessionTokenAccessor";
+import { Balance } from "./components/balance";
+import { Recommendations } from "../components/main/recommendations/recommendations";
 
-async function getAllInfoAboutUser() {
-  const url = `${process.env.URl}users/profile`;
+async function getAllInfoAboutUser(type: string) {
+  const url = `${process.env.URl}users/${type}`;
 
   let access_token = await getAccessToken();
 
@@ -16,6 +14,7 @@ async function getAllInfoAboutUser() {
       "Content-Type": "application/json",
       Authorization: "Bearer " + access_token,
     },
+    cache: 'no-store'
   });
 
   if (resp.ok) {
@@ -27,10 +26,13 @@ async function getAllInfoAboutUser() {
 }
 
 export default async function Home() {
-  const fullInfo: FullInfoUserResponse = await getAllInfoAboutUser();
+  const fullInfo: FullInfoUserResponse = await getAllInfoAboutUser("profile");
+  const allGamesInAccount: AllGamesInAccountResponse = await getAllInfoAboutUser("games");
+  console.log(allGamesInAccount);
+  
   return (
     <main
-      style={{ height: "100vh", display: "flex", justifyContent: "center" }}
+      style={{display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center", width: "100vw"}}
     >
       <Box
         mt={"130px"}
@@ -49,7 +51,10 @@ export default async function Home() {
             {fullInfo.email}
           </Typography>
         </Box>
-        <Typography variant="h4">$ {fullInfo.balance}</Typography>
+        <Balance balance={fullInfo.balance}/>
+      </Box>
+      <Box>
+      <Recommendations title={"My games"} data={allGamesInAccount} />
       </Box>
     </main>
   );

@@ -2,22 +2,9 @@
 import { Box, Checkbox, Divider, FormControlLabel, Slider, TextField, Typography } from "@mui/material";
 import { ICheckboxFilterGroupProps, ITitleFilterGroupProps, IWrapperFilterGroupProps } from "../types/filters";
 import { useRouter } from 'next/navigation'
-import { usePathname } from 'next/navigation'
-import { useState } from "react";
-import { useSearchParams } from 'next/navigation'
-const mockCheckBoxSlider = [
-    {
-        id: 0,
-        name : "Special offers",
-        value: 0
-    },
-    {
-        id: 1,
-        name : "Hide free to paly games",
-        value: 0
-    }
+import { useQueryState } from 'nuqs'
+import { AllFiltersByNameResponse } from "@/app/types/types";
 
-]
 
 const mockCheckBoxCheckbox = [
     {
@@ -47,11 +34,15 @@ const mockCheckBoxCheckbox = [
     },
 
   ]
-
+interface IFilterProps {
+  refetch: () => void
+  tags?: AllFiltersByNameResponse
+  name?: string
+}
 const WrapperFilterGroup : React.FC<IWrapperFilterGroupProps> = ({children}) => {
     return<Box
     width={"200px"}
-    minHeight={"250px"}
+    minHeight={"150px"}
     bgcolor={"#0a0a0adb"}
     overflow={"hidden"}
     pt={"5px"}
@@ -72,54 +63,53 @@ const TitleFilterGroup: React.FC<ITitleFilterGroupProps> = ({name}) => {
         <Typography pl={"12px"} fontSize={"20px"} fontWeight={"600"}>{name}</Typography>
         <Divider  />
     </>
-
-
 }
 
 const SliderFilterGroup: React.FC = () => {
     const {push} = useRouter()
     const handleSliderChange = (event: Event, newValue: number | number[]) => {
-
-      !window.location.search || window.location.search.includes("maxPrice") && push(`?maxPrice=${newValue}`)
-      window.location.search && !window.location.search.includes("maxPrice") && push(`${window.location.search}&maxPrice=${newValue}`)
+      if(!window.location.search){
+        push(`?maxPrice=${newValue}`)
+      } else {
+        const changeURL = window.location.search.replace(/maxPrice=\d+/g, `maxPrice=${newValue}`)
+        push(`${changeURL}`, {scroll: false})
+      }
     };
 
     return <>
             <Box p={"20px"} pb={"10px"} >
-                <Slider  onChange={handleSliderChange} aria-label="Temperature" defaultValue={30} valueLabelDisplay="auto" step={10} marks min={10} max={110}/>
+                <Slider onChange={handleSliderChange} aria-label="Temperature" defaultValue={30} valueLabelDisplay="auto" step={10} marks min={10} max={110}/>
                 <Typography textAlign={"center"} fontSize={"20px"} fontWeight={"300"}>300</Typography>
            </Box>
-           <Divider  />
     </>
 }
 
-const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({checkboxes}) => {
-  const {push} = useRouter()
-  const searchParams = useSearchParams()
-
-  const tags = searchParams.get('tags')
-
-
-   const checkboxesItems = checkboxes.map((checkbox)=> {
-    const url = decodeURI(searchParams.toString())
-    console.log(url);
-    
+const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({checkboxes, name, refetch}) => {
+  const [state, setState] = useQueryState(name,{ shallow: false })
+  const checkboxesItems = checkboxes.map((checkbox)=> {
     const handleCheckboxChange = (event: React.SyntheticEvent, checked: boolean) => {
-      const url = searchParams.toString()
-      if(window.location.href.includes("tags")){
-        
-        
-        // checked && push(`${window.location.search},${checkbox.id}`)
-        
-        // !checked && tags?.length !== 1 && push(`${window.location.search.replace(`,${checkbox.id}`,'')}`)
-        // !checked && tags?.length === 1 && push(`${window.location.search.replace(`tags=${checkbox.id}`,'')}`)
-        
-      } else {
-        // !window.location.search && push(`?tags=${checkbox.id}`)
-        // window.location.search && push(`${window.location.search}&tags=${checkbox.id}`)
-      }
+      checked && setState((prev) => {
+        if(checkbox.id && !prev?.includes(checkbox.id.toString())){
+          const newURl = prev ? `${prev},${checkbox.id}` : `${checkbox.id}`
+         
+          return newURl
+        } else {
+          return prev
+        }
+      })
+      !checked && setState((prev) => {
+        if(checkbox.id && prev?.includes(checkbox.id.toString())){
+          const newParam = prev.replace(`${checkbox.id}`, ``).split(",").filter((item)=> item).join(",")
+          return  newParam !== "" ? newParam : null
+        } else {
+          return prev
+        }
+      })
+      refetch()
     };
-        return <FormControlLabel key={checkbox.id} onChange={handleCheckboxChange} sx={{pl:"10px"}} control={<Checkbox sx={{width:'50px', height:"50px"}} />} label={checkbox.name} />
+    const checked = checkbox.id && state?.split(",").includes(checkbox.id.toString()) 
+    const disabled = !Boolean(checked) &&  Boolean(state?.split(",").length) && name !== "tags"
+        return <FormControlLabel key={checkbox.id} onChange={handleCheckboxChange} sx={{pl:"10px"}} control={<Checkbox sx={{width:'50px', height:"50px"}} />} disabled={disabled} checked={Boolean(checked)} label={checkbox.name} />
    })
     return <>
         {checkboxesItems}
@@ -128,21 +118,21 @@ const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({checkboxes}) 
 
 
 
-export const FilterSlider: React.FC = () => {
+export const FilterSlider: React.FC<IFilterProps> = ({refetch}) => {
     return (
       <WrapperFilterGroup>
         <TitleFilterGroup name={"Narrow by Price"}/>
         <SliderFilterGroup/>
-        <CheckboxFilterGroup checkboxes={mockCheckBoxSlider}/>
       </WrapperFilterGroup>
     );
   };
 
-export const FilterCheckBox: React.FC = () => {
+export const FilterCheckBox: React.FC<IFilterProps> = ({refetch, tags, name}) => {
+
     return (
       <WrapperFilterGroup>
-        <TitleFilterGroup name={"Tags"}/>
-        <CheckboxFilterGroup checkboxes={mockCheckBoxCheckbox}/>
+        <TitleFilterGroup name={name}/>
+        {tags && name && <CheckboxFilterGroup checkboxes={tags} refetch={refetch} name={name?.toLowerCase()}/>}
         <TextField placeholder="Search"/>
       </WrapperFilterGroup>
     );

@@ -2,7 +2,7 @@
 import TextField from "@mui/material/TextField";
 import { useQuery } from "@tanstack/react-query";
 import { getGamesByTitle } from "../api/search";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDebounce } from "use-debounce";
 
 import { Box, Skeleton, SxProps, Typography, useMediaQuery } from "@mui/material";
@@ -75,6 +75,9 @@ const Search: React.FC = () => {
   const { data, isSuccess, isLoading, isFetched } = useQuery({
     queryKey: ["game", debouncedFilter],
     queryFn: () => getGamesByTitle(debouncedFilter[0]),
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    staleTime: 120000,
   });
   const items = data && data.map((game: RandomResponse[0]) => {
     return (
@@ -96,7 +99,7 @@ const Search: React.FC = () => {
         name="hidden"
         value={value}
         onChange={(e) => {
-          setValue(e.target.value)
+          setValue(e.target.value.replaceAll("#", ""));
           value  ?  setFocus(1) : setFocus(0)
         }}
       />

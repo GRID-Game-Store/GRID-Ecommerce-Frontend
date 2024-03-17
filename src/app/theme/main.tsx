@@ -118,8 +118,44 @@ export const mainTheme = (deviceType: string) =>
         styleOverrides: {
           root: {
             color: "#ffff",
+            "&.Mui-disabled": {
+              color: "#ffffff38",
+            },
+            "&.Mui-disabled span": {
+              color: "#ffffff38",
+            },
+            
           },
         },
+      },
+      MuiFormControlLabel: {
+        styleOverrides: {
+          root: {
+            color: "#ffff",
+            "&.Mui-disabled span": {
+              color: "#ffffff5e !important",
+            },
+          }
+        }
+      },
+      MuiMenu: {
+        styleOverrides: {
+          root: {
+            "& div.MuiPaper-root": {
+              background: "#000",
+              color: "#ffff",
+              borderRadius: "0px 0px 10px 5px",
+              boxShadow: "0 5px 15px rgba(8,173,44,0.2 )",
+            }
+          }
+        }
+      },
+      MuiRadio: {
+        styleOverrides: {
+          root: {
+            color: "#ffff",
+          }
+        }
       },
       MuiDivider: {
         styleOverrides: {

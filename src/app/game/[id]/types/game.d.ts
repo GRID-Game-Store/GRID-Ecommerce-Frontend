@@ -1,3 +1,5 @@
+import React from "react";
+import { FullInfoResponse } from "@/app/types/types"
 export interface TabPanelProps {
     children?: React.ReactNode;
     index: number;
@@ -12,3 +14,7 @@ export interface ISysReqItemsProps {
     sysReq : string ,
     type : string
 }
+
+export interface IInfoProps {
+    fullInfo:  FullInfoResponse
+ }

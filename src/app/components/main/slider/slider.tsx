@@ -1,7 +1,6 @@
 "use client";
 import Box from "@mui/material/Box";
-import {
-  useEffect,
+import React, {
   useState,
 } from "react";
 import {

@@ -2,6 +2,7 @@
 const nextConfig = {
     output: 'standalone',
     images: { domains: ['cdn.cloudflare.steamstatic.com']}, 
+    reactStrictMode: false,
     typescript: {
         // !! WARN !!
         // Dangerously allow production builds to successfully complete even if

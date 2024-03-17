@@ -3,7 +3,7 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { Box, Button, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
-
+import React from "react";
 interface IAvatarProps {
   name: string;
 }
@@ -48,7 +48,7 @@ const Avatar: React.FC<IAvatarProps> = ({ name }) => {
           keycloakSessionLogOut().then(() => signOut({ callbackUrl: "/" }));
         }}
       >
-        Log out
+        Logout
       </Button>
     </Box>
   );

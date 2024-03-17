@@ -34,3 +34,36 @@ export async function POST(req: NextRequest) {
   }
   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 }
+
+export async function DELETE(req: NextRequest) {
+  const { searchParams } = new URL(req.url)
+  const id = searchParams.get('id')
+  const session = await getServerSession(authOptions);
+  if (session) {
+    const url = `${process.env.URL}cart/delete/${id}`;
+    console.log(url);
+    
+    let accessToken = await getAccessToken();
+    
+   
+    const resp = await fetch(url, {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+      method: "DELETE",
+    });
+    
+    
+    
+    if (resp.ok) {
+      const data = await resp.json();
+      return NextResponse.json({ data }, { status: resp.status });
+    }
+
+    return NextResponse.json(
+      { error: await resp.text() },
+      { status: resp.status }
+    );
+  }
+  return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+}

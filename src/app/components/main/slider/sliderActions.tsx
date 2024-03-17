@@ -18,10 +18,10 @@ import { changeCurrentSlide } from './sliderNavigation';
 import {
   IButtonsNavigate,
   IDescriptionProps,
-  IPricingProps,
   ITitleProps,
   TSlierItemsProps,
 } from './types/slider.d';
+import { getPrice } from '../../shared/Item/variants/item';
 
 const Title: React.FC<ITitleProps> = ({ title }) => {
   const matches = useMediaQuery('(min-width:1200px)');
@@ -53,25 +53,10 @@ const Description: React.FC<IDescriptionProps> = ({ description }) => {
   );
 };
 
-const Pricing: React.FC<IPricingProps> = ({ prise }) => {
-  //! move out
-  const price = prise ? prise + "" : "free"
-  return (
-    <Container
-      sx={{
-        padding: "5.4px",
-        background: "#08AD2C",
-        borderRadius: "5px",
-        width: "max-content",
-      }}
-    >
-      <Typography fontSize={"21px"}>{price}</Typography>
-    </Container>
-  );
-};
+
 
 const ButtonBuy = ({price}: {price: number | undefined}) => {
-  const priceOrFree = price && price ? price + "" : "free"
+  const priceOrFree = getPrice(price)
   return (
     <Button size="large" sx={{ minWidth: "280px", marginRight: "4px" }}>
       {priceOrFree}

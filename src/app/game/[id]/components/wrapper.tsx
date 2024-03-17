@@ -11,7 +11,7 @@ import { SysReq } from './sysReq';
 import getQueryClient from '@/app/reactQuery/get-query-client';
 import { dehydrate } from '@tanstack/react-query';
 import Hydrate from '@/app/reactQuery/Hydrate';
-
+import React from 'react';
 interface IWrapperGamePageProps {
     fullInfo : FullInfoResponse
 } 
@@ -21,6 +21,7 @@ const WrapperGamePage : React.FC<IWrapperGamePageProps> = ({fullInfo}) => {
     const flexDirection = !matches ? "column" : "row"
     const queryClient = getQueryClient();
     const dehydratedState = dehydrate(queryClient);
+
     return <>
             <Box display={"flex"} flexDirection={flexDirection} justifyContent={"center"} alignItems={alignItems}>
                 <Gallery gameMedia={fullInfo.gameMedia}/>

@@ -2,6 +2,7 @@ import { MetaData } from '@/app/components/main/types/Response';
 import { FullInfoResponse } from '@/app/types/types';
 
 import { RandomResponse } from '../../../../types/types';
+import React from 'react';
 
 export interface IItemsProps {
   game: FullInfoResponse | RandomResponse[0] ;
@@ -9,6 +10,8 @@ export interface IItemsProps {
   width?: string 
   setActiveHover?: () => void
   isCart?: boolean
+  cartId?: number
+  ref?: any
 }
 
 
@@ -47,6 +50,8 @@ export interface IItem{
     game : RandomResponse[0]
     setActiveHover?: () => void
     isCart ?: boolean
+    cartId ?: number
+    ref?: any
 
 }
 
@@ -55,9 +60,10 @@ export interface IItemLargePreview {
   width?: string
 
 }
+
 export interface IButtonBuyProps{
   href: string;
-  price: string | number;
+  price: React.JSX.Element | "free";
 }
 
 export type THover = 0 | 1 
