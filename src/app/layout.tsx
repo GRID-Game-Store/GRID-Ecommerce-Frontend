@@ -1,14 +1,14 @@
-import './globals.css';
+import "./globals.css";
 
-import type { Metadata } from 'next';
-import { headers } from 'next/headers';
-import parser from 'ua-parser-js';
-
-import { Footer } from './components/footer/footer';
-import { Header } from './components/header';
-import { Providers } from './reactQuery/providers';
-import ThemeRegistry from './theme/ThemeRegistry';
-import SessionProviderWrapper from './utils/sessionProviderWrapper';
+import type { Metadata } from "next";
+import { headers } from "next/headers";
+import parser from "ua-parser-js";
+import { Footer } from "./components/footer/footer";
+import { Header } from "./components/header";
+import { Providers } from "./reactQuery/providers";
+import ThemeRegistry from "./theme/ThemeRegistry";
+import SessionProviderWrapper from "./utils/sessionProviderWrapper";
+import React from "react";
 
 export const metadata: Metadata = {
   title: "GRID",
@@ -21,24 +21,22 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const headersList = headers()
-  const referer = headersList.get('user-agent')
-  const parsed = parser(referer?.toString()).device.type || 'desktop'
-  console.log(parsed);
-  
+  const headersList = headers();
+  const referer = headersList.get("user-agent");
+  const parsed = parser(referer?.toString()).device.type || "desktop";
+
   return (
-    <html lang="en"> 
+    <html lang="en">
       <body suppressHydrationWarning={true}>
         <ThemeRegistry deviceType={parsed}>
-        <Providers>
-        <SessionProviderWrapper>
-          <Header />
-          {children}
-          <Footer />
-        </SessionProviderWrapper>
-        </Providers>
+          <Providers>
+            <SessionProviderWrapper>
+              <Header />
+              {children}
+              <Footer />
+            </SessionProviderWrapper>
+          </Providers>
         </ThemeRegistry>
-        
       </body>
     </html>
   );

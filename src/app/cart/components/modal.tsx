@@ -44,7 +44,6 @@ interface ITransitionsModalProps {
   totalCost?: number;
 }
 
-
 const Title = ({ title }: { title: string }) => {
   return (
     <Typography
@@ -103,23 +102,32 @@ const TransitionsModal: React.FC<ITransitionsModalProps> = ({
   setOpen,
   totalCost,
 }) => {
-  
   const [paymentMethod, setPaymentMethod] = useState("Stripe");
   const [isPaymentWithBalance, setIsPaymentWithBalance] = useState(false);
   const isBalanceChecked = paymentMethod === "Balance";
   const balanceAction = isPaymentWithBalance
     ? "PAYMENT_WITH_BALANCE"
     : "NO_ACTION";
-  const {data, isSuccess, isError, isPending, mutate} = useGameBuyQuery(paymentMethod, balanceAction, "", "");
+  const { data, isSuccess, isError, isPending, mutate } = useGameBuyQuery(
+    paymentMethod,
+    balanceAction,
+    "",
+    "",
+  );
   usePaymentRedirect(isSuccess, data, paymentMethod);
   const allItemsIntoCart = allCartsIds && allCartsIds.length;
   const handleClose = () => setOpen(false);
-  const ButtonState =  BuyButtonState(isSuccess, isPending, isPending, isError, data);
+  const ButtonState = BuyButtonState(
+    isSuccess,
+    isPending,
+    isPending,
+    isError,
+    data,
+  );
   const handleCheckout = async () => {
-   mutate();
+    mutate();
   };
- 
-  
+
   return (
     <>
       <Modal

@@ -14,7 +14,7 @@ const Recommendations: React.FC<IRecommendationsProps> = ({ data, title }) => {
         {title}
       </Typography>
       <Stack direction={"row"} spacing={"0"} sx={{ flexWrap: "wrap" }}>
-        {title == "My games"
+        {title === "My games"
           ? data.map((game: AllGamesInAccountResponse[0]) => {
               return game.game && <Items key={game.game.id} game={game.game} />;
             })

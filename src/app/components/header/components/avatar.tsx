@@ -12,7 +12,7 @@ const Avatar: React.FC<IAvatarProps> = ({ name }) => {
   const { push } = useRouter();
   async function keycloakSessionLogOut() {
     try {
-      await fetch(`/api/auth/logout`, { method: "GET" });
+      await fetch("/api/auth/logout", { method: "GET" });
     } catch (err) {
       console.error(err);
     }
@@ -25,13 +25,17 @@ const Avatar: React.FC<IAvatarProps> = ({ name }) => {
       justifyContent={"center"}
       alignItems={"center"}
     >
-      <Button onClick={() => {
+      <Button
+        onClick={() => {
           push("/cart", {});
         }}
-       >
+      >
         CART
       </Button>
-      <Link href={"/profile"} style={{ color: "ffff", textDecorationColor: "#fff" }}>
+      <Link
+        href={"/profile"}
+        style={{ color: "ffff", textDecorationColor: "#fff" }}
+      >
         <Typography
           height={"max-content"}
           fontSize={"18px"}

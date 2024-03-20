@@ -1,28 +1,29 @@
+/* eslint-disable no-unused-vars */
 import { AllFiltersByNameResponse } from "@/app/types/types";
+import React from "react";
 
 export interface IFiltersProps {
-    variant: "slider" | "checkbox" | "checkboxWithoutSearch";
-    refetch: () => void;
-    tags?: AllFiltersByNameResponse;
-    name?: string;
+  variant: "slider" | "checkbox" | "checkboxWithoutSearch";
+  refetch: () => void;
+  tags?: AllFiltersByNameResponse;
+  name?: string;
 }
 
 interface ITitleFilterGroupProps {
-    name?: string;
+  name?: string;
 }
 interface IWrapperFilterGroupProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 interface ICheckboxes {
-    id: number;
-    name : string;
-    value: number;
+  id: number;
+  name: string;
+  value: number;
 }
 
-
 interface ICheckboxFilterGroupProps {
-    checkboxes: AllFiltersByNameResponse;
-    name: string;
-    refetch: () => void;
+  checkboxes: AllFiltersByNameResponse;
+  name: string;
+  refetch: () => void;
 }

@@ -36,4 +36,5 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 ## Generete Types
- `npx openapi-typescript http://localhost:8082/v3/api-docs  -o ./src/app/types/shema.d.ts`
+
+`npx openapi-typescript http://localhost:8082/v3/api-docs  -o ./src/app/types/shema.d.ts`

@@ -1,12 +1,15 @@
-import { FullInfoResponse, AllGamesInAccountResponse } from "./../../../types/types";
+import {
+  FullInfoResponse,
+  AllGamesInAccountResponse,
+} from "./../../../types/types";
 import { RandomResponse } from "../../../types/types";
-export type gameMedia = FullInfoResponse["gameMedia"]
+export type gameMedia = FullInfoResponse["gameMedia"];
 
 export interface IMainProps {
   slides: RandomResponse;
   recommendations: RandomResponse;
   byGenre: RandomResponse;
-  genreTitle: string
+  genreTitle: string;
 }
 
 export interface IMostPopularProps {
@@ -16,4 +19,3 @@ export interface IRecommendationsProps {
   title: string;
   data: RandomResponse | AllGamesInAccountResponse;
 }
-

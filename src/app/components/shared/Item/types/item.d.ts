@@ -1,19 +1,17 @@
-import { MetaData } from '@/app/components/main/types/Response';
-import { FullInfoResponse } from '@/app/types/types';
-
-import { RandomResponse } from '../../../../types/types';
-import React from 'react';
+import { MetaData } from "@/app/components/main/types/Response";
+import { FullInfoResponse } from "@/app/types/types";
+import { RandomResponse } from "../../../../types/types";
+import React from "react";
 
 export interface IItemsProps {
-  game: FullInfoResponse | RandomResponse[0] ;
+  game: FullInfoResponse | RandomResponse[0];
   variant?: "row" | "column" | "preview";
-  width?: string 
-  setActiveHover?: () => void
-  isCart?: boolean
-  cartId?: number
-  ref?: any
+  width?: string;
+  setActiveHover?: () => void;
+  isCart?: boolean;
+  cartId?: number;
+  ref?: any;
 }
-
 
 export interface ICoverItemProps {
   linkCoverImg?: string;
@@ -22,6 +20,8 @@ export interface ICoverItemProps {
   variant?: string;
   hover?: number;
   minHeight?: number;
+  labelOwnerGame?: "left" | "right";
+  isOwned?: boolean;
 }
 
 type TFontSizeForTypography = string;
@@ -34,7 +34,6 @@ export interface ITypographyItemProps {
   ml?: string;
   p?: string;
   link?: string | boolean;
-
 }
 
 export interface IListTagsOrGenresProps {
@@ -43,27 +42,31 @@ export interface IListTagsOrGenresProps {
   ml?: string;
   spacing?: number;
   mb?: string;
-  spaceBetween?: boolean
+  spaceBetween?: boolean;
 }
 
-export interface IItem{
-    game : RandomResponse[0]
-    setActiveHover?: () => void
-    isCart ?: boolean
-    cartId ?: number
-    ref?: any
+export interface IItem {
+  game: RandomResponse[0];
+  setActiveHover?: () => void;
+  isCart?: boolean;
+  cartId?: number;
+  ref?: any;
+}
 
+export interface IItemPlay {
+  game: RandomResponse[0];
+  playtime?: string;
+  purchaseDate?: string;
 }
 
 export interface IItemLargePreview {
-  game: FullInfoResponse  
-  width?: string
-
+  game: FullInfoResponse;
+  width?: string;
 }
 
-export interface IButtonBuyProps{
+export interface IButtonBuyProps {
   href: string;
   price: React.JSX.Element | "free";
 }
 
-export type THover = 0 | 1 
+export type THover = 0 | 1;

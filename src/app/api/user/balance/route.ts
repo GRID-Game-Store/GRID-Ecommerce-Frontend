@@ -1,16 +1,15 @@
-import { getServerSession } from 'next-auth';
-import { NextResponse } from 'next/server';
-
-import { authOptions } from '../auth/[...nextauth]/route';
-import { getAccessToken } from '@/app/utils/sessionTokenAccessor';
+import { getServerSession } from "next-auth";
+import { NextResponse } from "next/server";
+import { getAccessToken } from "@/app/utils/sessionTokenAccessor";
+import { authOptions } from "../../auth/[...nextauth]/route";
 
 export async function GET() {
   const session = await getServerSession(authOptions);
 
   if (session) {
-    const url = `${process.env.URL}users/profile`;
-    let accessToken = getAccessToken()
-    
+    const url = `${process.env.URL}users/balance`;
+    let accessToken = await getAccessToken();
+
     const resp = await fetch(url, {
       headers: {
         Authorization: "Bearer " + accessToken,
@@ -25,7 +24,7 @@ export async function GET() {
 
     return NextResponse.json(
       { error: await resp.text() },
-      { status: resp.status }
+      { status: resp.status },
     );
   }
   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

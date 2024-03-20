@@ -1,14 +1,15 @@
 @font-face {
-  font-family: 'Ropa Sans';
-  src: url('../../public/fonts/RopaSansSCPro-Regular.eot');
-  src: local('Ropa Sans'), local('RopaSansPro-Regular'),
-      url('../../public/fonts/RopaSansSCPro-Regular.eot') format('embedded-opentype'),
-      url('../../public/fonts/RopaSansSCPro-Regular.woff2') format('woff2'),
-      url('../../public/fonts/RopaSansSCPro-Regular.woff') format('woff'),
-      url('../../public/fonts/RopaSansSCPro-Regular.ttf') format('truetype');
+  font-family: "Ropa Sans";
+  src: url("../../public/fonts/RopaSansSCPro-Regular.eot");
+  src:
+    local("Ropa Sans"),
+    local("RopaSansPro-Regular"),
+    url("../../public/fonts/RopaSansSCPro-Regular.eot")
+      format("embedded-opentype"),
+    url("../../public/fonts/RopaSansSCPro-Regular.woff2") format("woff2"),
+    url("../../public/fonts/RopaSansSCPro-Regular.woff") format("woff"),
+    url("../../public/fonts/RopaSansSCPro-Regular.ttf") format("truetype");
 
-
-  
   font-weight: normal;
   font-style: normal;
 }
@@ -30,36 +31,26 @@ body {
   background: #000;
   color: #fff;
 }
-mark{
+mark {
   background: none;
   color: #fff;
 }
 
-
 .messageout-enter {
-
 }
 
 /* ending ENTER animation */
 .messageout-enter-active {
   opacity: 0;
-
 }
 .messageout-enter-active:nth-child(2) {
-  
-} 
-
-
+}
 
 /* starting EXIT animation */
 .messageout-exit {
   position: absolute;
   top: 23px;
 }
-
-
-
-
 
 /* ending EXIT animation */
 .messageout-exit-active {
@@ -82,7 +73,6 @@ mark{
 .item-exit {
   opacity: 1;
   position: absolute;
-  
 }
 .item-exit-active {
   opacity: 0;
@@ -97,12 +87,10 @@ mark{
 .search-enter {
   position: absolute;
   opacity: 0;
-  
 }
 .search-enter-active {
   opacity: 1;
   transition: opacity 250ms ease-in;
-
 }
 .search-exit {
   opacity: 1;
@@ -111,24 +99,18 @@ mark{
 .search-exit-active {
   opacity: 0;
   transition: opacity 250ms ease-in;
- 
-  
 }
 
-
-
-
-
-button, input[type="submit"], input[type="reset"] {
-	background: none;
-	color: inherit;
-	border: none;
-	padding: 0;
-	font: inherit;
-	cursor: pointer;
-	
+button,
+input[type="submit"],
+input[type="reset"] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
 }
-
 
 .changeSlide-enter {
   opacity: 0;
@@ -137,34 +119,30 @@ button, input[type="submit"], input[type="reset"] {
   -moz-transition: opacity 300ms ease-in;
   -ms-transition: opacity 300ms ease-in;
   -o-transition: opacity 300ms ease-in;
-} 
+}
 .changeSlide-enter-active {
   opacity: 0;
   transition: opacity 300ms ease-in;
-  
-} 
+}
 .changeSlide-exit {
   opacity: 1;
   transition: opacity 300ms ease-in;
-  
-} 
+}
 
 .changeSlide-exit-active {
   position: absolute;
   opacity: 0;
   transition: opacity 300ms ease-in;
-  
-} 
-
+}
 
 .changeSlide-exit-active:nth-child(2) {
   opacity: 0;
   position: absolute;
   top: 0px;
-} 
+}
 * {
   scrollbar-width: thin;
-  scrollbar-color: #08AD2C #202020;
+  scrollbar-color: #08ad2c #202020;
 }
 *::-webkit-scrollbar {
   width: 20px;
@@ -179,4 +157,3 @@ button, input[type="submit"], input[type="reset"] {
   border-radius: 100px;
   box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
 }
-

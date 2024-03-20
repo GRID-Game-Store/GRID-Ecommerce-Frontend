@@ -31,7 +31,7 @@ const Balance = ({ balance }: { balance?: number }) => {
         sx={{ width: "140px" }}
       >
         {balance}
-        <UAH/>
+        <UAH />
       </Button>
       <Menu
         id="basic-menu"
@@ -47,7 +47,12 @@ const Balance = ({ balance }: { balance?: number }) => {
         <MenuItem onClick={handleClose}>Transactions</MenuItem>
         <MenuItem onClick={handleClose}>Logout</MenuItem>
       </Menu>
-      <TransitionsModal open={open} setOpen={setOpen} totalCost={10} isBalanceRecharge={true} />
+      <TransitionsModal
+        open={open}
+        setOpen={setOpen}
+        totalCost={10}
+        isBalanceRecharge={true}
+      />
     </div>
   );
 };

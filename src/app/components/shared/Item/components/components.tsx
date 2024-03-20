@@ -1,23 +1,17 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useState,
-} from 'react';
+import React, { Dispatch, SetStateAction, useState } from "react";
 
-import Link from 'next/link';
-import {
-  CSSTransition,
-  TransitionGroup,
-} from 'react-transition-group';
+import Link from "next/link";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import {
+  Badge,
   Box,
   Button,
   Chip,
   Stack,
   Tooltip,
   Typography,
-} from '@mui/material';
+} from "@mui/material";
 
 import {
   IButtonBuyProps,
@@ -25,7 +19,7 @@ import {
   IListTagsOrGenresProps,
   ITypographyItemProps,
   THover,
-} from '../types/item';
+} from "../types/item";
 
 //! TODO FIX WARN WITH REF
 export const CoverItem: React.FC<ICoverItemProps> = ({
@@ -34,25 +28,34 @@ export const CoverItem: React.FC<ICoverItemProps> = ({
   hover,
   linkCoverVideo,
   minHeight = "70px",
+  labelOwnerGame = "left",
+  isOwned,
 }) => {
   const [hoverOnTheiler, setHoverOnTheiler] = useState(false);
   const customHeight = minHeight !== "70px" && minHeight;
+  const badgeContent = isOwned ? "In library" : 0;
   if (linkCoverImg || linkCoverVideo) {
     return (
       <>
         {hover === 0 || hover === undefined ? (
-          <img
-            style={{
-              borderRadius: "5px",
-              minHeight: minHeight,
-              cursor: "pointer",
-              objectFit: "cover",
-            }}
-            width={width}
-            height={customHeight.toString()}
-            src={linkCoverImg}
-            alt="cover item"
-          />
+          <Badge
+            color="primary"
+            badgeContent={badgeContent}
+            anchorOrigin={{ horizontal: labelOwnerGame, vertical: "top" }}
+          >
+            <img
+              style={{
+                borderRadius: "5px",
+                minHeight: minHeight,
+                cursor: "pointer",
+                objectFit: "cover",
+              }}
+              width={width}
+              height={customHeight.toString()}
+              src={linkCoverImg}
+              alt="cover item"
+            />
+          </Badge>
         ) : (
           <video
             style={{ cursor: "pointer" }}
@@ -70,7 +73,7 @@ export const CoverItem: React.FC<ICoverItemProps> = ({
       </>
     );
   } else {
-    return null
+    return null;
   }
 };
 
@@ -137,7 +140,7 @@ export const ListTagsOrGenres: React.FC<IListTagsOrGenresProps> = ({
   return (
     <Stack
       sx={
-        spacing == 0
+        spacing === 0
           ? { flexWrap: "wrap", maxWidth: "350px" }
           : { justifyContent: spaceBetween ? "space-between" : null }
       }
@@ -156,8 +159,8 @@ export const ListTagsOrGenres: React.FC<IListTagsOrGenresProps> = ({
                   label={el.name}
                   sx={{
                     fontSize: "12px",
-                    marginTop: spacing == 0 ? "7px" : null,
-                    marginLeft: spacing == 0 ? "5px" : null,
+                    marginTop: spacing === 0 ? "7px" : null,
+                    marginLeft: spacing === 0 ? "5px" : null,
                     maxWidth: "70px",
                   }}
                 />
@@ -165,13 +168,11 @@ export const ListTagsOrGenres: React.FC<IListTagsOrGenresProps> = ({
             </div>
           );
         })}
-        
     </Stack>
   );
 };
 
 export const ButtonBuy: React.FC<IButtonBuyProps> = ({ price, href }) => {
-  
   return (
     <Link href={href}>
       <Button

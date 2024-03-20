@@ -1,6 +1,6 @@
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../[...nextauth]/route';
-import { getIdToken } from '@/app/utils/sessionTokenAccessor';
+import { getServerSession } from "next-auth";
+import { authOptions } from "../[...nextauth]/route";
+import { getIdToken } from "@/app/utils/sessionTokenAccessor";
 
 export async function GET() {
   const session = await getServerSession(authOptions);
@@ -9,12 +9,11 @@ export async function GET() {
     const idToken = await getIdToken();
     let url = `${process.env.END_SESSION_URL}?id_token_hint=${idToken}&post_logout_redirect_uri=${encodeURIComponent(process.env.NEXTAUTH_URL!)}`;
     try {
-      const resp = await fetch(url, { method: "GET" });
-      console.log(resp, url);
+      await fetch(url, { method: "GET" });
     } catch (err) {
       console.error(err);
-      return new Response(null,{ status: 500 });
+      return new Response(null, { status: 500 });
     }
   }
-  return new Response(null,{ status: 200 });
+  return new Response(null, { status: 200 });
 }

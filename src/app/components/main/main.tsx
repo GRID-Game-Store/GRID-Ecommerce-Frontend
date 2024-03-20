@@ -1,15 +1,15 @@
-import React, { Suspense } from 'react';
+import React, { Suspense } from "react";
 
-import Loading from '@/app/loading';
-import getQueryClient from '@/app/reactQuery/get-query-client';
-import { Container } from '@mui/material';
-import { dehydrate } from '@tanstack/react-query';
+import Loading from "@/app/loading";
+import getQueryClient from "@/app/reactQuery/get-query-client";
+import { Container } from "@mui/material";
+import { dehydrate } from "@tanstack/react-query";
 
-import Hydrate from '../../reactQuery/Hydrate';
-import { Recommendations } from './recommendations/recommendations';
-import { RecommendationsModule } from './recommendations/recommendationsModule';
-import { MostPopular } from './slider/slider';
-import { IMainProps } from './types/Response.d';
+import Hydrate from "../../reactQuery/Hydrate";
+import { Recommendations } from "./recommendations/recommendations";
+import { RecommendationsModule } from "./recommendations/recommendationsModule";
+import { MostPopular } from "./slider/slider";
+import { IMainProps } from "./types/Response.d";
 
 const Main: React.FC<IMainProps> = ({
   slides,

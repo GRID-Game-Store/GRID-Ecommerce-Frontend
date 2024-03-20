@@ -1,23 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
-import {
-  signOut,
-  useSession,
-} from 'next-auth/react';
+import { signOut, useSession } from "next-auth/react";
 
-import { AuthenticationActions } from '../authenticationActions';
-import Avatar from '../avatar';
+import { AuthenticationActions } from "../authenticationActions";
+import Avatar from "../avatar";
 
 const Authentication = () => {
   const { data: session, status } = useSession();
-  
-  // const { data, isSuccess, isLoading, isFetched, isError } = useQuery({
-  //     queryKey: ["auth"],
-  //     queryFn: async () => await fetch(`/api/user`, { method: "GET" })
-  //   });
   useEffect(() => {
     if (
-      status != "loading" &&
+      status !== "loading" &&
       session &&
       session?.error === "RefreshAccessTokenError"
     ) {
@@ -25,10 +17,14 @@ const Authentication = () => {
     }
   }, [session, status]);
 
- 
-
   return (
-    <div>{session ? <Avatar name={session.user.name} /> : <AuthenticationActions />}</div>
+    <div>
+      {session ? (
+        <Avatar name={session.user.name} />
+      ) : (
+        <AuthenticationActions />
+      )}
+    </div>
   );
 };
 

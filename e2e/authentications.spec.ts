@@ -1,19 +1,21 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-const NEXT_URL="http://localhost:3000"
+const NEXT_URL = "http://localhost:3000";
 
-test('logging in GRID', async ({ page }) => {
+test("logging in GRID", async ({ page }) => {
   await page.goto(NEXT_URL);
-  const getStarted = page.getByRole('button', { name: 'Login' });
+  const getStarted = page.getByRole("button", { name: "Login" });
   await getStarted.click();
   await page.waitForURL(/auth.grid.domain-for-tests.com/);
-  await page.getByRole('textbox', { name: 'Username' }).fill('Kyryll');
-  await page.fill('#password', '12345');
-  await page.getByRole('button', { name: 'Sign in' }).click();
+  await page.getByRole("textbox", { name: "Username" }).fill("Kyryll");
+  await page.fill("#password", "12345");
+  await page.getByRole("button", { name: "Sign in" }).click();
   await page.waitForURL(NEXT_URL);
-  await expect(page.locator('.MuiBox-root .mui-yyeo6n > a')).toHaveText("Serebriakov Kyryl");
-  const cart = await page.getByRole('button', { name: 'CART' }).isEnabled();
-  const logout = await page.getByRole('button', { name: 'LOGOUT' }).isEnabled();
+  await expect(page.locator(".MuiBox-root .mui-yyeo6n > a")).toHaveText(
+    "Serebriakov Kyryl",
+  );
+  const cart = await page.getByRole("button", { name: "CART" }).isEnabled();
+  const logout = await page.getByRole("button", { name: "LOGOUT" }).isEnabled();
   expect(cart).toBe(true);
   expect(logout).toBe(true);
 });
@@ -40,17 +42,19 @@ test('logging in GRID', async ({ page }) => {
 //   await page.waitForURL(NEXT_URL);
 // });
 
-test('logging out in GRID', async ({ page }) => {
+test("logging out in GRID", async ({ page }) => {
   await page.goto(NEXT_URL);
-  const getStarted = page.getByRole('button', { name: 'Login' });
+  const getStarted = page.getByRole("button", { name: "Login" });
   await getStarted.click();
   await page.waitForURL(/auth.grid.domain-for-tests.com/);
-  await page.getByRole('textbox', { name: 'Username' }).fill('Kyryll');
-  await page.fill('#password', '12345');
-  await page.getByRole('button', { name: 'Sign in' }).click();
+  await page.getByRole("textbox", { name: "Username" }).fill("Kyryll");
+  await page.fill("#password", "12345");
+  await page.getByRole("button", { name: "Sign in" }).click();
   await page.waitForURL(NEXT_URL);
-  await expect(page.locator('.MuiBox-root .mui-yyeo6n > a')).toHaveText("Serebriakov Kyryl");
-  await page.getByRole('button', { name: 'LOGOUT' }).click();
+  await expect(page.locator(".MuiBox-root .mui-yyeo6n > a")).toHaveText(
+    "Serebriakov Kyryl",
+  );
+  await page.getByRole("button", { name: "LOGOUT" }).click();
   await getStarted.click();
   await page.waitForURL(/auth.grid.domain-for-tests.com/);
   await expect(page).toHaveTitle("Sign in to GRID");

@@ -1,7 +1,8 @@
-import NextAuth from 'next-auth';
-import { DefaultJWT } from 'next-auth/jwt';
+/* eslint-disable no-unused-vars */
+import NextAuth from "next-auth";
+import { DefaultJWT } from "next-auth/jwt";
 
-declare module 'next-auth' {
+declare module "next-auth" {
   /**
    * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
    */
@@ -10,11 +11,10 @@ declare module 'next-auth' {
     id_token?: number | string;
     roles?: any;
     error?: any;
-
   }
 }
 
-declare module 'next-auth/jwt' {
+declare module "next-auth/jwt" {
   /**
    * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
    */
@@ -23,8 +23,6 @@ declare module 'next-auth/jwt' {
       realm_access: {
         roles: any[];
       };
-    }
-
-
+    };
   }
 }

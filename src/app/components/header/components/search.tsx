@@ -5,10 +5,14 @@ import { getGamesByTitle } from "../api/search";
 import React, { useState } from "react";
 import { useDebounce } from "use-debounce";
 
-import { Box, Skeleton, SxProps, Typography, useMediaQuery } from "@mui/material";
 import {
-  ItemSmallColumnForSearch,
-} from "../../shared/Item/variants/item";
+  Box,
+  Skeleton,
+  SxProps,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+import { ItemSmallColumnForSearch } from "../../shared/Item/variants/item";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { RandomResponse } from "@/app/types/types";
 
@@ -20,7 +24,6 @@ const SkeletonItem = () => {
       display={"flex"}
       flexDirection={"row"}
       pb={"25px"}
-      
     >
       <Skeleton
         variant="rectangular"
@@ -52,25 +55,34 @@ const SkeletonItem = () => {
   );
 };
 const SkeletonWrapper = () => {
-  return <>
-  <SkeletonItem />
-  <SkeletonItem />
-  <SkeletonItem />
-</>
-}
+  return (
+    <>
+      <SkeletonItem />
+      <SkeletonItem />
+      <SkeletonItem />
+    </>
+  );
+};
 const NotFound = () => {
-  return <Box height={266} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-    <Typography fontSize="20px" mt={"-20px"} ml={"0px"} > Not found :(</Typography>
-  </Box>
-}
-
-
-
+  return (
+    <Box
+      height={266}
+      display={"flex"}
+      justifyContent={"center"}
+      alignItems={"center"}
+    >
+      <Typography fontSize="20px" mt={"-20px"} ml={"0px"}>
+        {" "}
+        Not found :(
+      </Typography>
+    </Box>
+  );
+};
 
 const Search: React.FC = () => {
   const [value, setValue] = useState("");
   const [isFocus, setFocus] = useState(0);
-  const matches = useMediaQuery('(min-width:1200px)');
+  const matches = useMediaQuery("(min-width:1200px)");
   const debouncedFilter = useDebounce<string>(value, 500);
   const { data, isSuccess, isLoading, isFetched } = useQuery({
     queryKey: ["game", debouncedFilter],
@@ -79,18 +91,18 @@ const Search: React.FC = () => {
     refetchOnWindowFocus: false,
     staleTime: 120000,
   });
-  const items = data && data.map((game: RandomResponse[0]) => {
-    return (
-      <div key={game.id}>
-        <ItemSmallColumnForSearch game={game} />
-      </div>
-    );
-  })
-
-
+  const items =
+    data &&
+    data.map((game: RandomResponse[0]) => {
+      return (
+        <div key={game.id}>
+          <ItemSmallColumnForSearch game={game} />
+        </div>
+      );
+    });
 
   return (
-    <Box  onMouseEnter={() => setFocus(1)} onMouseLeave={() => setFocus(0)} >
+    <Box onMouseEnter={() => setFocus(1)} onMouseLeave={() => setFocus(0)}>
       <TextField
         sx={{ width: "300px" }}
         placeholder="Search"
@@ -100,27 +112,29 @@ const Search: React.FC = () => {
         value={value}
         onChange={(e) => {
           setValue(e.target.value.replaceAll("#", ""));
-          value  ?  setFocus(1) : setFocus(0)
+          value ? setFocus(1) : setFocus(0);
         }}
       />
       <TransitionGroup>
-          <CSSTransition key={isFocus} timeout={250} classNames="search">
-      {isFocus ? (
-        <Box
-          mt={"12px"}
-          width={400}
-          pt={"12px"}
-          pb={"5px"}
-          sx={BoxWrapper}
-          position={"absolute"}
-          right={!matches ? "4vw": undefined}
-        >
-          {isSuccess && items}
-          {isLoading && !isFetched &&  <SkeletonWrapper/>}
-          {data && !data[0] && <NotFound/>}
-        </Box>
-      ) : <></>}
-       </CSSTransition>
+        <CSSTransition key={isFocus} timeout={250} classNames="search">
+          {isFocus ? (
+            <Box
+              mt={"12px"}
+              width={400}
+              pt={"12px"}
+              pb={"5px"}
+              sx={BoxWrapper}
+              position={"absolute"}
+              right={!matches ? "4vw" : undefined}
+            >
+              {isSuccess && items}
+              {isLoading && !isFetched && <SkeletonWrapper />}
+              {data && !data[0] && <NotFound />}
+            </Box>
+          ) : (
+            <></>
+          )}
+        </CSSTransition>
       </TransitionGroup>
     </Box>
   );
@@ -133,5 +147,4 @@ const BoxWrapper: SxProps = {
   zIndex: "2",
   borderRadius: "0px 0px 10px 5px",
   boxShadow: "0 5px 15px rgba(8,173,44,0.2 )",
-  
-}
+};

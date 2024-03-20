@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
+import {NextResponse } from "next/server";
 
 import { getAccessToken } from "@/app/utils/sessionTokenAccessor";
 import { authOptions } from "../../auth/[...nextauth]/route";
@@ -24,7 +24,7 @@ export async function DELETE() {
 
     return NextResponse.json(
       { error: await resp.text() },
-      { status: resp.status }
+      { status: resp.status },
     );
   }
   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

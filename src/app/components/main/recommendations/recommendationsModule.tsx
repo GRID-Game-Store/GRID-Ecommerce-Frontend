@@ -1,31 +1,18 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { ErrorUILayer } from "@/app/error";
-import {
-  FullInfoResponse,
-  RandomResponse,
-} from "@/app/types/types";
-import {
-  Box,
-  Container,
-  Stack,
-  Tab,
-  Tabs,
-  useMediaQuery,
-} from "@mui/material";
+import { FullInfoResponse, RandomResponse } from "@/app/types/types";
+import { Box, Container, Stack, Tab, Tabs, useMediaQuery } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 
 import { Filters } from "../../shared/Filters/filters";
 import { Items } from "../../shared/Item/items";
+import { getGameFullInfo, getGamesOfferByTab } from "./api/getGames";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
-  getGameFullInfo,
-  getGamesOfferByTab,
-} from "./api/getGames";
-import {
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
-import { useGetGamesBySortingQuery, useInfiniteScrollQuery } from "./api/query/query";
+  useGetGamesBySortingQuery,
+  useInfiniteScrollQuery,
+} from "./api/query/query";
 
 interface IListGames {
   isCart?: boolean;
@@ -60,7 +47,6 @@ export const ListGames: React.FC<IListGames> = ({
       pt={"20px"}
       borderRadius={"5px"}
       sx={{ cursor: "pointer", overflowY: overflowY }}
-    
     >
       <Stack direction={"column"} spacing={"0"}>
         {data &&
@@ -100,8 +86,6 @@ export const ListGames: React.FC<IListGames> = ({
   );
 };
 
-
-
 const tabs = [
   {
     forReq: "release date",
@@ -121,12 +105,13 @@ interface IRecommendationsProps {
   data: RandomResponse;
 }
 
+
 const RecommendationsModule: React.FC<IRecommendationsProps> = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [activeHover, setActiveHover] = useState(1);
   const matches = useMediaQuery("(min-width:1200px)");
   const marginLeft = !matches ? "0px" : "100px";
-  
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
   };
@@ -161,7 +146,7 @@ const RecommendationsModule: React.FC<IRecommendationsProps> = () => {
         <Tab disableRipple sx={{ fontSize: "20px" }} label={tabs[2].forUI} />
       </Tabs>
       <Container disableGutters sx={{ display: "flex" }}>
-        <ListGames data={data} setActiveHover={setActiveHover}  />
+        <ListGames data={data} setActiveHover={setActiveHover} />
         {isfullInfoSuccess && matches && (
           <Items variant="preview" game={fullInfo} />
         )}
@@ -173,21 +158,27 @@ const RecommendationsModule: React.FC<IRecommendationsProps> = () => {
 const RecommendationsModuleForFilterAndSorting: React.FC = () => {
   const searchParams = useSearchParams();
   const { data: AllTags } = useGetGamesBySortingQuery("tags");
-  const { data: AllDevelopers  } = useGetGamesBySortingQuery("developers");
-  const { data: AllPlatforms  } = useGetGamesBySortingQuery("platforms");
-  const { data: AllGenres  } = useGetGamesBySortingQuery("genres");
-  const { data, refetch, ref}  = useInfiniteScrollQuery(searchParams)
-
+  const { data: AllDevelopers } = useGetGamesBySortingQuery("developers");
+  const { data: AllPlatforms } = useGetGamesBySortingQuery("platforms");
+  const { data: AllGenres } = useGetGamesBySortingQuery("genres");
+  const { data, refetch, ref } = useInfiniteScrollQuery(searchParams);
   const Lists = data?.pages.map((page, index) => {
     return (
-      <Box sx={{ display: "flex", flexDirection: "column" }} key={index}  >
-        <ListGames data={page.games} width="900px" height="auto"   />
+      <Box sx={{ display: "flex", flexDirection: "column" }} key={index}>
+        <ListGames data={page.games} width="900px" height="auto" />
       </Box>
     );
   });
 
   return (
-    <Container sx={{ marginTop: "20px", width: "1000px", flexDirection: "row", display: "flex", }}>
+    <Container
+      sx={{
+        marginTop: "20px",
+        width: "1000px",
+        flexDirection: "row",
+        display: "flex",
+      }}
+    >
       <Box sx={{ display: "flex", width: "1000px", flexDirection: "column" }}>
         {Lists}
         <div ref={ref}></div>
@@ -212,7 +203,7 @@ const RecommendationsModuleForFilterAndSorting: React.FC = () => {
           tags={AllDevelopers?.slice(0, 5)}
           name="developers"
         />
-        
+
         <Filters
           variant="checkbox"
           refetch={refetch}
@@ -223,5 +214,4 @@ const RecommendationsModuleForFilterAndSorting: React.FC = () => {
     </Container>
   );
 };
-
 export { RecommendationsModule, RecommendationsModuleForFilterAndSorting };

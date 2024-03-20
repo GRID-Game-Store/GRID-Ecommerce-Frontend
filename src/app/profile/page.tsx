@@ -1,8 +1,13 @@
-import { Box, Typography } from "@mui/material";
-import { AllGamesInAccountResponse, FullInfoUserResponse } from "../types/types";
+import { Box, Stack, Typography } from "@mui/material";
+import {
+  AllGamesInAccountResponse,
+  FullInfoUserResponse,
+} from "../types/types";
 import { getAccessToken } from "../utils/sessionTokenAccessor";
 import { Balance } from "./components/balance";
 import { Recommendations } from "../components/main/recommendations/recommendations";
+import { ItemSmallRowForPlay } from "../components/shared/Item/variants/item";
+import { Items } from "../components/shared/Item/items";
 
 async function getAllInfoAboutUser(type: string) {
   const url = `${process.env.URl}users/${type}`;
@@ -14,7 +19,7 @@ async function getAllInfoAboutUser(type: string) {
       "Content-Type": "application/json",
       Authorization: "Bearer " + access_token,
     },
-    cache: 'no-store'
+    cache: "no-store",
   });
 
   if (resp.ok) {
@@ -27,12 +32,18 @@ async function getAllInfoAboutUser(type: string) {
 
 export default async function Home() {
   const fullInfo: FullInfoUserResponse = await getAllInfoAboutUser("profile");
-  const allGamesInAccount: AllGamesInAccountResponse = await getAllInfoAboutUser("games");
-  console.log(allGamesInAccount);
-  
+  const allGamesInAccount: AllGamesInAccountResponse =
+  await getAllInfoAboutUser("games");
+
   return (
     <main
-      style={{display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center", width: "100vw"}}
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "100vw",
+      }}
     >
       <Box
         mt={"130px"}
@@ -51,10 +62,18 @@ export default async function Home() {
             {fullInfo.email}
           </Typography>
         </Box>
-        <Balance balance={fullInfo.balance}/>
+        <Balance balance={fullInfo.balance} />
       </Box>
-      <Box>
-      <Recommendations title={"My games"} data={allGamesInAccount} />
+      <Box display={"flex"} justifyContent={"center"} mt={"20px"} alignItems={"center"} width={"70%"}>
+        <Stack direction={"row"} sx={{ flexWrap: "wrap" }}> 
+            {allGamesInAccount.map((game) => {
+              return game.game && game.playtime && 
+              <div key={game.game.id}>
+                  <ItemSmallRowForPlay  game={game.game}  purchaseDate={game.purchaseDate} playtime={game.playtime.toString()}/>
+              </div>
+            })}
+        </Stack>
+        
       </Box>
     </main>
   );

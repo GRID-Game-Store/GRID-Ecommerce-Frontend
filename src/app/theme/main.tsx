@@ -1,6 +1,6 @@
-import mediaQuery from 'css-mediaquery';
+import mediaQuery from "css-mediaquery";
 
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
 // const ssrMatchMedia = (deviceType: string) => (query: string) => ({
 //   matches: mediaQuery.match(query, {
@@ -55,6 +55,21 @@ export const mainTheme = (deviceType: string) =>
           },
         },
       },
+      MuiFormLabel: {
+        styleOverrides: {
+          root: {
+            color: "#fff",
+          },
+        }
+      },
+      MuiBadge: {
+        styleOverrides: {
+          badge: {
+            color: "#ffff",
+            fontSize: "10px",
+          },
+        },
+      },
       MuiButton: {
         styleOverrides: {
           root: {
@@ -64,14 +79,12 @@ export const mainTheme = (deviceType: string) =>
             "&:hover": {
               background: "#08AD2C",
             },
+            "&.Mui-disabled": {
+              background: "none",
+              color: "#ffff",
+              border: "#08AD2C 1px solid",
+            },
           },
-          // error:{
-          //   width:"100px",
-          //   color: "#ffff",
-          //   background:"#CD5644",
-          //   "&:hover":{
-          //     background:"#CD5644",
-          // }
         },
         variants: [
           {
@@ -124,7 +137,6 @@ export const mainTheme = (deviceType: string) =>
             "&.Mui-disabled span": {
               color: "#ffffff38",
             },
-            
           },
         },
       },
@@ -135,8 +147,8 @@ export const mainTheme = (deviceType: string) =>
             "&.Mui-disabled span": {
               color: "#ffffff5e !important",
             },
-          }
-        }
+          },
+        },
       },
       MuiMenu: {
         styleOverrides: {
@@ -146,16 +158,16 @@ export const mainTheme = (deviceType: string) =>
               color: "#ffff",
               borderRadius: "0px 0px 10px 5px",
               boxShadow: "0 5px 15px rgba(8,173,44,0.2 )",
-            }
-          }
-        }
+            },
+          },
+        },
       },
       MuiRadio: {
         styleOverrides: {
           root: {
             color: "#ffff",
-          }
-        }
+          },
+        },
       },
       MuiDivider: {
         styleOverrides: {

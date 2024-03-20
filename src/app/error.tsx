@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  Box,
-  Button,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Typography } from "@mui/material";
 
 export const ErrorUILayer = ({
   message,

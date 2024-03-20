@@ -1,10 +1,12 @@
 import Stack from "@mui/material/Stack";
 import { Typography } from "@mui/material";
-import { NAVIGATION_POINT, SPACING } from "../../../../constants/header";
+import { NAVIGATION_POINT } from "../../../../constants/header";
+import React from "react";
+
 interface INavigationProps {
-  direction?: "column" | "row"; 
+  direction?: "column" | "row";
 }
-const Navigation : React.FC<INavigationProps> = ({direction = "row"}) => {
+const Navigation: React.FC<INavigationProps> = ({ direction = "row" }) => {
   const navigationPoints = NAVIGATION_POINT.map((point, i) => {
     return (
       <Typography key={i} sx={fontSize}>
@@ -12,9 +14,14 @@ const Navigation : React.FC<INavigationProps> = ({direction = "row"}) => {
       </Typography>
     );
   });
-  
+
   return (
-    <Stack direction={direction} spacing={"5vw"} pl={"10px"}  textAlign={"center"}>
+    <Stack
+      direction={direction}
+      spacing={"5vw"}
+      pl={"10px"}
+      textAlign={"center"}
+    >
       {navigationPoints}
     </Stack>
   );

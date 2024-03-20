@@ -1,11 +1,8 @@
-
 import { Box, Container, Typography } from "@mui/material";
 import { ListGames } from "../components/main/recommendations/recommendationsModule";
 import { AllItemsInCartResponse } from "../types/types";
 import { ActionsButtons } from "./components/actionsButton";
 import { getAccessToken } from "../utils/sessionTokenAccessor";
-
-
 
 async function getAllGamesInCart() {
   const url = `${process.env.URl}cart`;
@@ -13,7 +10,7 @@ async function getAllGamesInCart() {
   let access_token = await getAccessToken();
 
   const resp = await fetch(url, {
-    cache: 'no-store',
+    cache: "no-store",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + access_token,
@@ -22,14 +19,12 @@ async function getAllGamesInCart() {
 
   if (resp.ok) {
     const data = await resp.json();
-   
+
     return data;
   }
 
   throw new Error("Failed to fetch data. Status: " + resp.status);
 }
-
-
 
 export type Game = Array<{
   id?: number | undefined;
@@ -44,9 +39,9 @@ export default async function Home() {
   const allCartsIds: number[] = [];
   allGamesInCart.cartItems?.map((item) => {
     item.cartId && allCartsIds.push(item.cartId);
-    allGamesInfoInCart.push(item.game)
+    allGamesInfoInCart.push(item.game);
   });
-  
+
   return (
     <main
       style={{
@@ -66,7 +61,14 @@ export default async function Home() {
           <Typography fontSize={"28px"} fontWeight={"600"}>
             SHOPPING CART
           </Typography>
-         {allGamesInCart.totalCost && allGamesInCart.totalCost > 0 ? <ActionsButtons cost={allGamesInCart.totalCost} mode="all" allGamesInfoInCart={allGamesInfoInCart} allCartsIds={allCartsIds} /> : null}
+          {allGamesInCart.totalCost && allGamesInCart.totalCost > 0 ? (
+            <ActionsButtons
+              cost={allGamesInCart.totalCost}
+              mode="all"
+              allGamesInfoInCart={allGamesInfoInCart}
+              allCartsIds={allCartsIds}
+            />
+          ) : null}
         </Box>
       </Container>
       <ListGames
@@ -76,7 +78,6 @@ export default async function Home() {
         height="auto"
         isCart={true}
       />
-      
     </main>
   );
 }

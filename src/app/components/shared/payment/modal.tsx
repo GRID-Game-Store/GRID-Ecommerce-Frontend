@@ -20,11 +20,10 @@ import {
 } from "@mui/material";
 import { ListGames } from "@/app/components/main/recommendations/recommendationsModule";
 import { Game } from "@/app/cart/page";
-import { useGameBuyQuery } from "./api/query";
+import { useGameBuyQuery, useGetBalanceQuery } from "./api/query";
 import { useState } from "react";
 import { usePaymentRedirect } from "@/app/cart/hooks/usePaymentRedirect";
 import { BuyButtonState } from "@/app/cart/utils/buyButtonState";
-
 
 const style: SxProps = {
   position: "absolute" as "absolute",
@@ -46,7 +45,7 @@ interface ITransitionsModalProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   totalCost?: number;
   title?: string;
-  isBalanceRecharge: boolean
+  isBalanceRecharge: boolean;
 }
 const Title = ({ title }: { title: string }) => {
   return (
@@ -63,15 +62,15 @@ const Title = ({ title }: { title: string }) => {
 };
 
 const paymentMethods = {
-    Stripe: {
-      status: "enabled",
-    },
-    PayPal: {
-      status: "enabled",
-    },
-    Balance: {
-      status: "disabled",
-    },
+  Stripe: {
+    status: "enabled",
+  },
+  PayPal: {
+    status: "enabled",
+  },
+  Balance: {
+    status: "disabled",
+  },
 };
 
 const paymentMethodsWithoutBalance = {
@@ -83,8 +82,9 @@ const paymentMethodsWithoutBalance = {
   },
 };
 
-const PaymentForm = ({ model, value }: { model: boolean, value: string }) => {
-  const paymentsMethodsFromProps = model !== true ? paymentMethodsWithoutBalance : paymentMethods
+const PaymentForm = ({ model, value }: { model: boolean; value: string }) => {
+  const paymentsMethodsFromProps =
+    model !== true ? paymentMethodsWithoutBalance : paymentMethods;
   const paymentMethodsUI = Object.keys(paymentsMethodsFromProps).map((key) => {
     return (
       <>
@@ -116,7 +116,7 @@ const TransitionsModal: React.FC<ITransitionsModalProps> = ({
   setOpen,
   totalCost,
   title = "Checkout",
-  isBalanceRecharge = false
+  isBalanceRecharge = false,
 }) => {
   const [paymentMethod, setPaymentMethod] = useState("Stripe");
   const [isPaymentWithBalance, setIsPaymentWithBalance] = useState(false);
@@ -127,27 +127,41 @@ const TransitionsModal: React.FC<ITransitionsModalProps> = ({
   const balanceAction = isPaymentWithBalance
     ? "PAYMENT_WITH_BALANCE"
     : "NO_ACTION";
-  
-  console.log(paymentMethod);
-  
-  const {data, isSuccess, mutate, isPending, isError} = useGameBuyQuery(paymentMethod, balanceAction, recharge, amount);
+
+
+  const { data, isSuccess, mutate, isPending, isError } = useGameBuyQuery(
+    paymentMethod,
+    balanceAction,
+    recharge,
+    amount,
+  );
+  const { data: balance } = useGetBalanceQuery();
+
   usePaymentRedirect(isSuccess, data, paymentMethod);
   const handleClose = () => setOpen(false);
-  const ButtonState =  BuyButtonState(isSuccess, isPending, isPending, isError, data);
+  const ButtonState = BuyButtonState(
+    isSuccess,
+    isPending,
+    isPending,
+    isError,
+    data,
+  );
   const handleCheckout = async () => {
     mutate();
-   };
-  
-  const allItemsIntoCart = allCartsIds && allCartsIds.length
+  };
+  const isCanPayWithBalance = balance
+    ? totalCost && Boolean(balance <= totalCost)
+    : false;
+  const allItemsIntoCart = allCartsIds && allCartsIds.length;
   return (
     <>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
-        style={{position:"fixed"}}
+        style={{ position: "fixed" }}
         open={open}
         onClose={handleClose}
-        closeAfterTransition 
+        closeAfterTransition
         slots={{ backdrop: Backdrop }}
         slotProps={{
           backdrop: {
@@ -158,46 +172,66 @@ const TransitionsModal: React.FC<ITransitionsModalProps> = ({
         <Fade in={open}>
           <Box sx={style}>
             <Title title={title} />
-            {isBalanceRecharge && <TextField
-              id="outlined-number"
-              label="How much do you want to recharge the balance by?"
-              type="number"
-              sx={{ mb: "20px", width: "330px" }}
-              onChange={(e : React.ChangeEvent<HTMLInputElement>) => setRechargeCount(Number(e.target.value))}
-              value={rechargeCount}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />}
-            {!isBalanceRecharge && <ListGames
-              data={allGamesInfoInCart}
-              cartsIds={allCartsIds}
-              width="560px"
-              height="310px"
-              scroll={true}
-            />}
-           
+            {isBalanceRecharge && (
+              <TextField
+                id="outlined-number"
+                label="How much do you want to recharge the balance by?"
+                type="number"
+                sx={{ mb: "20px", width: "330px" }}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setRechargeCount(Number(e.target.value))
+                }
+                value={rechargeCount}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            )}
+            {!isBalanceRecharge && (
+              <ListGames
+                data={allGamesInfoInCart}
+                cartsIds={allCartsIds}
+                width="560px"
+                height="310px"
+                scroll={true}
+              />
+            )}
+
             <FormControl
-              onChange={(e : React.ChangeEvent<HTMLInputElement>) => setPaymentMethod(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPaymentMethod(e.target.value)
+              }
             >
               <PaymentForm model={!isBalanceRecharge} value={paymentMethod} />
-              
             </FormControl>
-            {!isBalanceRecharge && <FormControlLabel
+            {!isBalanceRecharge && (
+              <FormControlLabel
                 checked={isPaymentWithBalance}
                 onChange={(event: React.SyntheticEvent, checked: boolean) =>
                   setIsPaymentWithBalance(checked)
                 }
                 control={<Checkbox />}
-                label={"With balance"}
-                disabled={isBalanceChecked}
-              />}
+                label={`With balance (${balance} UAH) `}
+                disabled={isBalanceChecked || !isCanPayWithBalance}
+              />
+            )}
             <Stack direction={"row"} sx={{ mt: "10px" }} spacing={"10px"}>
-              <Button    onClick={handleCheckout} sx={{ fontSize: "12px", mt: "10px" }}>
-                {ButtonState.messageRecharge}
+              <Button
+                disabled={ButtonState.disabled}
+                onClick={handleCheckout}
+                sx={{ fontSize: "12px", mt: "10px" }}
+              >
+                {ButtonState.message}
               </Button>
-              {!isBalanceRecharge && <Chip sx={{ mt: "10px" }} label={`Total cost: ${totalCost}` }/>}
-              {!isBalanceRecharge && <Chip sx={{ mt: "10px" }} label={`Total items: ${allItemsIntoCart}`} />}
+              {!isBalanceRecharge && (
+                <Chip sx={{ mt: "10px" }} label={`Total cost: ${totalCost}`} />
+              )}
+              {!isBalanceRecharge && (
+                <Chip
+                  sx={{ mt: "10px" }}
+                  label={`Total items: ${allItemsIntoCart}`}
+                />
+              )}
             </Stack>
           </Box>
         </Fade>

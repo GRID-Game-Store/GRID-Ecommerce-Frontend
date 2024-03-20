@@ -1,17 +1,17 @@
-version: '1.0'
+version: "1.0"
 services:
   app:
     image: frontend
     container_name: frontend
     env_file:
-    - docker.env
+      - docker.env
     build:
       context: ./
       target: dev
       dockerfile: Dockerfile
     volumes:
-        - .:/app
-        - /app/node_modules
-        - /app/.next
+      - .:/app
+      - /app/node_modules
+      - /app/.next
     ports:
       - "3000:3000"

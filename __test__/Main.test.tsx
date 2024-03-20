@@ -1,7 +1,13 @@
 import { Main } from "@/app/components/main/main";
 import { ResponseGamePopular } from "@/app/components/main/types/Response";
-import { getAllByLabelText, getByLabelText, getByText, render, screen } from "@testing-library/react";
-import '@testing-library/jest-dom'
+import {
+  getAllByLabelText,
+  getByLabelText,
+  getByText,
+  render,
+  screen,
+} from "@testing-library/react";
+import "@testing-library/jest-dom";
 import { MostPopular } from "@/app/components/main/slider/slider";
 export const mockSlides: Array<ResponseGamePopular> = [
   {
@@ -157,16 +163,16 @@ export const mockSlides: Array<ResponseGamePopular> = [
 
 describe("Test component Main on minimal functional ", () => {
   it("check main information in main page slider component", () => {
-    const {container} = render(<MostPopular slides={mockSlides} />);
-    expect(getByText(container, mockSlides[0].title)).toBeInTheDocument()
-   
-    
-    expect(getByText(container, mockSlides[0].description)).toBeInTheDocument()
-    expect(getByText(container, mockSlides[0].genres[0].name)).toBeInTheDocument()
+    const { container } = render(<MostPopular slides={mockSlides} />);
+    expect(getByText(container, mockSlides[0].title)).toBeInTheDocument();
+
+    expect(getByText(container, mockSlides[0].description)).toBeInTheDocument();
+    expect(
+      getByText(container, mockSlides[0].genres[0].name),
+    ).toBeInTheDocument();
   });
   it("check amount navigations dots for slider", () => {
-    const {container} = render(<MostPopular slides={mockSlides}  />);
-    expect(getAllByLabelText(container,'navigation dots').length).toBe(5)
+    const { container } = render(<MostPopular slides={mockSlides} />);
+    expect(getAllByLabelText(container, "navigation dots").length).toBe(5);
   });
-
 });

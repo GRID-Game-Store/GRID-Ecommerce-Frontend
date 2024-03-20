@@ -1,4 +1,4 @@
-
+/* eslint-disable no-unused-vars */
 import { PopularResponse } from "@/app/types/types";
 
 export interface ITitleProps {
@@ -22,3 +22,17 @@ export type IButtonsNavigate = {
   setCurrent: (i: number) => void;
   setIsTouched: (value: boolean) => void;
 };
+
+export interface IChangeCurrentSlide {
+  (
+    i: number,
+    setCurrent: (i: number) => void,
+    setIsTouched: (value: boolean) => void,
+  ): void;
+}
+
+export interface ISliderNavigation {
+  current: number;
+  setCurrent: (i: number) => void;
+  setIsTouched: (value: boolean) => void;
+}

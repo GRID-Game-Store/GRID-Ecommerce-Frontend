@@ -3,12 +3,14 @@ import { useEffect } from "react";
 export const useTimeChangeSlide = (
   isTouched: boolean,
   current: number,
-  setCurrent: (value: number) => void
+  // eslint-disable-next-line no-unused-vars
+  setCurrent: (value: number) => void,
 ) => {
   const slidesWrapInSec = 14;
   useEffect(() => {
     const timer = setTimeout(() => {
       if (isTouched) {
+        return null;
       } else if (current >= 4) {
         setCurrent(0);
       } else {

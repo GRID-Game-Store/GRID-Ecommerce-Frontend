@@ -25,7 +25,7 @@ export const useInfiniteScrollQuery = (searchParams: URLSearchParams) => {
     queryFn: async ({ pageParam }) =>
       getAllGamesBySorting(
         { pageParam },
-        decodeURI(searchParams.toString().replaceAll("%2C", ","))
+        decodeURI(searchParams.toString().replaceAll("%2C", ",")),
       ),
     getNextPageParam: (lastPage) => getNextPageParam(lastPage),
     initialPageParam: 0,
@@ -35,17 +35,17 @@ export const useInfiniteScrollQuery = (searchParams: URLSearchParams) => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
   return { ref, data, refetch };
 };
 
-
 export const useGetGamesBySortingQuery = (sortBy: string) => {
-    return useQuery<AllFiltersByNameResponse, Error>({
-        queryKey: [sortBy, null],
-        queryFn: () => getAllFilters(sortBy),
-        refetchOnMount: false,
-        refetchOnWindowFocus: false,
-        staleTime: 120000,
-      });
-}
+  return useQuery<AllFiltersByNameResponse, Error>({
+    queryKey: [sortBy, null],
+    queryFn: () => getAllFilters(sortBy),
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    staleTime: 120000,
+  });
+};
