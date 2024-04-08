@@ -17,4 +17,5 @@ export interface ISysReqItemsProps {
 
 export interface IInfoProps {
   fullInfo: FullInfoResponse;
+  wishListCheck: boolean;
 }

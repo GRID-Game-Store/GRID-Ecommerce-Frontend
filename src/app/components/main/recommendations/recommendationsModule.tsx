@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Filters } from "../../shared/Filters/filters";
 import { Items } from "../../shared/Item/items";
 import { getGameFullInfo, getGamesOfferByTab } from "./api/getGames";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   useGetGamesBySortingQuery,
   useInfiniteScrollQuery,
@@ -35,9 +35,10 @@ export const ListGames: React.FC<IListGames> = ({
   scroll = false,
 }) => {
   const { push } = useRouter();
-
+  const pathname = usePathname();
   const overflowY = scroll ? "scroll" : "";
   const heightForWrapper = data && data?.length <= 3 ? "max-content" : height;
+  const page = pathname.split("/").at(-1)?.toLocaleLowerCase();
   return (
     <Box
       width={width}
@@ -75,7 +76,7 @@ export const ListGames: React.FC<IListGames> = ({
             flexDirection={"column"}
           >
             <ErrorUILayer
-              message={"There is nothing in the cart"}
+              message={`There is nothing in the ${page}`}
               buttonTitle={"Go to the store"}
               buttonCallback={() => push("/")}
             />

@@ -77,7 +77,7 @@ export const ItemSmallRowForPlay: React.FC<IItemPlay> = ({ game, purchaseDate, p
       <Box position={"absolute"} bottom={"80px"} left={"10px"} zIndex={2}>
         <TypographyItem
           fontSize="17px"
-          whiteSpace="nowrap"
+          whiteSpace="normal"
           text={game.title} 
           link={`/game/${game.id}`}
         />
@@ -210,7 +210,7 @@ export const ItemSmallColumn: React.FC<IItem> = ({
                     game.genres && game.genres.slice(game.genres.length - 3)
                   }
                 />
-                {isCart && <ActionsButtons cost={game.price} cartId={cartId} />}
+                {isCart && <ActionsButtons cost={game.price} cartId={cartId || game.id} />}
               </Box>
             )}
           </>

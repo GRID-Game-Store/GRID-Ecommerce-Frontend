@@ -29,3 +29,4 @@ export type AllGamesInAccountResponse =
 export type GetBalanceInAccountResponse =
   paths["/api/v1/users/balance"]["get"]["responses"][200]["content"]["*/*"];
 export type AllTransactionsInfoResponse = paths["/api/v1/transactions"]["get"]["responses"][200]["content"]["*/*"];
+export type WishlistGamesResponse = paths["/api/v1/wishlist"]["get"]["responses"][200]["content"]["*/*"];

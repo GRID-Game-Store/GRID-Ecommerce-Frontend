@@ -1,11 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
-import { addGamesToCart } from "./addToCart";
+import { useMutation } from "@tanstack/react-query";
+import { addGamesToCart, addGamesToWishlist } from "./addToCart";
 
-export const useAddGameToCartQuery = (id?: number) => {
-  return useQuery({
-    queryKey: ["gameAddToCart", id],
-    queryFn: () => addGamesToCart(id),
-    refetchOnWindowFocus: false,
-    enabled: false,
+export const useAddGameToCartMutation = (id?: number) => {
+  return useMutation({
+    mutationKey: ["gameAddToCart", id],
+    mutationFn: () => addGamesToCart(id),
+  });
+};
+export const useAddGameWishlistMutation = (id?: number) => {
+  return useMutation({
+    mutationKey: ["gameAddWishlist", id],
+    mutationFn: () => addGamesToWishlist(id),
   });
 };

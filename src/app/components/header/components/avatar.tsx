@@ -1,13 +1,32 @@
 "use client";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { BookHeart, LogOut, ShoppingBasket, ShoppingCart } from "lucide-react";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 interface IAvatarProps {
   name: string;
 }
+interface IUserButtonsProps {
+  push: AppRouterInstance["push"];
+}
 
+const UserButtons: React.FC<IUserButtonsProps> = ({push}) => {
+  return (
+    <Stack direction={"row"} spacing={1}>
+      <Button onClick={() => push("/cart", {})}>
+        <ShoppingCart size={20} />
+      </Button>
+      <Button onClick={() => push("/wishList", {})}>
+        <BookHeart size={20} />
+      </Button>
+    </Stack>
+  );
+};
+
+// TODO: RENAME COMPONENT
 const Avatar: React.FC<IAvatarProps> = ({ name }) => {
   const { push } = useRouter();
   async function keycloakSessionLogOut() {
@@ -25,13 +44,7 @@ const Avatar: React.FC<IAvatarProps> = ({ name }) => {
       justifyContent={"center"}
       alignItems={"center"}
     >
-      <Button
-        onClick={() => {
-          push("/cart", {});
-        }}
-      >
-        CART
-      </Button>
+      <UserButtons push={push} />
       <Link
         href={"/profile"}
         style={{ color: "ffff", textDecorationColor: "#fff" }}
@@ -52,7 +65,7 @@ const Avatar: React.FC<IAvatarProps> = ({ name }) => {
           keycloakSessionLogOut().then(() => signOut({ callbackUrl: "/" }));
         }}
       >
-        Logout
+        <LogOut size={20} />
       </Button>
     </Box>
   );

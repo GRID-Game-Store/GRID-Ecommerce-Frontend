@@ -11,8 +11,9 @@ import Hydrate from "@/app/reactQuery/Hydrate";
 import React from "react";
 interface IWrapperGamePageProps {
   fullInfo: FullInfoResponse;
+  wishListCheck: boolean;
 }
-const WrapperGamePage: React.FC<IWrapperGamePageProps> = ({ fullInfo }) => {
+const WrapperGamePage: React.FC<IWrapperGamePageProps> = ({ fullInfo, wishListCheck }) => {
   const matches = useMediaQuery("(min-width:1200px)");
   const alignItems = !matches ? "center" : undefined;
   const flexDirection = !matches ? "column" : "row";
@@ -29,7 +30,7 @@ const WrapperGamePage: React.FC<IWrapperGamePageProps> = ({ fullInfo }) => {
       >
         <Gallery gameMedia={fullInfo.gameMedia} />
         <Hydrate state={dehydratedState}>
-          <Info fullInfo={fullInfo} />
+          <Info fullInfo={fullInfo}  wishListCheck={wishListCheck} />
         </Hydrate>
       </Box>
       {fullInfo.systemRequirements && (

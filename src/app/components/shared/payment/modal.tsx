@@ -109,6 +109,21 @@ const PaymentForm = ({ model, value }: { model: boolean; value: string }) => {
   );
 };
 
+
+// eslint-disable-next-line no-unused-vars
+const IncrementsButtons = ({setRechargeCount} : {setRechargeCount: React.Dispatch<React.SetStateAction<number>>}) => {
+  const handleIncrement = (count: number) => {
+    setRechargeCount((prev: number) => prev + count)
+  }
+  return (
+    <Stack direction={"row"}  spacing={1}>
+              <Button onClick={() => handleIncrement(25)}>25</Button>
+              <Button onClick={() => handleIncrement(50)}>50</Button>
+              <Button onClick={() => handleIncrement(100)}>100</Button>
+    </Stack>
+  );
+}
+
 const TransitionsModal: React.FC<ITransitionsModalProps> = ({
   allCartsIds,
   allGamesInfoInCart,
@@ -120,7 +135,7 @@ const TransitionsModal: React.FC<ITransitionsModalProps> = ({
 }) => {
   const [paymentMethod, setPaymentMethod] = useState("Stripe");
   const [isPaymentWithBalance, setIsPaymentWithBalance] = useState(false);
-  const [rechargeCount, setRechargeCount] = useState(0);
+  const [rechargeCount, setRechargeCount] = useState<number>(0);
   const recharge = isBalanceRecharge ? "/recharge/" : "/";
   const amount = isBalanceRecharge ? `amount=${rechargeCount}` : "";
   const isBalanceChecked = paymentMethod === "Balance";
@@ -136,7 +151,6 @@ const TransitionsModal: React.FC<ITransitionsModalProps> = ({
     amount,
   );
   const { data: balance } = useGetBalanceQuery();
-
   usePaymentRedirect(isSuccess, data, paymentMethod);
   const handleClose = () => setOpen(false);
   const ButtonState = BuyButtonState(
@@ -196,7 +210,7 @@ const TransitionsModal: React.FC<ITransitionsModalProps> = ({
                 scroll={true}
               />
             )}
-
+            {isBalanceRecharge && <IncrementsButtons setRechargeCount={setRechargeCount}/>}
             <FormControl
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setPaymentMethod(e.target.value)

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Chip, Stack } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 import { Game } from "../page";
@@ -25,20 +25,22 @@ export const ActionsButtons: React.FC<IActionsButtons> = ({
   allGamesInfoInCart,
   allCartsIds,
 }) => {
-  const { refresh } = useRouter();
+  const { refresh} = useRouter();
+  const pathname = usePathname()
   const [open, setOpen] = useState(false);
   const [isLoadingGame, setLoadingGame] = useState(false);
   const [isLoadingGames, setLoadingGames] = useState(false);
   const handleOpen = () => setOpen(true);
+  const deleteFrom = pathname.split("/").at(-1)?.toString().toLowerCase()
   const onDelete = async () => {
     if (mode === "all") {
       setLoadingGames(true);
-      await fetch("/api/cart/cleanUp", { method: "DELETE" });
+      await fetch(`/api/${deleteFrom}/cleanUp`, { method: "DELETE" });
       setLoadingGames(false);
     }
     if (mode === "single") {
       setLoadingGame(true);
-      await fetch(`/api/cart?id=${cartId}`, {
+      await fetch(`/api/${deleteFrom}?id=${cartId}`, {
         method: "DELETE",
       });
       setLoadingGame(false);

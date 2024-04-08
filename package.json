@@ -31,6 +31,7 @@
     "css-mediaquery": "^0.1.2",
     "csstype": "^3.1.2",
     "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.365.0",
     "msw": "^2.0.11",
     "next": "^14.0.3",
     "next-auth": "^4.24.5",
