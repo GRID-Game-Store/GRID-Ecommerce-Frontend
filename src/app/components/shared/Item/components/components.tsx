@@ -20,6 +20,8 @@ import {
   ITypographyItemProps,
   THover,
 } from "../types/item";
+import { ArrowDownRight, ArrowUpLeft, ArrowUpRight } from "lucide-react";
+import { useOpenClose } from "../hooks/useOpenClose";
 
 //! TODO FIX WARN WITH REF
 export const CoverItem: React.FC<ICoverItemProps> = ({
@@ -30,6 +32,7 @@ export const CoverItem: React.FC<ICoverItemProps> = ({
   minHeight = "70px",
   labelOwnerGame = "left",
   isOwned,
+  idGame,
 }) => {
   const [hoverOnTheiler, setHoverOnTheiler] = useState(false);
   const customHeight = minHeight !== "70px" && minHeight;
@@ -38,24 +41,26 @@ export const CoverItem: React.FC<ICoverItemProps> = ({
     return (
       <>
         {hover === 0 || hover === undefined ? (
-          <Badge
-            color="primary"
-            badgeContent={badgeContent}
-            anchorOrigin={{ horizontal: labelOwnerGame, vertical: "top" }}
-          >
-            <img
-              style={{
-                borderRadius: "5px",
-                minHeight: minHeight,
-                cursor: "pointer",
-                objectFit: "cover",
-              }}
-              width={width}
-              height={customHeight.toString()}
-              src={linkCoverImg}
-              alt="cover item"
-            />
-          </Badge>
+          <a href={`/game/${idGame}`} target="_blank">
+            <Badge
+              color="primary"
+              badgeContent={badgeContent}
+              anchorOrigin={{ horizontal: labelOwnerGame, vertical: "top" }}
+            >
+              <img
+                style={{
+                  borderRadius: "5px",
+                  minHeight: minHeight,
+                  cursor: "pointer",
+                  objectFit: "cover",
+                }}
+                width={width}
+                height={customHeight.toString()}
+                src={linkCoverImg}
+                alt="cover item"
+              />
+            </Badge>
+          </a>
         ) : (
           <video
             style={{ cursor: "pointer" }}
@@ -137,11 +142,14 @@ export const ListTagsOrGenres: React.FC<IListTagsOrGenresProps> = ({
   mb = "10px",
   spaceBetween,
 }) => {
+  const { isOpen, setIsOpen, modifiedArrayEl } = useOpenClose(arrayElements);
+  const maxAmountChips = 10;
+  const isMoreChips = arrayElements && arrayElements.length > maxAmountChips; 
   return (
     <Stack
       sx={
         spacing === 0
-          ? { flexWrap: "wrap", maxWidth: "350px" }
+          ? { flexWrap: "wrap", maxWidth: "350px", alignItems: "center" }
           : { justifyContent: spaceBetween ? "space-between" : null }
       }
       direction={"row"}
@@ -150,8 +158,8 @@ export const ListTagsOrGenres: React.FC<IListTagsOrGenresProps> = ({
       ml={ml}
       mt={mt}
     >
-      {arrayElements &&
-        arrayElements.map((el, i) => {
+      {modifiedArrayEl &&
+        modifiedArrayEl.map((el, i) => {
           return (
             <div key={el.id + "_" + i}>
               <Tooltip title={el.name}>
@@ -168,6 +176,15 @@ export const ListTagsOrGenres: React.FC<IListTagsOrGenresProps> = ({
             </div>
           );
         })}
+      {isMoreChips && (
+        <Button
+          onClick={() => setIsOpen(!isOpen)}
+          sx={{ width: "47px", height: "30px", mt: "7px", ml: "5px" }}
+        >
+          {!isOpen && <ArrowDownRight />}
+          {isOpen && <ArrowUpLeft />}
+        </Button>
+      )}
     </Stack>
   );
 };

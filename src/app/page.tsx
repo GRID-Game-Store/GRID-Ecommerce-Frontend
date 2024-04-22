@@ -11,6 +11,8 @@ import { getAccessToken } from "./utils/sessionTokenAccessor";
 
 export async function getData(url: string) {
   let access_token = await getAccessToken();
+  console.log(access_token);
+  
   let res = await fetch(url, { 
     headers: {
       "Content-Type": "application/json",

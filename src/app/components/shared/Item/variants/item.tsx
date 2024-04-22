@@ -42,6 +42,7 @@ export const ItemSmallRow: React.FC<IItem> = ({ game }) => {
         width={150}
         linkCoverImg={game.coverImageUrl}
         isOwned={game.ownedByCurrentUser}
+        idGame={game.id}
       />
       <TypographyItem
         fontSize="17px"
@@ -72,6 +73,7 @@ export const ItemSmallRowForPlay: React.FC<IItemPlay> = ({ game, purchaseDate, p
         width={315}
         linkCoverImg={game.coverImageUrl}
         isOwned={game.ownedByCurrentUser}
+        idGame={game.id}
       />
       </Box>
       <Box position={"absolute"} bottom={"80px"} left={"10px"} zIndex={2}>
@@ -116,6 +118,7 @@ export const ItemSmallColumnForSearch: React.FC<IItem> = ({
         minHeight={70}
         linkCoverImg={game.coverImageUrl}
         isOwned={game.ownedByCurrentUser}
+        idGame={game.id}
       />
       <Box display={"flex"} flexDirection={"column"} alignItems={"flex-start"}>
         <TypographyItem
@@ -174,6 +177,7 @@ export const ItemSmallColumn: React.FC<IItem> = ({
         linkCoverImg={game.coverImageUrl}
         labelOwnerGame="right"
         isOwned={game.ownedByCurrentUser}
+        idGame={game.id}
       />
       <Box position={"relative"}>
         <TypographyItem
@@ -232,8 +236,10 @@ export const ItemLargePreview: React.FC<IItemLargePreview> = ({
   width = "390px",
 }) => {
   const [hover, setHover] = useState<THover>(0);
-  const price = getPrice(game.price);
-  const developerAndPublisher =
+  const price = getPrice(game?.price);
+
+  
+  const developerAndPublisher = 
     game && game.developer && game.developer.name === game.publisher.name
       ? game.developer.name
       : game && `${game.developer.name} & ${game.publisher.name}`;
@@ -242,31 +248,32 @@ export const ItemLargePreview: React.FC<IItemLargePreview> = ({
       <ItemLargePreviewAnimation hover={hover}>
         <CoverItem
           width={390}
-          linkCoverImg={game.gameMedia?.bannerUrl}
-          linkCoverVideo={game.gameMedia?.trailer}
+          linkCoverImg={game?.gameMedia?.bannerUrl}
+          linkCoverVideo={game?.gameMedia?.trailer}
           hover={hover}
+          idGame={game?.id}
         />
       </ItemLargePreviewAnimation>
       <TypographyItem
         fontSize="22px"
         p={"10px"}
         whiteSpace="nowrap"
-        text={game.title}
-        link={`/game/${game.id}`}
+        text={game?.title}
+        link={`/game/${game?.id}`}
       />
       <TypographyItem
         mt={"-10px"}
         p={"10px"}
         whiteSpace="normal"
         fontSize="17px"
-        text={game.description}
+        text={game?.description}
       />
       <TypographyItem
         mt={"-10px"}
         p={"10px"}
         fontSize="17px"
         whiteSpace="nowrap"
-        text={`Release Date : ${game.releaseDate}`}
+        text={`Release Date : ${game?.releaseDate}`}
       />
       <TypographyItem
         mt={"-20px"}
@@ -280,10 +287,10 @@ export const ItemLargePreview: React.FC<IItemLargePreview> = ({
         ml="10px"
         spacing={0}
         arrayElements={
-          game.tags && game.genres && game.genres.concat(game.tags).slice(13)
+          game?.tags && game?.genres && game.genres.concat(game.tags).slice(13)
         }
       />
-      <Link href={`/game/${game.id}`} style={{ color: "#fff" }}>
+      <Link href={`/game/${game?.id}`} style={{ color: "#fff" }}>
         <Button sx={{ width: "100%", position: "absolute", bottom: 0 }}>
           {price}
         </Button>

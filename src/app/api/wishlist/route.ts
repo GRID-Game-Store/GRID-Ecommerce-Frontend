@@ -39,9 +39,6 @@ export async function DELETE(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (session) {
     const url = `${process.env.URL}wishlist/delete/${id}`;
-    console.log(url);
-    
-    
     let accessToken = await getAccessToken();
 
     const resp = await fetch(url, {

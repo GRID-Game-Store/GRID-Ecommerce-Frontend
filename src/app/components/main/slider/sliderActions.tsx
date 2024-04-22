@@ -22,6 +22,7 @@ import {
   TSlierItemsProps,
 } from "./types/slider.d";
 import { getPrice } from "../../shared/Item/variants/item";
+import { useRouter } from "next/navigation";
 
 const Title: React.FC<ITitleProps> = ({ title }) => {
   const matches = useMediaQuery("(min-width:1200px)");
@@ -114,8 +115,10 @@ const ButtonsNavigate: React.FC<IButtonsNavigate> = ({
           sx={StylingButtons(top)[1]}
           aria-label="prev slide"
           disableRipple
-          onClick={() =>
+          onClick={(e) =>{
+            e.stopPropagation()
             changeCurrentSlide(current - 1, setCurrent, setIsTouched)
+          }
           }
         >
           <ArrowRightAltIcon fontSize="large" />
@@ -126,8 +129,10 @@ const ButtonsNavigate: React.FC<IButtonsNavigate> = ({
           sx={StylingButtons(top)[0]}
           disableRipple
           aria-label="next slide"
-          onClick={() =>
+          onClick={(e) =>{
+            e.stopPropagation()
             changeCurrentSlide(current + 1, setCurrent, setIsTouched)
+          }
           }
         >
           <ArrowRightAltIcon sx={{ filter: "blur(0px)" }} fontSize="large" />
@@ -143,7 +148,7 @@ const SliderActions: React.FC<TSlierItemsProps> = ({
   setIsTouched,
 }) => {
   const matches = useMediaQuery("(min-width:1200px)");
-  
+
   const SliderWrapStyle: SxProps = {
     marginTop: "-200px",
     marginLeft: !matches ? "5px" : "65px",
@@ -153,12 +158,13 @@ const SliderActions: React.FC<TSlierItemsProps> = ({
     !matches && slides.genres ? slides.genres.slice(0, 3) : slides.genres;
 
   return (
-    <Container sx={SliderWrapStyle}>
+    <Container  sx={SliderWrapStyle}>
       <ButtonsNavigate
         setCurrent={setCurrent}
         setIsTouched={setIsTouched}
         current={current}
       />
+
       <Link href={`/game/${slides.id}`} style={{ color: "#fff" }}>
         {slides.title && <Title title={slides.title} />}
       </Link>

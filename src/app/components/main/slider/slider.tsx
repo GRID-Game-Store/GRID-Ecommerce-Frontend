@@ -10,6 +10,8 @@ import { IMostPopularProps } from "./../types/Response.d";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { TSlierItemsProps } from "./types/slider.d";
 import { useTimeChangeSlide } from "@/app/hooks/useTimeChangeSlide";
+import { useRouter } from "next/navigation";
+
 
 const SliderItems: React.FC<TSlierItemsProps> = ({
   slides,
@@ -20,6 +22,7 @@ const SliderItems: React.FC<TSlierItemsProps> = ({
   const color = useColorFromImg(slides.coverImageUrl);
   const Link = slides.coverImageUrl;
   const matches = useMediaQuery("(min-width:1200px)");
+  const router = useRouter()
   const styleItemSlider: SxProps = {
     background: `url(${Link}) 0 0px / 100% no-repeat `,
     borderRadius: "20px",
@@ -32,6 +35,7 @@ const SliderItems: React.FC<TSlierItemsProps> = ({
       height={"453px"}
       className={style.SliderItem}
       sx={styleItemSlider}
+      onClick={() => router.push(`/game/${slides.id}`)}
     >
       <SliderActions
         slides={slides}

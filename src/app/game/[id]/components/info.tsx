@@ -1,16 +1,23 @@
 "use client";
 import React from "react";
 import { ListTagsOrGenres } from "@/app/components/shared/Item/components/components";
-import { Box, Button, Grid, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, Typography, useMediaQuery } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useAddGameToCartMutation, useAddGameWishlistMutation } from "../api/query";
+import {
+  useAddGameToCartMutation,
+  useAddGameWishlistMutation,
+} from "../api/query";
 import { getMargins } from "../utils/margin";
 import { getPrice } from "@/app/components/shared/Item/variants/item";
 import { getDeveloperAndPublisher } from "../utils/developerAndPublisher";
 import { getPlatforms } from "../utils/platforms";
 import { IInfoProps } from "../types/game";
 import Image from "next/image";
-import { Heart } from "lucide-react";
+import { ArrowDownRight, Heart } from "lucide-react";
+import {
+  BuyButtonStateBuy,
+  BuyButtonStateWishlist,
+} from "../utils/buttonState";
 
 const Rating = ({ permit_age }: { permit_age: string }) => {
   return (
@@ -29,62 +36,18 @@ const Rating = ({ permit_age }: { permit_age: string }) => {
 };
 
 
-const BuyButtonState = (isSuccess: boolean, isPending: boolean, message: string | undefined, error: string | undefined, price: "free" | React.JSX.Element | null) => {
-  if (isSuccess )
-    return {
-      message: message || error,
-      disabled: true,
-    };
-  else if (isPending )
-    return {
-      message: "Loading...",
-      disabled: true,
-    };
-  else if (price)
-    return {
-      message: price,
-      disabled: false,
-    };
-  else 
-    return {
-      message: <Heart />,
-      disabled: false,
-    };
-};
-
-
-
 export const Info: React.FC<IInfoProps> = ({ fullInfo, wishListCheck }) => {
-
-  const BuyButtonStateWishlist = (isSuccess: boolean, isPending: boolean, message: string | undefined, error: string | undefined, price: "free" | React.JSX.Element | null) => {
-    if (isSuccess || wishListCheck )
-      return {
-        message: <Heart  fill="#fff"/> || error,
-        disabled: true,
-      };
-    else if (isPending )
-      return {
-        message: "Loading...",
-        disabled: true,
-      };
-    else if (price)
-      return {
-        message: price,
-        disabled: false,
-      };
-    else 
-      return {
-        message: <Heart />,
-        disabled: false,
-      };
-  };
-  
   const matches = useMediaQuery("(min-width:1200px)");
   const router = useRouter();
-  const { mutate, isSuccess, isPending, data  } =
-  useAddGameToCartMutation(fullInfo.id);
-  const { mutate: mutateWishlist, isSuccess : isSuccessWishlist, isPending : isPendingWishlist, data : dataWishlist  } =
-  useAddGameWishlistMutation(fullInfo.id);
+  const { mutate, isSuccess, isPending, data } = useAddGameToCartMutation(
+    fullInfo.id
+  );
+  const {
+    mutate: mutateWishlist,
+    isSuccess: isSuccessWishlist,
+    isPending: isPendingWishlist,
+    data: dataWishlist,
+  } = useAddGameWishlistMutation(fullInfo.id);
   const { ml, mr, mt } = getMargins(matches);
   const price = getPrice(fullInfo.price);
   const platforms = getPlatforms(fullInfo.platforms);
@@ -103,9 +66,18 @@ export const Info: React.FC<IInfoProps> = ({ fullInfo, wishListCheck }) => {
     mutateWishlist();
     router.refresh();
   };
-  
-  const { message: buyButtonStateMessage, disabled: buyButtonStateDisabled } =  BuyButtonState(isSuccess, isPending, data?.data.response, data?.error, price);
- const { message: wishlistButtonStateMessage, disabled : wishlistButtonStateDisabled } = BuyButtonStateWishlist(isSuccessWishlist, isPendingWishlist, dataWishlist?.data?.response , dataWishlist?.data?.error, null);
+
+  const { message: buyButtonStateMessage, disabled: buyButtonStateDisabled } =
+    BuyButtonStateBuy(isSuccess, isPending, data, data?.error, price);
+
+  const {
+    message: wishlistButtonStateMessage,
+    disabled: wishlistButtonStateDisabled,
+  } = BuyButtonStateWishlist(
+    isSuccessWishlist || wishListCheck,
+    isPendingWishlist,
+    dataWishlist?.data?.error
+  );
   return (
     <Box ml={ml} mt={mt} mr={mr}>
       <Typography fontWeight={"600"} variant="h3">
@@ -132,21 +104,34 @@ export const Info: React.FC<IInfoProps> = ({ fullInfo, wishListCheck }) => {
           mt="0px"
           ml="-5px"
           spacing={0}
-          arrayElements={fullInfo.tags.sort().slice(0, 4)}
+          arrayElements={fullInfo.tags}
         />
       )}
+
       {fullInfo.permitAge && <Rating permit_age={fullInfo.permitAge} />}
-      <Box display={"flex"} >
-      <Button
-        disabled={buyButtonStateDisabled}
-        onClick={onAddToCart}
-        sx={{ width: "100%", fontSize: "20px", pr: "10px", pl: "10px", mr: "5px", height: "50px" }}
-      >
-        {buyButtonStateMessage}
-      </Button>
-      <Button disabled={wishlistButtonStateDisabled} onClick={onAddWishlist} sx={{height: "50px" }} >{wishlistButtonStateMessage}</Button>
+      <Box display={"flex"}>
+        <Button
+          disabled={buyButtonStateDisabled}
+          onClick={onAddToCart}
+          sx={{
+            width: "100%",
+            fontSize: "20px",
+            pr: "10px",
+            pl: "10px",
+            mr: "5px",
+            height: "50px",
+          }}
+        >
+          {buyButtonStateMessage}
+        </Button>
+        <Button
+          disabled={wishlistButtonStateDisabled}
+          onClick={onAddWishlist}
+          sx={{ height: "50px" }}
+        >
+          {wishlistButtonStateMessage}
+        </Button>
       </Box>
-      
     </Box>
   );
 };

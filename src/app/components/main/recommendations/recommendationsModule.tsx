@@ -93,11 +93,11 @@ const tabs = [
     forUI: "New",
   },
   {
-    forReq: "sales",
+    forReq: "discount",
     forUI: "Specials",
   },
   {
-    forReq: "discount",
+    forReq: "sales",
     forUI: "Top Sellers",
   },
 ];
@@ -149,7 +149,7 @@ const RecommendationsModule: React.FC<IRecommendationsProps> = () => {
       <Container disableGutters sx={{ display: "flex" }}>
         <ListGames data={data} setActiveHover={setActiveHover} />
         {isfullInfoSuccess && matches && (
-          <Items variant="preview" game={fullInfo} />
+          <Items variant="preview" game={fullInfo.game} />
         )}
       </Container>
     </Container>

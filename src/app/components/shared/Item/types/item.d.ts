@@ -4,7 +4,7 @@ import { RandomResponse } from "../../../../types/types";
 import React from "react";
 
 export interface IItemsProps {
-  game: FullInfoResponse | RandomResponse[0];
+  game: FullInfoResponse["game"] | RandomResponse[0];
   variant?: "row" | "column" | "preview";
   width?: string;
   setActiveHover?: () => void;
@@ -22,6 +22,7 @@ export interface ICoverItemProps {
   minHeight?: number;
   labelOwnerGame?: "left" | "right";
   isOwned?: boolean;
+  idGame?: number;
 }
 
 type TFontSizeForTypography = string;
@@ -60,7 +61,7 @@ export interface IItemPlay {
 }
 
 export interface IItemLargePreview {
-  game: FullInfoResponse;
+  game: FullInfoResponse["game"];
   width?: string;
 }
 

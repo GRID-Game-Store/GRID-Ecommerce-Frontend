@@ -78,7 +78,7 @@ const SysReq: React.FC<ISysReqProps> = ({ sysReq }) => {
     sysReq && sysReq.split(/MINIMUM|RECOMMENDED:/);
 
   return (
-    <Box mt={"70px"}>
+    <Box mt={"70px"} position={"relative"}>
       <Tabs value={activeTab} onChange={handleChange} aria-label="tabs">
         {MinimumORRecommended[1] &&
           MinimumORRecommended[1].includes("OS: ") && (

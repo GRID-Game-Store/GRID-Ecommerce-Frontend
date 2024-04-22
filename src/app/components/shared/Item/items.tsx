@@ -29,7 +29,7 @@ const Items: React.FC<IItemsProps> = ({
           />
         )
     case "preview":
-        return game && <ItemLargePreview width={width} game={game as FullInfoResponse} />
+        return game && <ItemLargePreview width={width} game={game as FullInfoResponse["game"]} />
     default:
       return null
   }

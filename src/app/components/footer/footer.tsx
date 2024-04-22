@@ -10,9 +10,9 @@ const Footer = () => {
         alignItems: "center",
       }}
     >
-      <Typography variant="body2" align="center">
+      {/* <Typography variant="body2" align="center">
         {"Copyright © GRID 2023. All rights reserved."}
-      </Typography>
+      </Typography> */}
     </footer>
   );
 };

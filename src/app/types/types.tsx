@@ -30,3 +30,6 @@ export type GetBalanceInAccountResponse =
   paths["/api/v1/users/balance"]["get"]["responses"][200]["content"]["*/*"];
 export type AllTransactionsInfoResponse = paths["/api/v1/transactions"]["get"]["responses"][200]["content"]["*/*"];
 export type WishlistGamesResponse = paths["/api/v1/wishlist"]["get"]["responses"][200]["content"]["*/*"];
+export type ReviewItemGameResponse = paths["/api/v1/reviews/{game-id}"]["get"]["responses"][200]["content"]["*/*"];
+export type MyReviewGameResponse = paths["/api/v1/reviews/get/{game-id}"]["get"]["responses"][200]["content"]["*/*"];
+export type AllReviewsGameResponse = paths["/api/v1/reviews/{game-id}"]["get"]["responses"][200]["content"]["*/*"];

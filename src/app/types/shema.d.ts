@@ -4,6 +4,40 @@
  */
 
 export interface paths {
+    "/api/v1/reviews/edit/{review-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Edit review to game */
+        put: operations["editReviewToGame"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/games/edit/{game-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Edit game to db */
+        put: operations["editGameToDb"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/wishlist/{game-id}": {
         parameters: {
             query?: never;
@@ -21,23 +55,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/wishlist/check/{game-id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Check if game is already in wishlist and in library */
-        post: operations["checkIfGameIsInWishlist"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/v1/transactions/revert": {
         parameters: {
             query?: never;
@@ -49,6 +66,23 @@ export interface paths {
         put?: never;
         /** Revert transaction for user in case of cancel */
         post: operations["revertTransactionToCart"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reviews/add/{game-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add review to game */
+        post: operations["addReviewToGame"];
         delete?: never;
         options?: never;
         head?: never;
@@ -208,6 +242,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/admin/users/update/balance/{user-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Update user's balance */
+        post: operations["changeUserBalance"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/games/add": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add game to db */
+        post: operations["addGameToDb"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/games/activate/{game-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Change game visibility to activate/deactivate in db */
+        post: operations["changeGameVisibility"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/wishlist": {
         parameters: {
             query?: never;
@@ -217,6 +302,23 @@ export interface paths {
         };
         /** Show wishlist of user */
         get: operations["getUserWishList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/wishlist/check/{game-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Check if game is already in wishlist and in library */
+        get: operations["checkIfGameIsInWishlist"];
         put?: never;
         post?: never;
         delete?: never;
@@ -302,6 +404,40 @@ export interface paths {
         };
         /** Get all tags */
         get: operations["showAllTags"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reviews/{game-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** View all reviews to game */
+        get: operations["viewReviewForGame"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reviews/get/{game-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get my review for game */
+        get: operations["getReviewForGame"];
         put?: never;
         post?: never;
         delete?: never;
@@ -514,6 +650,74 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/admin/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all users */
+        get: operations["showAllUserByPage"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/transactions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all transactions */
+        get: operations["showAllTransactionsByPage"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/games": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all games */
+        get: operations["showAllGamesByPage_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/games/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get game by title */
+        get: operations["showGameByTitle"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/wishlist/delete/{game-id}": {
         parameters: {
             query?: never;
@@ -526,6 +730,23 @@ export interface paths {
         post?: never;
         /** Delete game to wishlist */
         delete: operations["deleteGameFromWishlist"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reviews/delete/{review-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete review from game */
+        delete: operations["deleteReviewFromGame"];
         options?: never;
         head?: never;
         patch?: never;
@@ -569,6 +790,42 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        ReviewRequest: {
+            comment: string;
+            /** Format: int32 */
+            rating?: number;
+        };
+        ReviewResponse: {
+            response?: string;
+        };
+        GameRequest: {
+            title: string;
+            description?: string;
+            /** Format: date */
+            releaseDate?: string;
+            systemRequirements?: string;
+            active: boolean;
+            aboutGame?: string;
+            price: number;
+            discount: number;
+            /** @enum {string} */
+            permitAge: "AGE_0" | "AGE_3" | "AGE_7" | "AGE_12" | "AGE_16" | "AGE_18" | "AGE_EXCLAMATION";
+            coverImageUrl?: string;
+            bannerImageUrl: string;
+            trailerUrl: string;
+            screenshotUrl?: string;
+            trailerScreenshotUrl?: string;
+            /** Format: int64 */
+            developer: number;
+            /** Format: int64 */
+            publisher: number;
+            tags: number[];
+            genres: number[];
+            platforms: number[];
+        };
+        AdminResponse: {
+            response?: string;
+        };
         WishListResponse: {
             response?: string;
         };
@@ -591,12 +848,15 @@ export interface components {
             title?: string;
             description?: string;
             price?: number;
+            discount?: number;
             coverImageUrl?: string;
+            active?: boolean;
             ownedByCurrentUser?: boolean;
         };
         FullUserInfoDTO: {
             externalId: string;
             email: string;
+            username: string;
             birthdate?: string;
             givenName: string;
             familyName: string;
@@ -624,6 +884,7 @@ export interface components {
         };
         TransactionDTO: {
             transactionId?: string;
+            userId?: string;
             /** Format: date-time */
             createdAt?: string;
             /** Format: date-time */
@@ -646,6 +907,17 @@ export interface components {
             /** Format: int32 */
             id?: number;
             name: string;
+        };
+        ReviewDTO: {
+            /** Format: int64 */
+            reviewId?: number;
+            username?: string;
+            shortGameModel?: components["schemas"]["ShortGameModel"];
+            /** Format: int32 */
+            rating?: number;
+            comment?: string;
+            /** Format: date-time */
+            reviewDate?: string;
         };
         Publisher: {
             /** Format: int32 */
@@ -690,6 +962,10 @@ export interface components {
             id?: number;
             name: string;
         };
+        ExtendedGame: {
+            game?: components["schemas"]["Game"];
+            ownedByCurrentUser?: boolean;
+        };
         Game: {
             /** Format: int64 */
             id?: number;
@@ -697,7 +973,9 @@ export interface components {
             description?: string;
             /** Format: date */
             releaseDate?: string;
+            active: boolean;
             systemRequirements?: string;
+            aboutGame?: string;
             price?: number;
             coverImageUrl?: string;
             discount: number;
@@ -731,6 +1009,7 @@ export interface components {
             title?: string;
             description?: string;
             price?: number;
+            discount?: number;
             coverImageUrl?: string;
             genres?: components["schemas"]["Genre"][];
             ownedByCurrentUser?: boolean;
@@ -745,6 +1024,22 @@ export interface components {
             userId: string;
             game: components["schemas"]["ShortGameModel"];
         };
+        EntityModelRequest: {
+            /** Format: int32 */
+            page?: number;
+            /** Format: int32 */
+            size?: number;
+            sort?: string[];
+        };
+        AdminModelResponse: {
+            entities?: Record<string, never>[];
+            /** Format: int64 */
+            totalItems?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            /** Format: int32 */
+            currentPage?: number;
+        };
     };
     responses: never;
     parameters: never;
@@ -754,6 +1049,58 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    editReviewToGame: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "review-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ReviewResponse"];
+                };
+            };
+        };
+    };
+    editGameToDb: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "game-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GameRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
     addGameToWishlist: {
         parameters: {
             query?: never;
@@ -776,28 +1123,6 @@ export interface operations {
             };
         };
     };
-    checkIfGameIsInWishlist: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                "game-id": number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": boolean;
-                };
-            };
-        };
-    };
     revertTransactionToCart: {
         parameters: {
             query: {
@@ -816,6 +1141,32 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["TransactionResponse"];
+                };
+            };
+        };
+    };
+    addReviewToGame: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "game-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ReviewResponse"];
                 };
             };
         };
@@ -1016,6 +1367,78 @@ export interface operations {
             };
         };
     };
+    changeUserBalance: {
+        parameters: {
+            query: {
+                newBalance: number;
+            };
+            header?: never;
+            path: {
+                "user-id": string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
+    addGameToDb: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GameRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
+    changeGameVisibility: {
+        parameters: {
+            query: {
+                activate: boolean;
+            };
+            header?: never;
+            path: {
+                "game-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
     getUserWishList: {
         parameters: {
             query?: never;
@@ -1032,6 +1455,28 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["ShortGameModel"][];
+                };
+            };
+        };
+    };
+    checkIfGameIsInWishlist: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "game-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": boolean;
                 };
             };
         };
@@ -1136,6 +1581,50 @@ export interface operations {
             };
         };
     };
+    viewReviewForGame: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "game-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ReviewDTO"][];
+                };
+            };
+        };
+    };
+    getReviewForGame: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "game-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ReviewDTO"];
+                };
+            };
+        };
+    };
     showAllPublishers: {
         parameters: {
             query?: never;
@@ -1235,7 +1724,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["Game"];
+                    "*/*": components["schemas"]["ExtendedGame"];
                 };
             };
         };
@@ -1393,6 +1882,95 @@ export interface operations {
             };
         };
     };
+    showAllUserByPage: {
+        parameters: {
+            query: {
+                entityModelRequest: components["schemas"]["EntityModelRequest"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminModelResponse"];
+                };
+            };
+        };
+    };
+    showAllTransactionsByPage: {
+        parameters: {
+            query: {
+                entityModelRequest: components["schemas"]["EntityModelRequest"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminModelResponse"];
+                };
+            };
+        };
+    };
+    showAllGamesByPage_1: {
+        parameters: {
+            query: {
+                gameCriteria: components["schemas"]["GameCriteria"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GeneralGame"];
+                };
+            };
+        };
+    };
+    showGameByTitle: {
+        parameters: {
+            query: {
+                title: string;
+                qty?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GameModelWithGenreLimit"][];
+                };
+            };
+        };
+    };
     deleteGameFromWishlist: {
         parameters: {
             query?: never;
@@ -1411,6 +1989,28 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["WishListResponse"];
+                };
+            };
+        };
+    };
+    deleteReviewFromGame: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "review-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ReviewResponse"];
                 };
             };
         };

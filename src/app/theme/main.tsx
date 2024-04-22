@@ -1,6 +1,7 @@
 import mediaQuery from "css-mediaquery";
 
 import { createTheme } from "@mui/material/styles";
+import { BorderBottom } from "@mui/icons-material";
 
 // const ssrMatchMedia = (deviceType: string) => (query: string) => ({
 //   matches: mediaQuery.match(query, {
@@ -14,6 +15,10 @@ export const mainTheme = (deviceType: string) =>
       primary: {
         main: "#08AD2C",
       },
+      info: {
+        main: "#fff",
+      },
+      
     },
     typography: {
       fontFamily: "Ropa Sans",
@@ -29,7 +34,7 @@ export const mainTheme = (deviceType: string) =>
           }),
         },
       },
-      
+
       MuiTextField: {
         styleOverrides: {
           root: {
@@ -41,6 +46,10 @@ export const mainTheme = (deviceType: string) =>
               borderRight: "none",
               paddingBottom: "2px",
               paddingTop: "4.2px",
+            },
+            "& .MuiInputBase-inputMultiline": {
+              color: "#fff",
+              border: "none",
             },
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
@@ -54,14 +63,16 @@ export const mainTheme = (deviceType: string) =>
               },
             },
           },
+
         },
       },
+
       MuiFormLabel: {
         styleOverrides: {
           root: {
             color: "#fff",
           },
-        }
+        },
       },
       MuiBadge: {
         styleOverrides: {
