@@ -7,7 +7,7 @@ services:
       - docker.env
     build:
       context: ./
-      target: dev
+      target: production
       dockerfile: Dockerfile
     volumes:
       - .:/app
