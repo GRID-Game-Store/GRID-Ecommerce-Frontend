@@ -9,7 +9,6 @@ export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (session) {
     const url = `${process.env.URL}wishlist/${id}`;
-    console.log(url);
     let accessToken = await getAccessToken();
 
 
