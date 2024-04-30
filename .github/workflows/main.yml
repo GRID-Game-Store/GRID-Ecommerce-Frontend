@@ -17,5 +17,9 @@ jobs:
       steps:
       - name: Check docker containers 
         run: docker ps
+      - name: Stop all docker containers 
+        run: docker stop $(docker ps -q)
+      - name: remove frontend container 
+        run: docker rm frontend
 
 
