@@ -25,5 +25,7 @@ jobs:
         run: docker rm frontend
       - name: Docker build 
         run: docker build .
+      - name: Docker compouse up
+        run: docker compouse up 
 
 
