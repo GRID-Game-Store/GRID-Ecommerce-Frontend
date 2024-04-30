@@ -16,7 +16,19 @@ jobs:
       needs: pull
       steps:
       - name: Check docker containers 
-        run: cd ../../../ && cat .env
+        run: docker ps
+      - name: Stop all docker containers 
+        continue-on-error: true
+        run: docker stop $(docker ps -q)
+      - name: Remove frontend container 
+        continue-on-error: true
+        run: docker rm frontend
+      - name: Docker build 
+        run: docker build .
+      - name: Docker compose up
+        run: docker compose up -d 
+      - name: All stoped containers restart
+        run: docker restart $(docker ps -a -q)
 
 
 
