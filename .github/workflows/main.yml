@@ -16,7 +16,7 @@ jobs:
       needs: pull
       steps:
       - name: Check docker containers 
-        run: cd ../../../ && ls
+        run: cd ../../../ && cat .env
 
 
 
