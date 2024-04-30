@@ -1,6 +1,6 @@
 import { FullInfoResponse } from "@/app/types/types";
 
-export const getDeveloperAndPublisher = (fullInfo: FullInfoResponse) => {
+export const getDeveloperAndPublisher = (fullInfo: FullInfoResponse["game"]) => {
   if (fullInfo) {
     const { developer, publisher } = fullInfo;
     const isMatchDeveloperAndPublisher = developer.name === publisher.name;

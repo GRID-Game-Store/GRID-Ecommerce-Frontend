@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { BookHeart, LogOut, ShoppingBasket, ShoppingCart } from "lucide-react";
+import {  Heart, LogOut, ShoppingCart } from "lucide-react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 interface IAvatarProps {
   name: string;
@@ -20,7 +20,7 @@ const UserButtons: React.FC<IUserButtonsProps> = ({push}) => {
         <ShoppingCart size={20} />
       </Button>
       <Button onClick={() => push("/wishList", {})}>
-        <BookHeart size={20} />
+        <Heart size={20} />
       </Button>
     </Stack>
   );

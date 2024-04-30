@@ -5,12 +5,12 @@ import {
 } from "../types/types";
 import { getAccessToken } from "../utils/sessionTokenAccessor";
 import { Balance } from "./components/balance";
-import { Recommendations } from "../components/main/recommendations/recommendations";
-import { ItemSmallRowForPlay } from "../components/shared/Item/variants/item";
-import { Items } from "../components/shared/Item/items";
 
-async function getAllInfoAboutUser(type: string) {
-  const url = `${process.env.URl}users/${type}`;
+import { ItemSmallRowForPlay } from "../components/shared/Item/variants/item";
+
+
+async function getAllInfoAboutUser(urlBackend: string | undefined ,type: string) {
+  const url = `${urlBackend}users/${type}`;
 
   let access_token = await getAccessToken();
 
@@ -30,10 +30,10 @@ async function getAllInfoAboutUser(type: string) {
   throw new Error("Failed to fetch data. Status: " + resp.status);
 }
 
-export default async function Home() {
-  const fullInfo: FullInfoUserResponse = await getAllInfoAboutUser("profile");
+export default async function Profile() {
+  const fullInfo: FullInfoUserResponse = await getAllInfoAboutUser(process.env.URl || process.env.NEXT_PUBLIC_URL ,"profile");
   const allGamesInAccount: AllGamesInAccountResponse =
-  await getAllInfoAboutUser("games");
+  await getAllInfoAboutUser(process.env.URl || process.env.NEXT_PUBLIC_URL,"games");
 
   return (
     <main

@@ -1,7 +1,8 @@
 "use client";
 import { UAH } from "@/app/components/shared/currency/UAH";
 import TransitionsModal from "@/app/components/shared/payment/modal";
-import { Button, Menu, MenuItem } from "@mui/material";
+import { Box, Button, Chip, Menu, MenuItem, dividerClasses } from "@mui/material";
+import { ChevronDown, Menu as  MenuIcon } from 'lucide-react';
 import React, { useState } from "react";
 
 const Balance = ({ balance }: { balance?: number }) => {
@@ -22,17 +23,31 @@ const Balance = ({ balance }: { balance?: number }) => {
   };
   return (
     <div>
+      <Box sx={{ display: "flex", alignItems: "center",  }}>
+      <Chip sx={{ fontSize: "20px", mr: "10px" }} label={
+        <div style={{ display: "flex", alignItems: "center", marginLeft: "10px" }}>
+          <span>{balance}</span>
+
+          <UAH  />
+        </div>
+        
+      } />
       <Button
         id="basic-button"
         aria-controls={openMenu ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={openMenu ? "true" : undefined}
         onClick={handleClick}
-        sx={{ width: "140px" }}
+        
+        sx={{ width: "10px", display: "flex", alignItems: "center", "& .MuiButton-endIcon": {
+         margin: "0"
+      } }}
+        endIcon={<ChevronDown  />}
       >
-        {balance}
-        <UAH />
+       
       </Button>
+      </Box>
+
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
@@ -44,7 +59,9 @@ const Balance = ({ balance }: { balance?: number }) => {
         sx={{ mt: "2px", position: "absolute", zIndex: "1" }}
       >
         <MenuItem onClick={handleOpen}>Recharge balance</MenuItem>
-        <MenuItem onClick={handleClose}>Transactions</MenuItem>
+        <MenuItem onClick={handleClose}>
+          Transactions
+          </MenuItem>
         <MenuItem onClick={handleClose}>Logout</MenuItem>
       </Menu>
       <TransitionsModal

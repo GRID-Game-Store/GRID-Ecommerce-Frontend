@@ -6,7 +6,7 @@ export const BuyButtonStateBuy = (
   isPending: boolean,
   message: any | undefined,
   error: string | undefined,
-  price: "free" | React.JSX.Element | null
+  price: "free" | React.JSX.Element | null | "problem with price"
 ) => {
   if (isSuccess)
     return {
@@ -30,6 +30,8 @@ export const BuyButtonStateWishlist = (
   isPending: boolean,
   error: string | undefined
 ) => {
+  
+  
   if (isSuccess)
     return {
       message: <Heart fill="#fff" /> || error,
