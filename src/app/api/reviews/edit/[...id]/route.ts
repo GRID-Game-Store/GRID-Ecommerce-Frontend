@@ -21,7 +21,7 @@ export async function PUT(req: Request) {
         "Content-Type": 'application/json', 
         charset: 'utf-8',
         Authorization: "Bearer " + accessToken,
-        Origin: "http://localhost:3000/",
+        Origin: process.env.URL || "",
       },
       body: JSON.stringify(body), 
       method: "PUT",

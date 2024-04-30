@@ -15,7 +15,7 @@ export async function DELETE(req: Request) {
         "Content-Type": "application/json",
         charset: "utf-8",
         Authorization: "Bearer " + accessToken,
-        Origin: "http://localhost:3000/",
+        Origin: process.env.URL || "",
       },
       method: "DELETE",
     });

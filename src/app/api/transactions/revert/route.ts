@@ -16,7 +16,7 @@ export async function POST(req: NextApiRequest) {
     const resp = await fetch(url, {
       headers: {
         Authorization: "Bearer " + accessToken,
-        Origin: "http://localhost:3000/",
+        Origin: process.env.URL || "",
       },
       method: "POST",
     });
