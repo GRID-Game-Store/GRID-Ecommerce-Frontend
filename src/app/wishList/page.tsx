@@ -1,13 +1,11 @@
 import { Box, Container, SxProps, Typography } from "@mui/material";
 import { ListGames } from "../components/main/recommendations/recommendationsModule";
-import { AllItemsInCartResponse, WishlistGamesResponse } from "../types/types";
-
 import { getAccessToken } from "../utils/sessionTokenAccessor";
-import { ActionsButtons } from "../cart/components/actionsButton";
 import { CSSProperties } from "react";
+import { WishlistGamesResponse } from "../types/types";
 
 async function getAllGamesInCart() {
-  const url = `${process.env.URl}wishlist`;
+  const url = `${process.env.URL}wishlist`;
 
   let access_token = await getAccessToken();
 
@@ -21,7 +19,6 @@ async function getAllGamesInCart() {
 
   if (resp.ok) {
     const data = await resp.json();
-    console.log(data);
     return data;
   }
 
