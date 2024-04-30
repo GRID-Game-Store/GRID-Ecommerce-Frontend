@@ -5,7 +5,7 @@ import { ActionsButtons } from "./components/actionsButton";
 import { getAccessToken } from "../utils/sessionTokenAccessor";
 
 async function getAllGamesInCart() {
-  const url = `${process.env.URl}cart`;
+  const url = `${process.env.URL}cart`;
 
   let access_token = await getAccessToken();
 

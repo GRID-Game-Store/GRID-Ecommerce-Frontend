@@ -5,12 +5,11 @@ import {
 } from "../types/types";
 import { getAccessToken } from "../utils/sessionTokenAccessor";
 import { Balance } from "./components/balance";
-
 import { ItemSmallRowForPlay } from "../components/shared/Item/variants/item";
 
 
-async function getAllInfoAboutUser(urlBackend: string | undefined ,type: string) {
-  const url = `${urlBackend}users/${type}`;
+async function getAllInfoAboutUser(type: string) {
+  const url = `${process.env.URL}users/${type}`;
 
   let access_token = await getAccessToken();
 
@@ -31,9 +30,9 @@ async function getAllInfoAboutUser(urlBackend: string | undefined ,type: string)
 }
 
 export default async function Profile() {
-  const fullInfo: FullInfoUserResponse = await getAllInfoAboutUser(process.env.URl || process.env.NEXT_PUBLIC_URL ,"profile");
+  const fullInfo: FullInfoUserResponse = await getAllInfoAboutUser("profile");
   const allGamesInAccount: AllGamesInAccountResponse =
-  await getAllInfoAboutUser(process.env.URl || process.env.NEXT_PUBLIC_URL,"games");
+  await getAllInfoAboutUser("games");
 
   return (
     <main
