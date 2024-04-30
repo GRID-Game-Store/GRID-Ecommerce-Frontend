@@ -4,7 +4,7 @@ services:
     image: frontend
     container_name: frontend
     env_file:
-      - docker.env
+      - ../../../.env
     build:
       context: ./
       target: production
