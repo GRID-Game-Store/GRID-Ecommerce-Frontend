@@ -18,9 +18,12 @@ jobs:
       - name: Check docker containers 
         run: docker ps
       - name: Stop all docker containers 
+        continue-on-error: true
         run: docker stop $(docker ps -q)
-      - name: remove frontend container 
+      - name: Remove frontend container 
         continue-on-error: true
         run: docker rm frontend
+      - name: Docker build 
+        run: docker build .
 
 
