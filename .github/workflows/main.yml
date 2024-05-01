@@ -17,6 +17,8 @@ jobs:
       steps:
       - name: Check docker containers 
         run: docker ps
+      - name: Install node modules
+        run: npm install --force
       - name: Stop all docker containers 
         continue-on-error: true
         run: docker stop $(docker ps -q)
