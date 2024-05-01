@@ -27,6 +27,8 @@ jobs:
         run: docker build .
       - name: Docker compose up
         run: docker compose up -d 
+      - name: Docker set at startup
+        run: docker update --restart unless-stopped frontend 
       - name: All stoped containers restart
         run: docker restart $(docker ps -a -q)
 
