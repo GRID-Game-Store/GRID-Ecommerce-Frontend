@@ -16,21 +16,17 @@ jobs:
       needs: pull
       steps:
       - name: Check docker containers 
-        run: docker ps
+        run: docker ps && pm2 list
       - name: Install node modules
         run: npm install --force
-      - name: Stop all docker containers 
-        continue-on-error: true
-        run: docker stop $(docker ps -q)
+      - name: Build 
+        run: npm run build
       - name: Remove frontend container 
         continue-on-error: true
-        run: docker rm frontend
-      - name: Docker build 
-        run: docker build .
-      - name: Docker compose up
-        run: docker compose up -d 
-      - name: Docker set at startup
-        run: docker update --restart unless-stopped frontend 
+        run: pm2 start npm --name frontend -- start
+      - name: Reload frontend  
+        continue-on-error: true
+        run: pm2 reload frontend
       - name: All stoped containers restart
         run: docker restart $(docker ps -a -q)
 
