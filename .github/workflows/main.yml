@@ -17,6 +17,8 @@ jobs:
       steps:
       - name: Check docker containers 
         run: docker ps && pm2 list
+      - name: .en transfer
+        run: cd ../../../ && cp .env /_work/frontend/frontend 
       - name: Install node modules
         run: npm install --force
       - name: Build 
