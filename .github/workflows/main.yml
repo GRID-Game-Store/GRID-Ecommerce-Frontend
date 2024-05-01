@@ -15,8 +15,11 @@ jobs:
       runs-on: self-hosted
       needs: pull
       steps:
-      - name: Check docker containers 
+      - name: Check docker containers and pm2 apps
         run: docker ps && pm2 list
+      - name: Stop all containers 
+        continue-on-error: true
+        run: docker stop $(docker ps -q) 
       - name: .env transfer
         run: cd ../../../ && cp .env ./_work/frontend/frontend 
       - name: ls
