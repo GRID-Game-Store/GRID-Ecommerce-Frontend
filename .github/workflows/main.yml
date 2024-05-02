@@ -21,9 +21,9 @@ jobs:
         continue-on-error: true
         run: docker stop $(docker ps -q) 
       - name: .env transfer
-        run: cd ../../../ && cp .env ./_work/frontend/frontend 
+        run: cd ../../../ && cp .env ./_work/frontend/frontend  
       - name: ls
-        run: ls
+        run: ls && cat .env
       - name: Install node modules
         run: npm install --force
       - name: Build 
