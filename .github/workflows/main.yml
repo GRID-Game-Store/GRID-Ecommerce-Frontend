@@ -32,7 +32,7 @@ jobs:
         continue-on-error: true
         run: pm2 delete frontend
       - name: Start frontend  
-        run: pm2 start npm --name frontend -- start && pm2 save
+        run: npm start
       - name: All stoped containers restart
         continue-on-error: true
         run: docker restart $(docker ps -a -q)
