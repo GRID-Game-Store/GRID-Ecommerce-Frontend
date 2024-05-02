@@ -35,6 +35,7 @@ export async function getData(url: string) {
     cache: "no-store",
   });
 
+  
   if (!res.ok) {
     res = await fetch(url, { cache: "no-store" });
   }
@@ -55,7 +56,7 @@ export default async function Game(props: { params: { id: number } }) {
     `${process.env.URL}reviews/${props.params.id}`
   );
 
-  console.log(fullInfo);
+
   
   return (
     <main

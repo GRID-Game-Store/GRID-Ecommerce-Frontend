@@ -21,7 +21,7 @@ export async function POST(req: Request) {
         "Content-Type": 'application/json', 
         charset: 'utf-8',
         Authorization: "Bearer " + accessToken,
-        Origin: process.env.URL || "",
+        Origin: process.env.NEXTAUTH_URL || "",
       },
       body: JSON.stringify(body), 
       method: "POST",

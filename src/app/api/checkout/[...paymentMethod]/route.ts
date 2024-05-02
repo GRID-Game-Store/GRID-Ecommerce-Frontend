@@ -20,7 +20,7 @@ export async function POST(req: NextApiRequest) {
     const resp = await fetch(url, {
       headers: {
         Authorization: "Bearer " + accessToken,
-        Origin: process.env.URL || "",
+        Origin: process.env.NEXTAUTH_URL || "",
       },
       method: "POST",
     });
