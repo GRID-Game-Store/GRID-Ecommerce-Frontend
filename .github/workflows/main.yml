@@ -30,7 +30,7 @@ jobs:
         run: npm run build
       - name: delete frontend  
         continue-on-error: true
-        run: pm2 delete frontend
+        run: ls
       - name: Start frontend  
         run: pm2 restart frontend
       - name: All stoped containers restart
