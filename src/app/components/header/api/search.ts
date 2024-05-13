@@ -1,7 +1,7 @@
 export const getGamesByTitle = async (value: string = "") => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_URL_CLIENT}games/search?title=${value}&qty=3`,
-  );
-  const game = res.json();
-  return game;
+  const res = await fetch(`/api/games/search?title=${value}&qty=3`);
+  const game = await res.json();
+  return game.data;
 };
+
+//    `${process.env.NEXT_PUBLIC_URL_CLIENT}games/search?title=${value}&qty=3`,

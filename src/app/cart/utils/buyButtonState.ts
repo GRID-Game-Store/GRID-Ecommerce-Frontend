@@ -5,7 +5,7 @@ export const BuyButtonState = (
   isError: boolean,
   data?: any,
 ) => {
-  if (isSuccess && !isError && data)
+  if (isSuccess && !isError && data && data.ok )
     return {
       message: "Success",
       messageRecharge: "Success",
@@ -17,7 +17,7 @@ export const BuyButtonState = (
       messageRecharge: "Loading...",
       disabled: true,
     };
-  else if (isError) return { message: "Error", disabled: true };
+  else if (data && !data.ok) return { message: "Error", disabled: false };
   else
     return {
       message: "Buy",

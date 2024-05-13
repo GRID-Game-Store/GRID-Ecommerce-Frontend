@@ -20,12 +20,14 @@ export interface ISysReqItemsProps {
 export interface IInfoProps {
   fullInfo: FullInfoResponse["game"];
   wishListCheck: boolean;
+  ownedByCurrentUser?: boolean
 }
 
 export interface IReviewsProps {
   gameID: number | undefined;
   myReview: MyReviewGameResponse;
-  allReviews: AllReviewsGameResponse
+  allReviews: AllReviewsGameResponse,
+  ownedByCurrentUser?: boolean 
 }
 export interface IReviewItemProps {
   author?: string;

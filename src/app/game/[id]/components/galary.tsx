@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 "use client";
 import React, { useRef, useState } from "react";
 
@@ -54,7 +55,7 @@ const Preview = ({
   }
 };
 
-// eslint-disable-next-line no-unused-vars
+
 const Item = ({
   src,
   setIsPreview,
@@ -70,10 +71,14 @@ const Item = ({
 }) => {
   const matches = useMediaQuery("(min-width:1200px)");
   const widthItem = matches ? 180 : 120;
+  const handleChange = () => {
+    setIsPreview({ src: additionSrc, isVideo: index });
+    window.scrollTo(0, 0);
+  }
   return (
     <button
       style={{ position: "relative" }}
-      onClick={() => setIsPreview({ src: additionSrc, isVideo: index })}
+      onClick={handleChange}
     >
       {src && (
         <img
@@ -125,7 +130,6 @@ export const Gallery: React.FC<IGalleryProps> = ({ gameMedia }) => {
     isPreview.isVideo === 0
       ? -8
       : isPreview.isVideo * widthItem + (isPreview.isVideo - 1) * 8;
-  const nodeRef = useRef(null);
   return (
     <Box position={"relative"}>
       <TransitionGroup>
@@ -136,7 +140,6 @@ export const Gallery: React.FC<IGalleryProps> = ({ gameMedia }) => {
         >
           <Box maxWidth={840} position={"relative"}>
             <Preview
-              ref={nodeRef}
               src={isPreview.src}
               isVideo={isPreview.isVideo}
             />

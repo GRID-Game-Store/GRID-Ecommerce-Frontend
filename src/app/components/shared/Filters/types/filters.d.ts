@@ -7,6 +7,7 @@ export interface IFiltersProps {
   refetch: () => void;
   tags?: AllFiltersByNameResponse;
   name?: string;
+  maxPrice?: number;
 }
 
 interface ITitleFilterGroupProps {
@@ -25,5 +26,16 @@ interface ICheckboxes {
 interface ICheckboxFilterGroupProps {
   checkboxes: AllFiltersByNameResponse;
   name: string;
+}
+
+
+export interface IFilterProps {
   refetch: () => void;
+  tags?: AllFiltersByNameResponse;
+  name?: string;
+  maxPrice?: number;
+}
+
+interface ISliderFilterGroupProps {
+  maxPrice?: number;
 }

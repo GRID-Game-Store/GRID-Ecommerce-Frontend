@@ -21,31 +21,45 @@ export async function GetStatusGameInWishlist(url: string) {
   if (res.status === 200) {
     return res.json();
   } else {
-    return true;
+    return false;
   }
 }
 
 export async function getData(url: string) {
   let access_token = await getAccessToken();
-  let res = await fetch(url, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + access_token,
-    },
-    cache: "no-store",
-  });
-
   
-  if (!res.ok) {
-    res = await fetch(url, { cache: "no-store" });
+  if (access_token) {
+    let res = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + access_token,
+      },
+      cache: "no-store",
+    });
+    if (res.status === 404) {
+      return [];
+    } else {
+      return res.json();
+    }
   }
-  return res.json();
+  
+  
+
+  if (!access_token) {
+    let res = await fetch(url, { cache: "no-store" });
+    if (res.status === 404) {
+      return [];
+    } else {
+      return res.json();
+    }
+  }
 }
 
 export default async function Game(props: { params: { id: number } }) {
   const fullInfo: FullInfoResponse = await getData(
     `${process.env.URL}games/${props.params.id}`
   );
+  
   const wishlistCheck: boolean = await GetStatusGameInWishlist(
     `${process.env.URL}wishlist/check/${props.params.id}`
   );
@@ -56,8 +70,6 @@ export default async function Game(props: { params: { id: number } }) {
     `${process.env.URL}reviews/${props.params.id}`
   );
 
-
-  
   return (
     <main
       style={{
@@ -70,6 +82,7 @@ export default async function Game(props: { params: { id: number } }) {
       <WrapperGamePage
         fullInfo={fullInfo.game}
         wishListCheck={wishlistCheck}
+        ownedByCurrentUser={fullInfo?.ownedByCurrentUser}
         myReview={myReview}
         allReviews={AllReviews}
       />

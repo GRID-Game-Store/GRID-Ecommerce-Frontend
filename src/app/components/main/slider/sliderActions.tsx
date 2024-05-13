@@ -5,6 +5,7 @@ import Link from "next/link";
 import { AMOUNT_SLIDES } from "@/app/constants/slider";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import {
+  Box,
   Button,
   Chip,
   Container,
@@ -23,6 +24,7 @@ import {
 } from "./types/slider.d";
 import { getPrice } from "../../shared/Item/variants/item";
 import { useRouter } from "next/navigation";
+import { getBtnBackgroundColor } from "../../shared/Item/utils/btnColor";
 
 const Title: React.FC<ITitleProps> = ({ title }) => {
   const matches = useMediaQuery("(min-width:1200px)");
@@ -62,12 +64,33 @@ const Description: React.FC<IDescriptionProps> = ({ description }) => {
   );
 };
 
-const ButtonBuy = ({ price }: { price: number | undefined }) => {
+const ButtonBuy = ({
+  price,
+  discount,
+}: {
+  price: number | undefined;
+  discount: number | undefined;
+}) => {
   const priceOrFree = getPrice(price);
   return (
-    <Button size="large" sx={{ minWidth: "280px", marginRight: "4px" }}>
-      {priceOrFree}
-    </Button>
+    <Box>
+      {discount ? (
+        <Chip
+          label={`discount: ${discount}%`}
+          sx={{ mr: "5px", height: "48px", borderColor: "#FF7A00" }}
+        />
+      ) : null}
+      <Button
+        size="large"
+        sx={{
+          minWidth: "280px",
+          marginRight: "4px",
+          backgroundColor: getBtnBackgroundColor(discount),
+        }}
+      >
+        {priceOrFree}
+      </Button>
+    </Box>
   );
 };
 
@@ -115,11 +138,10 @@ const ButtonsNavigate: React.FC<IButtonsNavigate> = ({
           sx={StylingButtons(top)[1]}
           aria-label="prev slide"
           disableRipple
-          onClick={(e) =>{
-            e.stopPropagation()
-            changeCurrentSlide(current - 1, setCurrent, setIsTouched)
-          }
-          }
+          onClick={(e) => {
+            e.stopPropagation();
+            changeCurrentSlide(current - 1, setCurrent, setIsTouched);
+          }}
         >
           <ArrowRightAltIcon fontSize="large" />
         </Button>
@@ -129,11 +151,10 @@ const ButtonsNavigate: React.FC<IButtonsNavigate> = ({
           sx={StylingButtons(top)[0]}
           disableRipple
           aria-label="next slide"
-          onClick={(e) =>{
-            e.stopPropagation()
-            changeCurrentSlide(current + 1, setCurrent, setIsTouched)
-          }
-          }
+          onClick={(e) => {
+            e.stopPropagation();
+            changeCurrentSlide(current + 1, setCurrent, setIsTouched);
+          }}
         >
           <ArrowRightAltIcon sx={{ filter: "blur(0px)" }} fontSize="large" />
         </Button>
@@ -158,7 +179,7 @@ const SliderActions: React.FC<TSlierItemsProps> = ({
     !matches && slides.genres ? slides.genres.slice(0, 3) : slides.genres;
 
   return (
-    <Container  sx={SliderWrapStyle}>
+    <Container sx={SliderWrapStyle}>
       <ButtonsNavigate
         setCurrent={setCurrent}
         setIsTouched={setIsTouched}
@@ -179,7 +200,7 @@ const SliderActions: React.FC<TSlierItemsProps> = ({
       </Stack>
       <Container disableGutters sx={StyleWrapInfo}>
         <Link href={`/game/${slides.id}`} style={{ color: "#fff" }}>
-          <ButtonBuy price={slides.price} />
+          <ButtonBuy price={slides.price} discount={slides.discount} />
         </Link>
       </Container>
     </Container>

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-import { Box, Button, Chip, Stack, useMediaQuery } from "@mui/material";
+import { Badge, Box, Button, Chip, Stack, useMediaQuery } from "@mui/material";
 
 import {
   ButtonBuy,
@@ -14,6 +14,9 @@ import {
 import { IItem, IItemLargePreview, IItemPlay, THover } from "../types/item";
 import { ActionsButtons } from "@/app/cart/components/actionsButton";
 import { UAH } from "../../currency/UAH";
+import { usePathname, useRouter } from "next/navigation";
+import { BadgeInfo, Hotel } from "lucide-react";
+import { getBtnBackgroundColor } from "../utils/btnColor";
 
 export const getPrice = (price: number | undefined) => {
   return price !== undefined && price ? (
@@ -36,14 +39,22 @@ export const ItemSmallRow: React.FC<IItem> = ({ game }) => {
       width={width}
       height={"220px"}
       mt={"20px"}
+      position={"relative"}
       sx={{ marginRight: "40px !important" }}
     >
-      <CoverItem
-        width={150}
-        linkCoverImg={game.coverImageUrl}
-        isOwned={game.ownedByCurrentUser}
-        idGame={game.id}
-      />
+      <Badge
+        color="warning"
+        badgeContent={game.discount ? `${game.discount}%` : 0}
+        anchorOrigin={{ horizontal: "right", vertical: "top" }}
+        sx={{ flexDirection: "column" }}
+      >
+        <CoverItem
+          width={150}
+          linkCoverImg={game.coverImageUrl}
+          isOwned={game.ownedByCurrentUser}
+          idGame={game.id}
+        />
+      </Badge>
       <TypographyItem
         fontSize="17px"
         whiteSpace="nowrap"
@@ -52,12 +63,18 @@ export const ItemSmallRow: React.FC<IItem> = ({ game }) => {
       />
       <ListTagsOrGenres arrayElements={game.genres} spaceBetween />
       <Link href={`/game/${game.id}`} style={{ color: "#fff" }}>
-        <Button sx={{ width: "100%" }}>{price}</Button>
+        <Button sx={{ width: "100%", backgroundColor: getBtnBackgroundColor(game.discount) }}>
+          {price}
+        </Button>
       </Link>
     </Box>
   );
 };
-export const ItemSmallRowForPlay: React.FC<IItemPlay> = ({ game, purchaseDate, playtime }) => {
+export const ItemSmallRowForPlay: React.FC<IItemPlay> = ({
+  game,
+  purchaseDate,
+  playtime,
+}) => {
   const matches = useMediaQuery("(min-width:1200px)");
   const width = matches ? "315px" : "132px";
   return (
@@ -68,28 +85,40 @@ export const ItemSmallRowForPlay: React.FC<IItemPlay> = ({ game, purchaseDate, p
       mt={"20px"}
       sx={{ marginRight: "40px !important", position: "relative" }}
     >
-      <Box sx={{"&:before": {content: "''", position: "absolute", top: "0", left: "0", width: "100%", height: "100%", backgroundColor: "#000", zIndex: "1", opacity: "0.6"}}}>
-      <CoverItem
-        width={315}
-        linkCoverImg={game.coverImageUrl}
-        isOwned={game.ownedByCurrentUser}
-        idGame={game.id}
-      />
+      <Box
+        sx={{
+          "&:before": {
+            content: "''",
+            position: "absolute",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "#000",
+            zIndex: "1",
+            opacity: "0.6",
+          },
+        }}
+      >
+        <CoverItem
+          width={315}
+          linkCoverImg={game.coverImageUrl}
+          isOwned={game.ownedByCurrentUser}
+          idGame={game.id}
+        />
       </Box>
       <Box position={"absolute"} bottom={"80px"} left={"10px"} zIndex={2}>
         <TypographyItem
           fontSize="17px"
           whiteSpace="normal"
-          text={game.title} 
+          text={game.title}
           link={`/game/${game.id}`}
         />
         <Stack direction={"row"} spacing={1}>
-          <Chip label={purchaseDate} sx={{fontSize: "10px"}} />
-          <Chip label={`Play time ${playtime}`} sx={{fontSize: "10px"}} />
+          <Chip label={purchaseDate} sx={{ fontSize: "10px" }} />
+          <Chip label={`Play time ${playtime}`} sx={{ fontSize: "10px" }} />
         </Stack>
-        
-      </Box >
-      
+      </Box>
     </Box>
   );
 };
@@ -113,6 +142,12 @@ export const ItemSmallColumnForSearch: React.FC<IItem> = ({
       }}
       alignItems={"center"}
     >
+      <Badge
+        color="warning"
+        badgeContent={game.discount ? `${game.discount}%` : 0}
+        anchorOrigin={{ horizontal: "right", vertical: "top" }}
+        sx={{ flexDirection: "column" }}  
+      >
       <CoverItem
         width={144}
         minHeight={70}
@@ -120,6 +155,7 @@ export const ItemSmallColumnForSearch: React.FC<IItem> = ({
         isOwned={game.ownedByCurrentUser}
         idGame={game.id}
       />
+      </Badge>
       <Box display={"flex"} flexDirection={"column"} alignItems={"flex-start"}>
         <TypographyItem
           ml={"10px"}
@@ -143,7 +179,7 @@ export const ItemSmallColumnForSearch: React.FC<IItem> = ({
           height={"30px"}
           position={"relative"}
         >
-          <ButtonBuy price={price} href={`game/${game.id}`} />
+          <ButtonBuy price={price} href={`game/${game.id}`} discount={game.discount} />
         </Box>
       </Box>
     </Box>
@@ -158,20 +194,32 @@ export const ItemSmallColumn: React.FC<IItem> = ({
 }) => {
   const matches = useMediaQuery("(min-width:1200px)");
   const price = getPrice(game.price);
+  const path = usePathname();
   const widthBlockInCart = !isCart ? "280px" : "650px";
+  const { push } = useRouter();
+  const isAllGames = path === "/games";
   return (
     <Box
       width={"95%"}
       onMouseEnter={() => setActiveHover && setActiveHover()}
+      onClick={() => push(`/game/${game.id}`)}
       key={game.id}
       borderRadius={"5px"}
       display={"flex"}
+      alignItems={"center"}
       sx={{
         marginLeft: "10px !important",
         backgroundColor: "#000",
         marginBottom: "20px !important",
+        position: "relative",
       }}
     >
+      <Badge
+       color="warning"
+       badgeContent={game.discount ? `${game.discount}%` : 0}
+       anchorOrigin={{ horizontal: "left", vertical: "top" }}
+       sx={{ flexDirection: "column" }}
+      >
       <CoverItem
         width={170}
         linkCoverImg={game.coverImageUrl}
@@ -179,7 +227,8 @@ export const ItemSmallColumn: React.FC<IItem> = ({
         isOwned={game.ownedByCurrentUser}
         idGame={game.id}
       />
-      <Box position={"relative"}>
+      </Badge>
+      <Box>
         <TypographyItem
           mt={"10px"}
           ml={"10px"}
@@ -188,6 +237,7 @@ export const ItemSmallColumn: React.FC<IItem> = ({
           text={game.title}
           link={`/game/${game.id}`}
         />
+
         {matches && (
           <>
             <Box width={widthBlockInCart}>
@@ -199,6 +249,7 @@ export const ItemSmallColumn: React.FC<IItem> = ({
                 text={game.description}
               />
             </Box>
+
             {matches && (
               <Box
                 width={"100%"}
@@ -214,19 +265,32 @@ export const ItemSmallColumn: React.FC<IItem> = ({
                     game.genres && game.genres.slice(game.genres.length - 3)
                   }
                 />
-                {isCart && <ActionsButtons cost={game.price} cartId={cartId || game.id} />}
+                {isCart && (
+                  <ActionsButtons
+                    cost={game.price}
+                    cartId={cartId || game.id}
+                  />
+                )}
               </Box>
             )}
           </>
         )}
-        {!matches && (
-          <Link href={`/game/${game.id}`} style={{ color: "#fff" }}>
-            <Button sx={{ mt: "10px", ml: "10px", width: "150px" }}>
-              {price}
-            </Button>
-          </Link>
-        )}
       </Box>
+      {isAllGames && (
+        <Link href={`/game/${game.id}`} style={{ color: "#fff" }}>
+          <Button
+            sx={{
+              width: "150px",
+              position: "absolute",
+              right: "10px",
+              bottom: "20px",
+              backgroundColor: getBtnBackgroundColor(game.discount),
+            }}
+          >
+            {price} 
+          </Button>
+        </Link>
+      )}
     </Box>
   );
 };
@@ -238,8 +302,7 @@ export const ItemLargePreview: React.FC<IItemLargePreview> = ({
   const [hover, setHover] = useState<THover>(0);
   const price = getPrice(game?.price);
 
-  
-  const developerAndPublisher = 
+  const developerAndPublisher =
     game && game.developer && game.developer.name === game.publisher.name
       ? game.developer.name
       : game && `${game.developer.name} & ${game.publisher.name}`;
@@ -291,7 +354,7 @@ export const ItemLargePreview: React.FC<IItemLargePreview> = ({
         }
       />
       <Link href={`/game/${game?.id}`} style={{ color: "#fff" }}>
-        <Button sx={{ width: "100%", position: "absolute", bottom: 0 }}>
+        <Button sx={{ width: "100%", position: "absolute", bottom: 0, background: getBtnBackgroundColor(game?.discount), }}>
           {price}
         </Button>
       </Link>

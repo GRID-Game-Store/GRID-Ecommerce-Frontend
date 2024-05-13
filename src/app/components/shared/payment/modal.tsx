@@ -24,6 +24,7 @@ import { useGameBuyQuery, useGetBalanceQuery } from "./api/query";
 import { useState } from "react";
 import { usePaymentRedirect } from "@/app/cart/hooks/usePaymentRedirect";
 import { BuyButtonState } from "@/app/cart/utils/buyButtonState";
+import { hashKey } from "@tanstack/react-query";
 
 const style: SxProps = {
   position: "absolute" as "absolute",
@@ -86,10 +87,11 @@ const PaymentForm = ({ model, value }: { model: boolean; value: string }) => {
   const paymentsMethodsFromProps =
     model !== true ? paymentMethodsWithoutBalance : paymentMethods;
   const paymentMethodsUI = Object.keys(paymentsMethodsFromProps).map((key) => {
+    const paymentMethod = key === "Stripe" ? "Card" : key;
     return (
-      <>
-        <FormControlLabel value={key} control={<Radio />} label={key} />
-      </>
+      <div key={paymentMethod}>
+        <FormControlLabel value={key} control={<Radio />} label={paymentMethod} />
+      </div>
     );
   });
   return (
@@ -167,6 +169,7 @@ const TransitionsModal: React.FC<ITransitionsModalProps> = ({
     ? totalCost && Boolean(balance <= totalCost)
     : false;
   const allItemsIntoCart = allCartsIds && allCartsIds.length;
+  const withBalance = balance !== undefined ?`(${balance} UAH)` : "";
   return (
     <>
       <Modal
@@ -225,7 +228,7 @@ const TransitionsModal: React.FC<ITransitionsModalProps> = ({
                   setIsPaymentWithBalance(checked)
                 }
                 control={<Checkbox />}
-                label={`With balance (${balance} UAH) `}
+                label={`With balance ${withBalance}`}
                 disabled={isBalanceChecked || !isCanPayWithBalance}
               />
             )}

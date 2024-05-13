@@ -2,6 +2,7 @@ import mediaQuery from "css-mediaquery";
 
 import { createTheme } from "@mui/material/styles";
 import { BorderBottom } from "@mui/icons-material";
+import { colors } from "@mui/material";
 
 // const ssrMatchMedia = (deviceType: string) => (query: string) => ({
 //   matches: mediaQuery.match(query, {
@@ -14,6 +15,9 @@ export const mainTheme = (deviceType: string) =>
     palette: {
       primary: {
         main: "#08AD2C",
+      },
+      warning: {
+        main: "#FF7A00",
       },
       info: {
         main: "#fff",
@@ -64,6 +68,23 @@ export const mainTheme = (deviceType: string) =>
             },
           },
 
+        },
+      },
+      MuiSelect: {
+        styleOverrides: {
+          root: {
+            color: "#fff",
+            border: "2.4px #fff solid",
+            borderTop: "none",
+            borderLeft: "none",
+            borderRight: "none",
+            "&::after": {
+              border: "none",
+            }
+          },
+          icon: {
+            color: "#fff",
+          },
         },
       },
 

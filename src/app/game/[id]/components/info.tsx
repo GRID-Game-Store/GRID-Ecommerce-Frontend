@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import { ListTagsOrGenres } from "@/app/components/shared/Item/components/components";
-import { Box, Button, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, Chip, Typography, useMediaQuery } from "@mui/material";
 import { useRouter } from "next/navigation";
 import {
   useAddGameToCartMutation,
@@ -19,6 +19,7 @@ import {
   BuyButtonStateWishlist,
 } from "../utils/buttonState";
 import { signIn } from "next-auth/react";
+import { getBtnBackgroundColor } from "@/app/components/shared/Item/utils/btnColor";
 
 const Rating = ({ permit_age }: { permit_age: string }) => {
   return (
@@ -36,8 +37,11 @@ const Rating = ({ permit_age }: { permit_age: string }) => {
   );
 };
 
-
-export const Info: React.FC<IInfoProps> = ({ fullInfo, wishListCheck }) => {
+export const Info: React.FC<IInfoProps> = ({
+  fullInfo,
+  wishListCheck,
+  ownedByCurrentUser = false,
+}) => {
   const matches = useMediaQuery("(min-width:1200px)");
   const router = useRouter();
   const { mutate, isSuccess, isPending, data } = useAddGameToCartMutation(
@@ -54,9 +58,13 @@ export const Info: React.FC<IInfoProps> = ({ fullInfo, wishListCheck }) => {
   const platforms = fullInfo && getPlatforms(fullInfo.platforms);
   const developerAndPublisher = getDeveloperAndPublisher(fullInfo);
   const firstGenre =
-  fullInfo && fullInfo.genres && fullInfo.genres[0] ? fullInfo.genres[0].name : "";
+    fullInfo && fullInfo.genres && fullInfo.genres[0]
+      ? fullInfo.genres[0].name
+      : "";
   const secondGenre =
-  fullInfo && fullInfo.genres && fullInfo.genres[1] ? fullInfo.genres[1].name : "";
+    fullInfo && fullInfo.genres && fullInfo.genres[1]
+      ? fullInfo.genres[1].name
+      : "";
   const genres = `${firstGenre} ${secondGenre}`;
 
   const onAddToCart = () => {
@@ -69,22 +77,27 @@ export const Info: React.FC<IInfoProps> = ({ fullInfo, wishListCheck }) => {
   };
 
   const { message: buyButtonStateMessage, disabled: buyButtonStateDisabled } =
-    BuyButtonStateBuy(isSuccess, isPending, data, data?.error, price);
+    BuyButtonStateBuy(
+      isSuccess || ownedByCurrentUser,
+      isPending,
+      data,
+      data?.error || "in library",
+      price
+    );
+
   const {
     message: wishlistButtonStateMessage,
     disabled: wishlistButtonStateDisabled,
   } = BuyButtonStateWishlist(
     isSuccessWishlist || wishListCheck,
     isPendingWishlist,
-    dataWishlist?.data?.error
+    dataWishlist
   );
   useEffect(() => {
-    if (data?.error) {
+    if (data?.error || dataWishlist?.error) {
       signIn("keycloak");
     }
-  }, [data?.error]);
-
-
+  }, [data?.error, dataWishlist?.error]);
 
   return (
     <Box ml={ml} mt={mt} mr={mr}>
@@ -115,9 +128,14 @@ export const Info: React.FC<IInfoProps> = ({ fullInfo, wishListCheck }) => {
           arrayElements={fullInfo.tags}
         />
       )}
-
       {fullInfo?.permitAge && <Rating permit_age={fullInfo?.permitAge} />}
-      <Box display={"flex"}>
+      <Box display={"flex"} alignItems={"center"}>
+        {fullInfo?.discount ? (
+          <Chip
+            label={`discount: ${fullInfo.discount}%`}
+            sx={{ mr: "5px", height: "50px", borderColor: "#FF7A00" }}
+          />
+        ) : null}
         <Button
           disabled={buyButtonStateDisabled}
           onClick={onAddToCart}
@@ -128,6 +146,10 @@ export const Info: React.FC<IInfoProps> = ({ fullInfo, wishListCheck }) => {
             pl: "10px",
             mr: "5px",
             height: "50px",
+          background: getBtnBackgroundColor(fullInfo?.discount),
+            "&.Mui-disabled": {
+              borderColor: getBtnBackgroundColor(fullInfo?.discount),
+            },
           }}
         >
           {buyButtonStateMessage}
@@ -135,7 +157,13 @@ export const Info: React.FC<IInfoProps> = ({ fullInfo, wishListCheck }) => {
         <Button
           disabled={wishlistButtonStateDisabled}
           onClick={onAddWishlist}
-          sx={{ height: "50px" }}
+          sx={{
+            height: "50px",
+            background: getBtnBackgroundColor(fullInfo?.discount),
+            "&.Mui-disabled": {
+              borderColor: getBtnBackgroundColor(fullInfo?.discount),
+            },
+          }}
         >
           {wishlistButtonStateMessage}
         </Button>

@@ -22,6 +22,7 @@ import {
 } from "../types/item";
 import { ArrowDownRight, ArrowUpLeft, ArrowUpRight } from "lucide-react";
 import { useOpenClose } from "../hooks/useOpenClose";
+import { getBtnBackgroundColor } from "../utils/btnColor";
 
 //! TODO FIX WARN WITH REF
 export const CoverItem: React.FC<ICoverItemProps> = ({
@@ -41,7 +42,7 @@ export const CoverItem: React.FC<ICoverItemProps> = ({
     return (
       <>
         {hover === 0 || hover === undefined ? (
-          <a href={`/game/${idGame}`} target="_blank">
+          <a href={`/game/${idGame}`} >
             <Badge
               color="primary"
               badgeContent={badgeContent}
@@ -189,7 +190,7 @@ export const ListTagsOrGenres: React.FC<IListTagsOrGenresProps> = ({
   );
 };
 
-export const ButtonBuy: React.FC<IButtonBuyProps> = ({ price, href }) => {
+export const ButtonBuy: React.FC<IButtonBuyProps> = ({ price, href, discount }) => {
   return (
     <Link href={href}>
       <Button
@@ -198,6 +199,7 @@ export const ButtonBuy: React.FC<IButtonBuyProps> = ({ price, href }) => {
           position: "absolute",
           bottom: "0",
           height: "100%",
+          background: getBtnBackgroundColor(discount),
         }}
       >
         {price}

@@ -1,6 +1,7 @@
 "use client";
 import {
   Box,
+  Button,
   Checkbox,
   Divider,
   FormControlLabel,
@@ -10,21 +11,18 @@ import {
 } from "@mui/material";
 import {
   ICheckboxFilterGroupProps,
+  IFilterProps,
+  ISliderFilterGroupProps,
   ITitleFilterGroupProps,
   IWrapperFilterGroupProps,
 } from "../types/filters";
-import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { AllFiltersByNameResponse } from "@/app/types/types";
 import React from "react";
+import { ArrowDownIcon } from "lucide-react";
+import { UAH } from "../../currency/UAH";
 
 
-interface IFilterProps {
-  refetch: () => void;
-  tags?: AllFiltersByNameResponse;
-  name?: string;
-}
-const WrapperFilterGroup: React.FC<IWrapperFilterGroupProps> = ({
+export const WrapperFilterGroup: React.FC<IWrapperFilterGroupProps> = ({
   children,
 }) => {
   return (
@@ -45,67 +43,71 @@ const WrapperFilterGroup: React.FC<IWrapperFilterGroupProps> = ({
   );
 };
 
-const TitleFilterGroup: React.FC<ITitleFilterGroupProps> = ({ name }) => {
+export const TitleFilterGroup: React.FC<ITitleFilterGroupProps> = ({ name }) => {
   return (
     <>
       <Typography pl={"12px"} fontSize={"20px"} fontWeight={"600"}>
         {name}
       </Typography>
+
       <Divider />
     </>
   );
 };
 
-const SliderFilterGroup: React.FC = () => {
-  const { push } = useRouter();
+const SliderFilterGroup: React.FC<ISliderFilterGroupProps> = ({ maxPrice }) => {
+  const [maxPriceURL, setMaxPriceURL] = useQueryState("maxPrice", { shallow: false });
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
-    if (!window.location.search) {
-      push(`?maxPrice=${newValue}`);
-    } else {
-      const changeURL = window.location.search.replace(
-        /maxPrice=\d+/g,
-        `maxPrice=${newValue}`,
-      );
-      push(`${changeURL}`, { scroll: false });
-    }
+    setMaxPriceURL(newValue.toString());
   };
 
   return (
     <>
-      <Box p={"20px"} pb={"10px"}>
+      { maxPrice && <Box p={"20px"} pb={"10px"}>
         <Slider
           onChange={handleSliderChange}
           aria-label="Temperature"
-          defaultValue={30}
+          defaultValue={maxPrice}
           valueLabelDisplay="auto"
-          step={10}
+          step={150}
           marks
-          min={10}
-          max={110}
+          min={0}
+          max={maxPrice}
+          value={maxPriceURL ? parseInt(maxPriceURL) : ++maxPrice  }
         />
+        <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
         <Typography textAlign={"center"} fontSize={"20px"} fontWeight={"300"}>
-          300
+          {maxPriceURL ? maxPriceURL : maxPrice} 
         </Typography>
-      </Box>
+        <UAH />
+        </Box>
+      </Box>}
     </>
   );
 };
 
+
+
+
+
+
 const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({
   checkboxes,
   name,
-  refetch,
 }) => {
   const [state, setState] = useQueryState(name, { shallow: false });
+  const isTags = name === "tags";
   const checkboxesItems = checkboxes.map((checkbox) => {
     const handleCheckboxChange = (
       event: React.SyntheticEvent,
-      checked: boolean,
+      checked: boolean
     ) => {
       checked &&
         setState((prev) => {
-          if (checkbox.id && !prev?.includes(checkbox.id.toString())) {
-            const newURl = prev ? `${prev},${checkbox.id}` : `${checkbox.id}`;
+          if (checkbox.id && !prev?.includes(checkbox.name.toString())) {
+            const newURl = prev
+              ? `${prev},${!isTags ? checkbox.name : checkbox.id}`
+              : `${!isTags ? checkbox.name : checkbox.id}`;
             return newURl;
           } else {
             return prev;
@@ -113,9 +115,9 @@ const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({
         });
       !checked &&
         setState((prev) => {
-          if (checkbox.id && prev?.includes(checkbox.id.toString())) {
-            const newParam = prev
-              .replace(`${checkbox.id}`, "")
+          if (checkbox.name || checkbox.id && prev?.includes(checkbox.name.toString())) {
+            const newParam = prev && prev
+              .replace(`${!isTags ? checkbox.name : checkbox.id}`, "")
               .split(",")
               .filter((item) => item)
               .join(",");
@@ -124,15 +126,16 @@ const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({
             return prev;
           }
         });
-      refetch();
     };
+
     const checked =
-      checkbox.id && state?.split(",").includes(checkbox.id.toString());
+       isTags && checkbox.id  ? state?.split(",").includes(checkbox.id.toString()) : state?.includes(checkbox.name.toString());
     const disabled =
       !Boolean(checked) && Boolean(state?.split(",").length) && name !== "tags";
+
     return (
       <FormControlLabel
-        key={checkbox.id}
+        key={checkbox.name}
         onChange={handleCheckboxChange}
         sx={{ pl: "10px" }}
         control={<Checkbox sx={{ width: "50px", height: "50px" }} />}
@@ -145,31 +148,41 @@ const CheckboxFilterGroup: React.FC<ICheckboxFilterGroupProps> = ({
   return <>{checkboxesItems}</>;
 };
 
-export const FilterSlider: React.FC<IFilterProps> = () => {
+export const FilterSlider: React.FC<IFilterProps> = ({maxPrice}) => {
   return (
     <WrapperFilterGroup>
       <TitleFilterGroup name={"Narrow by Price"} />
-      <SliderFilterGroup />
+      <SliderFilterGroup maxPrice={maxPrice} />
     </WrapperFilterGroup>
   );
 };
 
 export const FilterCheckBox: React.FC<IFilterProps> = ({
-  refetch,
   tags,
   name,
 }) => {
+  const [counterItems, setCounterItems] = React.useState(10);
+  const [valueSearch, setValueSearch] = React.useState("");
+  const MoreThenInitialValue = tags && tags?.length > 10;
+  const filteredTags = tags && tags.slice(0, counterItems).filter((tag) => tag.name.toLowerCase().includes(valueSearch.toLowerCase()))
   return (
     <WrapperFilterGroup>
       <TitleFilterGroup name={name} />
+      <TextField value={valueSearch}  onChange={(e) => setValueSearch(e.target.value)} placeholder={`Search ${name}`} />
       {tags && name && (
         <CheckboxFilterGroup
-          checkboxes={tags}
-          refetch={refetch}
+          checkboxes={filteredTags || []}
           name={name?.toLowerCase()}
         />
       )}
-      <TextField placeholder="Search" />
+      {MoreThenInitialValue && (
+        <Button
+          onClick={() => setCounterItems(counterItems + 10)}
+          sx={{ width: "100%" }}
+        >
+          <ArrowDownIcon size={15} />
+        </Button>
+      )}
     </WrapperFilterGroup>
   );
 };

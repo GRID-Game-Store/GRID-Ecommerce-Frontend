@@ -175,7 +175,7 @@ const AddNewAndChangeReview: React.FC<IAddNewAndChangeReviewProps> = ({
   );
 };
 
-const Reviews: React.FC<IReviewsProps> = ({ gameID, myReview, allReviews }) => {
+const Reviews: React.FC<IReviewsProps> = ({ gameID, myReview, allReviews, ownedByCurrentUser }) => {
   const [value, setValue] = useState<string | null>(myReview.comment || "");
   const [rating, setRating] = useState<number | null>(myReview.rating || 0);
   const router = useRouter();
@@ -212,7 +212,7 @@ const Reviews: React.FC<IReviewsProps> = ({ gameID, myReview, allReviews }) => {
 
   return (
     <Box width={"860px"} mt={"20px"} mr={"0px"} height={"400px"}>
-      <AddNewAndChangeReview
+      {ownedByCurrentUser && <AddNewAndChangeReview
         value={value}
         setValue={setValue}
         rating={rating}
@@ -222,7 +222,7 @@ const Reviews: React.FC<IReviewsProps> = ({ gameID, myReview, allReviews }) => {
         deleteReview={deleteReview.mutate}
         sendReviewButtonState={sendReviewButtonState}
         deleteReviewButtonState={deleteReviewButtonState}
-      />
+      />}
       {allReviews.map((review: ReviewItemGameResponse[0]) => {
         return (
           review && (

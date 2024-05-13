@@ -15,6 +15,8 @@ import {
 import { ItemSmallColumnForSearch } from "../../shared/Item/variants/item";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { RandomResponse } from "@/app/types/types";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 const SkeletonItem = () => {
   return (
@@ -130,6 +132,19 @@ const Search: React.FC = () => {
               {isSuccess && items}
               {isLoading && !isFetched && <SkeletonWrapper />}
               {data && !data[0] && <NotFound />}
+              <Box justifyContent={"center"} display={"flex"}>
+              <Link href={`/games?title=${value}`} style={{ color: "#fff" }}>
+                <Typography
+                  sx={{
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                  }}
+                >
+                  View more 
+                </Typography>
+              </Link>
+              </Box>
             </Box>
           ) : (
             <></>
@@ -147,4 +162,5 @@ const BoxWrapper: SxProps = {
   zIndex: "2",
   borderRadius: "0px 0px 10px 5px",
   boxShadow: "0 5px 15px rgba(8,173,44,0.2 )",
+ 
 };

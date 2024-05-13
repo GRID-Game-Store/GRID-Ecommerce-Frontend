@@ -11,26 +11,32 @@ import { SysReq } from "./sysReq";
 import getQueryClient from "@/app/reactQuery/get-query-client";
 import { dehydrate } from "@tanstack/react-query";
 import Hydrate from "@/app/reactQuery/Hydrate";
-import React from "react";
+import React, { useEffect } from "react";
 import { Reviews } from "./reviews";
+import { e } from "nuqs/dist/serializer-RqlbYgUW";
+import { useSetRecentGames } from "@/app/components/shared/recentGames/hooks/useSetRecentGames";
 
 interface IWrapperGamePageProps {
   fullInfo: FullInfoResponse["game"];
   wishListCheck: boolean;
   myReview: MyReviewGameResponse;
   allReviews: AllReviewsGameResponse;
+  ownedByCurrentUser?: boolean;
 }
 const WrapperGamePage: React.FC<IWrapperGamePageProps> = ({
   fullInfo,
   wishListCheck,
   myReview,
   allReviews,
+  ownedByCurrentUser,
 }) => {
   const matches = useMediaQuery("(min-width:1200px)");
   const alignItems = !matches ? "center" : undefined;
   const flexDirection = !matches ? "column" : "row";
   const queryClient = getQueryClient();
   const dehydratedState = dehydrate(queryClient);
+  useSetRecentGames(fullInfo?.id);
+  
 
   return (
     <Box display={"grid"} justifyContent={"center"} sx={{ gridGap: "40px" }}>
@@ -42,11 +48,12 @@ const WrapperGamePage: React.FC<IWrapperGamePageProps> = ({
       >
         <Gallery gameMedia={fullInfo?.gameMedia} />
         <Hydrate state={dehydratedState}>
-          <Info fullInfo={fullInfo} wishListCheck={wishListCheck} />
+          <Info fullInfo={fullInfo} wishListCheck={wishListCheck} ownedByCurrentUser={ownedByCurrentUser} />
         </Hydrate>
       </Box>
       <Reviews
         gameID={fullInfo?.id}
+        ownedByCurrentUser={ownedByCurrentUser}
         myReview={myReview}
         allReviews={allReviews}
       />

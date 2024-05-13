@@ -12,8 +12,7 @@ export async function POST(req: NextApiRequest) {
 
   if (session) {
     const url = `${process.env.URL}checkout/recharge/${paymentMethod}/create-payment?amount=${amount}`;
-
-    let accessToken = await getAccessToken();
+    let accessToken = await getAccessToken(session);
 
     const resp = await fetch(url, {
       headers: {

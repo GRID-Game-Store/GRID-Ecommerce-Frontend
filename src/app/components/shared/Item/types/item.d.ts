@@ -68,6 +68,7 @@ export interface IItemLargePreview {
 export interface IButtonBuyProps {
   href: string;
   price: React.JSX.Element | "free";
+  discount?: number
 }
 
 export type THover = 0 | 1;

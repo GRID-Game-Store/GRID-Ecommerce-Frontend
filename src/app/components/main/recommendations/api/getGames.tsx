@@ -1,20 +1,24 @@
+import { useSession } from "next-auth/react";
 
-export const getGamesOfferByTab = async (tab: string) => {
+export const getGamesOfferByTab = async (tab: string,) => {
+ 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_URL_CLIENT}games/offers?query=${tab}&qty=5`,
+    `api/games/offers?query=${tab}&qty=5`,
   );
-  const game = res.json();
-  return game;
+  const game = await res.json();
+  return game.data;
 };
 export const getAllGamesBySorting = async (
   { pageParam = 0 },
   search: string,
 ) => {
+  const start = Date.now();
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_URL_CLIENT}games?page=${pageParam}&size=23&${search}`,
+    `api/games?page=${pageParam}&size=23&${search}`,
   );
-  const game = res.json();
-  return game;
+  console.log(Date.now() - start);
+  const game = await res.json();
+  return game.data ;
 };
 export const getAllFilters = async (filterBy: string) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL_CLIENT}${filterBy}`);

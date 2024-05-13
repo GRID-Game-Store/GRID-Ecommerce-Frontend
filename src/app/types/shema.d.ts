@@ -259,6 +259,142 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/admin/tags/edit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Edit tag */
+        post: operations["editTag"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/tags/add": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add tag to db */
+        post: operations["addTag"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/reviews/edit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Edit review on game */
+        post: operations["editReviewOnGame"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/publishers/edit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Edit publisher */
+        post: operations["editDeveloper"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/platforms/edit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Edit platform */
+        post: operations["editPlatform"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/platforms/add": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add platform to db */
+        post: operations["addPlatform"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/genres/edit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Edit genre */
+        post: operations["editGenre"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/genres/add": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add genre to db */
+        post: operations["addGenre"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/admin/games/add": {
         parameters: {
             query?: never;
@@ -287,6 +423,39 @@ export interface paths {
         put?: never;
         /** Change game visibility to activate/deactivate in db */
         post: operations["changeGameVisibility"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/developers/edit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Edit developer */
+        post: operations["editDeveloper_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/chat/{text}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["chat"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -684,6 +853,91 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/admin/reviews/{game-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all reviews for game */
+        get: operations["showAllReviewsByGame"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/metrics/total": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Revenue Summary For Year */
+        get: operations["showRevenueSummaryForYear"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/metrics/total/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Total qty of users on Website */
+        get: operations["showUsersQtyOnWebsite"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/metrics/total/qty/{game-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Count times of game purchase */
+        get: operations["showPurchaseQty"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/metrics/total/amount/{game-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Total amount of game purchase */
+        get: operations["showPurchaseAmount"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/admin/games": {
         parameters: {
             query?: never;
@@ -693,6 +947,23 @@ export interface paths {
         };
         /** Get all games */
         get: operations["showAllGamesByPage_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/games/{game-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get game by id */
+        get: operations["showGameById_1"];
         put?: never;
         post?: never;
         delete?: never;
@@ -786,6 +1057,125 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/admin/tags/delete/{tag-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete tag */
+        delete: operations["deleteTag"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/reviews/delete/{review-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete review from game */
+        delete: operations["deleteReviewFromGame_1"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/publishers/{publisher-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete publisher */
+        delete: operations["deleteDeveloper"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/platforms/delete/{platform-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete platform */
+        delete: operations["deletePlatform"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/genres/delete/{genre-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete genre */
+        delete: operations["deleteGenre"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/games/delete/{game-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete game by id */
+        delete: operations["deleteGameById"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/developers/{developer-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete developer */
+        delete: operations["deleteDeveloper_1"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -819,9 +1209,24 @@ export interface components {
             developer: number;
             /** Format: int64 */
             publisher: number;
-            tags: number[];
-            genres: number[];
-            platforms: number[];
+            tags: components["schemas"]["Tag"][];
+            genres: components["schemas"]["Genre"][];
+            platforms: components["schemas"]["Platform"][];
+        };
+        Genre: {
+            /** Format: int64 */
+            id?: number;
+            name: string;
+        };
+        Platform: {
+            /** Format: int64 */
+            id?: number;
+            name: string;
+        };
+        Tag: {
+            /** Format: int64 */
+            id?: number;
+            name: string;
         };
         AdminResponse: {
             response?: string;
@@ -841,6 +1246,17 @@ export interface components {
         };
         CartResponse: {
             response?: string;
+        };
+        EntityEditRequest: {
+            name: string;
+            /** Format: int64 */
+            id: number;
+        };
+        EntityInsertRequest: {
+            name: string;
+        };
+        ChatResponse: {
+            aiResponse?: string;
         };
         ShortGameModel: {
             /** Format: int64 */
@@ -903,16 +1319,10 @@ export interface components {
             games?: components["schemas"]["ShortGameModel"];
             priceOnPay?: number;
         };
-        Tag: {
-            /** Format: int32 */
-            id?: number;
-            name: string;
-        };
         ReviewDTO: {
             /** Format: int64 */
             reviewId?: number;
             username?: string;
-            shortGameModel?: components["schemas"]["ShortGameModel"];
             /** Format: int32 */
             rating?: number;
             comment?: string;
@@ -924,21 +1334,12 @@ export interface components {
             id?: number;
             name: string;
         };
-        Platform: {
-            /** Format: int32 */
-            id?: number;
-            name: string;
-        };
-        Genre: {
-            /** Format: int64 */
-            id?: number;
-            name: string;
-        };
         GameCriteria: {
             /** Format: int32 */
             page?: number;
             /** Format: int32 */
             size?: number;
+            id?: number[];
             title?: string;
             maxPrice?: number;
             tags?: number[];
@@ -956,6 +1357,7 @@ export interface components {
             totalPages?: number;
             /** Format: int32 */
             currentPage?: number;
+            maxPrice?: number;
         };
         Developer: {
             /** Format: int32 */
@@ -999,6 +1401,7 @@ export interface components {
             title?: string;
             description?: string;
             price?: number;
+            discount?: number;
             coverImageUrl?: string;
             genres?: components["schemas"]["Genre"][];
             ownedByCurrentUser?: boolean;
@@ -1391,6 +1794,198 @@ export interface operations {
             };
         };
     };
+    editTag: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EntityEditRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
+    addTag: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EntityInsertRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
+    editReviewOnGame: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
+    editDeveloper: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EntityEditRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
+    editPlatform: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EntityEditRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
+    addPlatform: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EntityInsertRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
+    editGenre: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EntityEditRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
+    addGenre: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EntityInsertRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
     addGameToDb: {
         parameters: {
             query?: never;
@@ -1435,6 +2030,52 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
+    editDeveloper_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EntityEditRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
+    chat: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                text: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ChatResponse"];
                 };
             };
         };
@@ -1926,6 +2567,124 @@ export interface operations {
             };
         };
     };
+    showAllReviewsByGame: {
+        parameters: {
+            query: {
+                entityModelRequest: components["schemas"]["EntityModelRequest"];
+            };
+            header?: never;
+            path: {
+                "game-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminModelResponse"];
+                };
+            };
+        };
+    };
+    showRevenueSummaryForYear: {
+        parameters: {
+            query: {
+                year: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": {
+                        [key: string]: Record<string, never> | undefined;
+                    };
+                };
+            };
+        };
+    };
+    showUsersQtyOnWebsite: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": {
+                        [key: string]: number | undefined;
+                    };
+                };
+            };
+        };
+    };
+    showPurchaseQty: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "game-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": {
+                        [key: string]: number | undefined;
+                    };
+                };
+            };
+        };
+    };
+    showPurchaseAmount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "game-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": {
+                        [key: string]: number | undefined;
+                    };
+                };
+            };
+        };
+    };
     showAllGamesByPage_1: {
         parameters: {
             query: {
@@ -1944,6 +2703,28 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["GeneralGame"];
+                };
+            };
+        };
+    };
+    showGameById_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "game-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Game"];
                 };
             };
         };
@@ -2053,6 +2834,160 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["CartResponse"];
+                };
+            };
+        };
+    };
+    deleteTag: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "tag-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
+    deleteReviewFromGame_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "review-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
+    deleteDeveloper: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "publisher-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
+    deletePlatform: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "platform-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
+    deleteGenre: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "genre-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
+    deleteGameById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "game-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
+                };
+            };
+        };
+    };
+    deleteDeveloper_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                "developer-id": number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminResponse"];
                 };
             };
         };

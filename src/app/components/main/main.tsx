@@ -10,6 +10,8 @@ import { Recommendations } from "./recommendations/recommendations";
 import { RecommendationsModule } from "./recommendations/recommendationsModule";
 import { MostPopular } from "./slider/slider";
 import { IMainProps } from "./types/Response.d";
+import { useGetRecentGames } from "../shared/recentGames/hooks/useGetRecentGames";
+import { WrapperClientRecommendations } from "./recommendations/wrapperClientRecommendations";
 
 const Main: React.FC<IMainProps> = ({
   slides,
@@ -19,14 +21,17 @@ const Main: React.FC<IMainProps> = ({
 }) => {
   const queryClient = getQueryClient();
   const dehydratedState = dehydrate(queryClient);
-
+  
+  
   return (
     <Container>
       <Suspense fallback={<Loading />}>
         <MostPopular slides={slides} />
+        <WrapperClientRecommendations />
         <Recommendations data={byGenre} title={genreTitle} />
         <Hydrate state={dehydratedState}>
-          <RecommendationsModule data={recommendations} />
+          <RecommendationsModule  />
+          
         </Hydrate>
         <Recommendations data={recommendations} title="Recommendations" />
       </Suspense>

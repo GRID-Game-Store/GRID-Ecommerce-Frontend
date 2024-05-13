@@ -24,7 +24,7 @@ export const columns: GridColDef[] = [
     renderCell: (params: GridRenderCellParams<any, String>) => {
       if (params.value) {
         return (
-          <Link href={`/${params.value}`} style={{ color: "#fff" }}>
+          <Link href={`${params.value}`} style={{ color: "#fff" }}>
             Continue payment
           </Link>
         );

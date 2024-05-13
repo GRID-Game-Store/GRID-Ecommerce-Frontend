@@ -2,7 +2,20 @@
 import React, { useEffect, useState } from "react";
 import { ErrorUILayer } from "@/app/error";
 import { FullInfoResponse, RandomResponse } from "@/app/types/types";
-import { Box, Container, Stack, Tab, Tabs, useMediaQuery } from "@mui/material";
+import {
+  Box,
+  Container,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Stack,
+  Tab,
+  Tabs,
+  TextField,
+  useMediaQuery,
+} from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 
 import { Filters } from "../../shared/Filters/filters";
@@ -13,6 +26,13 @@ import {
   useGetGamesBySortingQuery,
   useInfiniteScrollQuery,
 } from "./api/query/query";
+import { useSession } from "next-auth/react";
+import { useQueryState } from "nuqs";
+import {
+  TitleFilterGroup,
+  WrapperFilterGroup,
+} from "../../shared/Filters/variants/filter";
+import { useDebounce } from "use-debounce";
 
 interface IListGames {
   isCart?: boolean;
@@ -44,7 +64,7 @@ export const ListGames: React.FC<IListGames> = ({
       width={width}
       height={heightForWrapper}
       bgcolor={"#0a0a0adb"}
-      overflow={"hidden"}
+      
       pt={"20px"}
       borderRadius={"5px"}
       sx={{ cursor: "pointer", overflowY: overflowY }}
@@ -102,12 +122,9 @@ const tabs = [
   },
 ];
 
-interface IRecommendationsProps {
-  data: RandomResponse;
-}
 
 
-const RecommendationsModule: React.FC<IRecommendationsProps> = () => {
+const RecommendationsModule: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [activeHover, setActiveHover] = useState(1);
   const matches = useMediaQuery("(min-width:1200px)");
@@ -156,20 +173,58 @@ const RecommendationsModule: React.FC<IRecommendationsProps> = () => {
   );
 };
 
+const Sorting = () => {
+  const [sorting, setSorting] = useQueryState("sort", { shallow: false });
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setSorting(event.target.value as string);
+  };
+  return (
+    <WrapperFilterGroup>
+      <TitleFilterGroup name={"Sort by"} />
+      <FormControl  sx={{ color: "white", mt: "20px", ml: "10px", mr: "10px"  }} variant="standard" >
+        <InputLabel id="demo-simple-select-label">Sort by</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          sx={{ color: "white",   }}
+          value={sorting || ""}
+          label="Name"
+          onChange={handleChange}
+        >
+          <MenuItem value={"releaseDate,desc"}>Release date</MenuItem>
+          <MenuItem value={"title,asc"}>Name</MenuItem>
+          <MenuItem value={"price,desc"}>High price</MenuItem>
+          <MenuItem value={"price,asc"}>Low price</MenuItem>
+        </Select>
+      </FormControl>
+    </WrapperFilterGroup>
+  );
+};
+
 const RecommendationsModuleForFilterAndSorting: React.FC = () => {
   const searchParams = useSearchParams();
   const { data: AllTags } = useGetGamesBySortingQuery("tags");
   const { data: AllDevelopers } = useGetGamesBySortingQuery("developers");
   const { data: AllPlatforms } = useGetGamesBySortingQuery("platforms");
   const { data: AllGenres } = useGetGamesBySortingQuery("genres");
-  const { data, refetch, ref } = useInfiniteScrollQuery(searchParams);
+  const [debouncedValue] = useDebounce(searchParams, 500);
+  const { data, refetch, ref } = useInfiniteScrollQuery(debouncedValue);
+
+  const [state, setState] = useQueryState("title", { shallow: false });
+
   const Lists = data?.pages.map((page, index) => {
     return (
       <Box sx={{ display: "flex", flexDirection: "column" }} key={index}>
-        <ListGames data={page.games} width="900px" height="auto" />
+       { page && <ListGames data={page.games} width="900px" height="auto" />}
       </Box>
     );
   });
+  useEffect(() => {
+    refetch();
+  }, [debouncedValue.toString()]);
+
+  
 
   return (
     <Container
@@ -181,34 +236,41 @@ const RecommendationsModuleForFilterAndSorting: React.FC = () => {
       }}
     >
       <Box sx={{ display: "flex", width: "1000px", flexDirection: "column" }}>
+        <TextField
+          value={state}
+          onChange={(e) => e.target.value ? setState(e.target.value) : setState(null)}
+          sx={{ marginBottom: "20px" }}
+          placeholder="Search game"
+        />
         {Lists}
         <div ref={ref}></div>
       </Box>
       <Box>
-        <Filters variant="slider" refetch={refetch} />
+        { data?.pages[0] && <Filters maxPrice={data?.pages[0].maxPrice} variant="slider" refetch={refetch} />}
+        <Sorting />
         <Filters
           variant="checkbox"
           refetch={refetch}
-          tags={AllTags?.slice(0, 10)}
+          tags={AllTags}
           name="tags"
         />
         <Filters
           variant="checkbox"
           refetch={refetch}
-          tags={AllGenres?.slice(0, 4)}
+          tags={AllGenres}
           name="genres"
         />
         <Filters
           variant="checkbox"
           refetch={refetch}
-          tags={AllDevelopers?.slice(0, 5)}
+          tags={AllDevelopers}
           name="developers"
         />
 
         <Filters
           variant="checkbox"
           refetch={refetch}
-          tags={AllPlatforms?.slice(0, 10)}
+          tags={AllPlatforms}
           name="platforms"
         />
       </Box>

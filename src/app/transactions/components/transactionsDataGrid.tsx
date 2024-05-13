@@ -1,8 +1,6 @@
 "use client";
 import { SxProps } from "@mui/material";
-
-import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import Link from "next/link";
+import { DataGrid } from "@mui/x-data-grid";
 import React from "react";
 import { ITransactionsDataGridProps } from "../types/transactions";
 import { compareGameTitles } from "../utils/compareGameTitles";

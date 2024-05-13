@@ -8,6 +8,7 @@ import { AllGamesInAccountResponse, RandomResponse } from "@/app/types/types";
 const Recommendations: React.FC<IRecommendationsProps> = ({ data, title }) => {
   const matches = useMediaQuery("(min-width:1200px)");
   const marginLeft = !matches ? "10px" : "100px";
+  
   return (
     <Container sx={{ marginLeft: marginLeft, marginTop: "20px" }}>
       <Typography variant="h5" pb={"5px"} fontWeight={"600"}>

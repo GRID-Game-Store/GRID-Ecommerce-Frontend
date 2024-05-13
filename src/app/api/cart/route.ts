@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (session) {
     const url = `${process.env.URL}cart/add/${id}`;
-    let accessToken = await getAccessToken();
+    let accessToken = await getAccessToken(session);
 
     const resp = await fetch(url, {
       headers: {
@@ -38,7 +38,7 @@ export async function DELETE(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (session) {
     const url = `${process.env.URL}cart/delete/${id}`;
-    let accessToken = await getAccessToken();
+    let accessToken = await getAccessToken(session);
 
     const resp = await fetch(url, {
       headers: {

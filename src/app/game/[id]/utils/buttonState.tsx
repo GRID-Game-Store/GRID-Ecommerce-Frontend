@@ -10,7 +10,7 @@ export const BuyButtonStateBuy = (
 ) => {
   if (isSuccess)
     return {
-      message: (message.data && message.data.response) || error,
+      message: (message && message.data && message.data.response) || error,
       disabled: true,
     };
   else if (isPending)
@@ -28,13 +28,14 @@ export const BuyButtonStateBuy = (
 export const BuyButtonStateWishlist = (
   isSuccess: boolean,
   isPending: boolean,
-  error: string | undefined
+  data: any | undefined
 ) => {
   
+  console.log(data);
   
   if (isSuccess)
     return {
-      message: <Heart fill="#fff" /> || error,
+      message: <Heart fill="#fff" /> || data.error,
       disabled: true,
     };
   else if (isPending)

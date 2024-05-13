@@ -5,7 +5,7 @@ import { useInView } from "react-intersection-observer";
 import { AllFiltersByNameResponse } from "@/app/types/types";
 
 const getNextPageParam = (lastPage: any) => {
-  return lastPage.currentPage < lastPage.totalPages // Here I'm assuming you have access to the total number of pages
+  return lastPage &&  lastPage.currentPage < lastPage.totalPages // Here I'm assuming you have access to the total number of pages
     ? lastPage.currentPage + 1
     : undefined; // If there is not a next page, getNextPageParam will return undefined and the hasNextPage boolean will be set to 'false'
 };
@@ -29,6 +29,7 @@ export const useInfiniteScrollQuery = (searchParams: URLSearchParams) => {
       ),
     getNextPageParam: (lastPage) => getNextPageParam(lastPage),
     initialPageParam: 0,
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {

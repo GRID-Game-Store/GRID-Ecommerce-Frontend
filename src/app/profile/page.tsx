@@ -64,7 +64,7 @@ export default async function Profile() {
         </Box>
         <Balance balance={fullInfo.balance} />
       </Box>
-      <Box display={"flex"} justifyContent={"center"} mt={"20px"} alignItems={"center"} width={"70%"}>
+      <Box display={"flex"}  mt={"20px"} alignItems={"center"} width={"70%"}>
         <Stack direction={"row"} sx={{ flexWrap: "wrap" }}> 
             {allGamesInAccount.map((game) => {
               return game.game && game.playtime && 
