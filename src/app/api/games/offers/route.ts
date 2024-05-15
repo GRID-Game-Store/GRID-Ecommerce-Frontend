@@ -9,7 +9,6 @@ export async function GET(req: NextRequest) {
   const url = `${process.env.URL}games/offers?${AllSearchParams}`;
   if (session) {
     let accessToken = await getAccessToken(session);
-
     const resp = await fetch(url, {
       headers: {
         Authorization: "Bearer " + accessToken,
