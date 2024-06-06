@@ -11,9 +11,7 @@ import { Items } from "../components/shared/Item/items";
 
 async function getAllInfoAboutUser(type: string) {
   const url = `${process.env.URL}users/${type}`;
-
   let access_token = await getAccessToken();
-
   const resp = await fetch(url, {
     headers: {
       "Content-Type": "application/json",

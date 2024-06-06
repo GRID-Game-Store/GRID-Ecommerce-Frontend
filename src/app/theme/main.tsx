@@ -38,7 +38,7 @@ export const mainTheme = (deviceType: string) =>
           }),
         },
       },
-
+      
       MuiTextField: {
         styleOverrides: {
           root: {

@@ -164,6 +164,8 @@ export const FilterCheckBox: React.FC<IFilterProps> = ({
   const [counterItems, setCounterItems] = React.useState(10);
   const [valueSearch, setValueSearch] = React.useState("");
   const MoreThenInitialValue = tags && tags?.length > 10;
+ 
+  
   const filteredTags = tags && tags.slice(0, counterItems).filter((tag) => tag.name.toLowerCase().includes(valueSearch.toLowerCase()))
   return (
     <WrapperFilterGroup>
@@ -175,9 +177,9 @@ export const FilterCheckBox: React.FC<IFilterProps> = ({
           name={name?.toLowerCase()}
         />
       )}
-      {MoreThenInitialValue && (
+      {MoreThenInitialValue && counterItems <  tags?.length - 1   && (
         <Button
-          onClick={() => setCounterItems(counterItems + 10)}
+          onClick={() => counterItems < tags?.length && setCounterItems(counterItems + 10)}
           sx={{ width: "100%" }}
         >
           <ArrowDownIcon size={15} />

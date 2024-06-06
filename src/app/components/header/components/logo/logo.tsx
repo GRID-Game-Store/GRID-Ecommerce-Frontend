@@ -4,11 +4,11 @@ import { Typography } from "@mui/material";
 import Link from "next/link";
 import "./animationLogo.css";
 
-export const SVGLogo = () => {
+export const SVGLogo = ({width = 42, height = 46}) => {
   return (
     <svg
-      width="42"
-      height="46"
+      width={width}
+      height={height}
       viewBox="0 0 52 56"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

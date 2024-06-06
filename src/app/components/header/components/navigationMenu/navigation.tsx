@@ -1,7 +1,8 @@
 import Stack from "@mui/material/Stack";
 import { Typography } from "@mui/material";
 import { NAVIGATION_POINT } from "../../../../constants/header";
-import React from "react";
+import React, { CSSProperties } from "react";
+import Link from "next/link";
 
 interface INavigationProps {
   direction?: "column" | "row";
@@ -9,9 +10,9 @@ interface INavigationProps {
 const Navigation: React.FC<INavigationProps> = ({ direction = "row" }) => {
   const navigationPoints = NAVIGATION_POINT.map((point, i) => {
     return (
-      <Typography key={i} sx={fontSize}>
-        {point}
-      </Typography>
+      <Link key={i} style={fontSize} href={point.path}>
+        <Typography sx={fontSize}>{point.name}</Typography>
+      </Link>
     );
   });
 
@@ -28,4 +29,8 @@ const Navigation: React.FC<INavigationProps> = ({ direction = "row" }) => {
 };
 export default Navigation;
 
-const fontSize = { fontSize: "30px" };
+const fontSize: CSSProperties = {
+  fontSize: "30px",
+  color: "#fff",
+  textDecoration: "none",
+};

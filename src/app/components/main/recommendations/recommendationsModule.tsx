@@ -14,6 +14,7 @@ import {
   Tab,
   Tabs,
   TextField,
+  Typography,
   useMediaQuery,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
@@ -64,7 +65,6 @@ export const ListGames: React.FC<IListGames> = ({
       width={width}
       height={heightForWrapper}
       bgcolor={"#0a0a0adb"}
-      
       pt={"20px"}
       borderRadius={"5px"}
       sx={{ cursor: "pointer", overflowY: overflowY }}
@@ -121,8 +121,6 @@ const tabs = [
     forUI: "Top Sellers",
   },
 ];
-
-
 
 const RecommendationsModule: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -182,16 +180,20 @@ const Sorting = () => {
   return (
     <WrapperFilterGroup>
       <TitleFilterGroup name={"Sort by"} />
-      <FormControl  sx={{ color: "white", mt: "20px", ml: "10px", mr: "10px"  }} variant="standard" >
+      <FormControl
+        sx={{ color: "white", mt: "20px", ml: "10px", mr: "10px" }}
+        variant="standard"
+      >
         <InputLabel id="demo-simple-select-label">Sort by</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          sx={{ color: "white",   }}
-          value={sorting || ""}
+          MenuProps={{ disableScrollLock: true }} 
+          sx={{ color: "white" }}
+          value={sorting || ""} 
           label="Name"
           onChange={handleChange}
+          
         >
+          <MenuItem value={"discount,desc"}>Specials</MenuItem>
           <MenuItem value={"releaseDate,desc"}>Release date</MenuItem>
           <MenuItem value={"title,asc"}>Name</MenuItem>
           <MenuItem value={"price,desc"}>High price</MenuItem>
@@ -199,6 +201,24 @@ const Sorting = () => {
         </Select>
       </FormControl>
     </WrapperFilterGroup>
+  );
+};
+
+const NotFoundGames = () => {
+  return (
+    <Box
+      width={900}
+      height={"100vh"}
+      bgcolor={"#0a0a0adb"}
+      pt={"20px"}
+      borderRadius={"5px"}
+      justifyContent={"center"}
+      display={"flex"}
+    >
+      <Typography fontSize={"20px"} fontWeight={"600"}>
+        NOT FOUND :(
+      </Typography>
+    </Box>
   );
 };
 
@@ -210,21 +230,20 @@ const RecommendationsModuleForFilterAndSorting: React.FC = () => {
   const { data: AllGenres } = useGetGamesBySortingQuery("genres");
   const [debouncedValue] = useDebounce(searchParams, 500);
   const { data, refetch, ref } = useInfiniteScrollQuery(debouncedValue);
-
   const [state, setState] = useQueryState("title", { shallow: false });
+  
 
   const Lists = data?.pages.map((page, index) => {
     return (
       <Box sx={{ display: "flex", flexDirection: "column" }} key={index}>
-       { page && <ListGames data={page.games} width="900px" height="auto" />}
+        {page && <ListGames data={page.games} width="900px" height="auto" />}
+        { !page && <NotFoundGames />}
       </Box>
     );
   });
   useEffect(() => {
     refetch();
   }, [debouncedValue.toString()]);
-
-  
 
   return (
     <Container
@@ -238,15 +257,23 @@ const RecommendationsModuleForFilterAndSorting: React.FC = () => {
       <Box sx={{ display: "flex", width: "1000px", flexDirection: "column" }}>
         <TextField
           value={state}
-          onChange={(e) => e.target.value ? setState(e.target.value) : setState(null)}
+          onChange={(e) =>
+            e.target.value ? setState(e.target.value) : setState(null)
+          }
           sx={{ marginBottom: "20px" }}
           placeholder="Search game"
         />
         {Lists}
-        <div ref={ref}></div>
+        <div style={{ width: "900px" }} ref={ref}></div>
       </Box>
       <Box>
-        { data?.pages[0] && <Filters maxPrice={data?.pages[0].maxPrice} variant="slider" refetch={refetch} />}
+        {data?.pages[0] && (
+          <Filters
+            maxPrice={data?.pages[0].maxPrice}
+            variant="slider"
+            refetch={refetch}
+          />
+        )}
         <Sorting />
         <Filters
           variant="checkbox"

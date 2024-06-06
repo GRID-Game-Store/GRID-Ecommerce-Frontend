@@ -12,7 +12,6 @@ import { authOptions } from "./api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 
 export async function getData(url: string, session: any) {
-  const start = Date.now();
   if (session) {
     let access_token = await getAccessToken(session);
     let res = await fetch(url, {
@@ -22,16 +21,12 @@ export async function getData(url: string, session: any) {
       },
       cache: "no-store",
     });
-    console.log(Date.now() - start + "ms /" + url);
+
     return res.json();
-    
   } else {
     let res = await fetch(url, { cache: "no-store" });
-    console.log(Date.now() - start + "ms ");
     return res.json();
   }
- 
-  
 }
 
 function getRandomIntInclusive(min: number, max: number) {

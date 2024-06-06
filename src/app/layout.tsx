@@ -9,6 +9,7 @@ import { Providers } from "./reactQuery/providers";
 import ThemeRegistry from "./theme/ThemeRegistry";
 import SessionProviderWrapper from "./utils/sessionProviderWrapper";
 import React from "react";
+import { AIWrapper } from "./components/ai/aiWrapper";
 
 export const metadata: Metadata = {
   title: "GRID",
@@ -33,6 +34,7 @@ export default function RootLayout({
             <SessionProviderWrapper>
               <Header />
               {children}
+              <AIWrapper />
               <Footer />
             </SessionProviderWrapper>
           </Providers>
