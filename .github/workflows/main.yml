@@ -32,7 +32,7 @@ jobs:
         continue-on-error: true
         run: ls
       - name: Start frontend  
-        run: pm2 restart frontend
+        run: pm2 restart frontend --update-env
       - name: All stoped containers restart
         continue-on-error: true
         run: docker restart $(docker ps -a -q)
