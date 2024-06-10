@@ -4,4 +4,4 @@ export const getGamesByTitle = async (value: string = "") => {
   return game.data;
 };
 
-//    `${process.env.NEXT_PUBLIC_SERVER_API}games/search?title=${value}&qty=3`,
+//    `${process.env.NEXT_PUBLIC_URL}games/search?title=${value}&qty=3`,
