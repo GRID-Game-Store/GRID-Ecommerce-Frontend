@@ -73,7 +73,11 @@ const Item = ({
   const widthItem = matches ? 180 : 120;
   const handleChange = () => {
     setIsPreview({ src: additionSrc, isVideo: index });
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   }
   return (
     <button

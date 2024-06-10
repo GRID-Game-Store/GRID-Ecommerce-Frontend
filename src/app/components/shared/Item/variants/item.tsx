@@ -179,7 +179,7 @@ export const ItemSmallColumnForSearch: React.FC<IItem> = ({
           height={"30px"}
           position={"relative"}
         >
-          <ButtonBuy price={price} href={`game/${game.id}`} discount={game.discount} />
+          <ButtonBuy price={price} href={`/game/${game.id}`} discount={game.discount} />
         </Box>
       </Box>
     </Box>

@@ -1,7 +1,7 @@
-import { Box, Button, SxProps, TextField, Typography } from "@mui/material";
+import { Box, Button, IconButton, SxProps, TextField, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { SVGLogo } from "../header/components/logo/logo";
-import { User2 } from "lucide-react";
+import { RefreshCcw, User2 } from "lucide-react";
 import { useGetResponseFromGemini } from "./api/query";
 import { IAIChatProps, IConversations, IMessageItemProps } from "./types/ai";
 import useConversations from "./hooks/useConversations";
@@ -54,7 +54,10 @@ const AIChat: React.FC<IAIChatProps> = ({
   return (
     <Box width={"330px"} height={"430px"} sx={styleWrapperChat}>
       <Box>
+        <Box display={"flex"} flexDirection={"row"} alignItems={"flex-start"} justifyContent={"center"}>
         <Typography sx={styleHeading}>GRID AI</Typography>
+        <IconButton onClick={() => setConversations([])} sx={{marginTop: "14px"}} > <RefreshCcw color="#fff" /> </IconButton>
+        </Box>
         <MessageItem
           isBot={true}
           content={

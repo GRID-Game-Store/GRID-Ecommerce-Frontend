@@ -33,10 +33,10 @@ export const deleteReview = async (id?: number) => {
   return game;
 };
 
-export const getReview = async (id?: number) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}reviews/${id}`, {
-    method: "GET",
-  });
-  const game = res.json();
-  return game;
-};
+// export const getReview = async (id?: number) => {
+//   const res = await fetch(`/api/reviews1/${id}`, {
+//     method: "GET",
+//   });
+//   const game = res.json();
+//   return game;
+// };

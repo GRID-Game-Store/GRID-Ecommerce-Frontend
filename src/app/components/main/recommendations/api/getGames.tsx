@@ -19,12 +19,16 @@ export const getAllGamesBySorting = async (
   return game.data ;
 };
 export const getAllFilters = async (filterBy: string) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}${filterBy}`);
-  const game = res.json();
-  return game;
+  const res = await fetch(`api/filters/${filterBy}`);
+  const game = await res.json();
+  return game.data;
 };
 export const getGameFullInfo = async (activeHover: number) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}games/${activeHover}`);
-  const game = res.json();
-  return game;
+  if (activeHover) {
+    const res =  await fetch(`api/games/${activeHover}`);
+    const game = await res.json();
+    return game.data;
+  } else {
+    return null;
+  }
 };

@@ -4,7 +4,7 @@ import {
   FullInfoResponse,
   MyReviewGameResponse,
 } from "@/app/types/types";
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import { Gallery } from "./galary";
 import { Info } from "./info";
 import { SysReq } from "./sysReq";
@@ -36,7 +36,6 @@ const WrapperGamePage: React.FC<IWrapperGamePageProps> = ({
   const queryClient = getQueryClient();
   const dehydratedState = dehydrate(queryClient);
   useSetRecentGames(fullInfo?.id);
-  
 
   return (
     <Box display={"grid"} justifyContent={"center"} sx={{ gridGap: "40px" }}>
@@ -48,8 +47,23 @@ const WrapperGamePage: React.FC<IWrapperGamePageProps> = ({
       >
         <Gallery gameMedia={fullInfo?.gameMedia} />
         <Hydrate state={dehydratedState}>
-          <Info fullInfo={fullInfo} wishListCheck={wishListCheck} ownedByCurrentUser={ownedByCurrentUser} />
+          <Info
+            fullInfo={fullInfo}
+            wishListCheck={wishListCheck}
+            ownedByCurrentUser={ownedByCurrentUser}
+          />
         </Hydrate>
+      </Box>
+      <Box display={"flex"} flexDirection={"row"} > 
+        { fullInfo && fullInfo.description &&  <Box width={"700px"} ml={"20px"}>
+          <Typography variant="h3">About game</Typography>
+          <Typography variant="body1">
+              {fullInfo.description}
+          </Typography>
+        </Box>}
+        {fullInfo && fullInfo.systemRequirements && (
+          <SysReq sysReq={fullInfo.systemRequirements} />
+        )}
       </Box>
       <Reviews
         gameID={fullInfo?.id}
@@ -57,9 +71,6 @@ const WrapperGamePage: React.FC<IWrapperGamePageProps> = ({
         myReview={myReview}
         allReviews={allReviews}
       />
-      {fullInfo && fullInfo.systemRequirements && (
-        <SysReq sysReq={fullInfo.systemRequirements} />
-      )}
     </Box>
   );
 };

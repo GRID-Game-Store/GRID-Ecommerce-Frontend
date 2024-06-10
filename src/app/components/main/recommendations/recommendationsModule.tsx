@@ -124,7 +124,7 @@ const tabs = [
 
 const RecommendationsModule: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const [activeHover, setActiveHover] = useState(1);
+  const [activeHover, setActiveHover] = useState(0);
   const matches = useMediaQuery("(min-width:1200px)");
   const marginLeft = !matches ? "0px" : "100px";
 
@@ -163,7 +163,7 @@ const RecommendationsModule: React.FC = () => {
       </Tabs>
       <Container disableGutters sx={{ display: "flex" }}>
         <ListGames data={data} setActiveHover={setActiveHover} />
-        {isfullInfoSuccess && matches && (
+        {isfullInfoSuccess && matches && fullInfo && (
           <Items variant="preview" game={fullInfo.game} />
         )}
       </Container>

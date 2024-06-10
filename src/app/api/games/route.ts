@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
   } else {
     const resp = await fetch(url, {
       method: "GET",
-    });
+});
 
     if (resp.ok) {
       const data = await resp.json();

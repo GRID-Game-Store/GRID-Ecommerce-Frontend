@@ -1,5 +1,5 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { addGamesToCart, addGamesToWishlist, addReview, deleteReview, getReview, updateReview } from "./gameReq";
+import { useMutation } from "@tanstack/react-query";
+import { addGamesToCart, addGamesToWishlist, addReview, deleteReview, updateReview } from "./gameReq";
 
 export const useAddGameToCartMutation = (id?: number) => {
   return useMutation({
@@ -35,10 +35,10 @@ export const useDeleteReviewMutation = (id?: number) => {
   });
 };
 
-export const useGetReviewQuery = (id?: number) => {
-  return useQuery({
-    queryKey: ["gameGetReview", id],
-    queryFn: () => getReview(id),
-    refetchOnWindowFocus: false,
-  });
-};
+// export const useGetReviewQuery = (id?: number) => {
+//   return useQuery({
+//     queryKey: ["gameGetReview", id],
+//     queryFn: () => getReview(id),
+//     refetchOnWindowFocus: false,
+//   });
+// };

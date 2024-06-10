@@ -4,4 +4,3 @@ export const getGamesByTitle = async (value: string = "") => {
   return game.data;
 };
 
-//    `${process.env.NEXT_PUBLIC_BACKEND}games/search?title=${value}&qty=3`,

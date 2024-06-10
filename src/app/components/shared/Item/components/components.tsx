@@ -192,7 +192,7 @@ export const ListTagsOrGenres: React.FC<IListTagsOrGenresProps> = ({
 
 export const ButtonBuy: React.FC<IButtonBuyProps> = ({ price, href, discount }) => {
   return (
-    <Link href={href}>
+    <Link href={href}   >
       <Button
         sx={{
           width: "100%",

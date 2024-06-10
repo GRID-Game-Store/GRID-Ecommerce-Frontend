@@ -20,6 +20,7 @@ import {
 } from "../utils/buttonState";
 import { signIn } from "next-auth/react";
 import { getBtnBackgroundColor } from "@/app/components/shared/Item/utils/btnColor";
+import { SysReq } from "./sysReq";
 
 const Rating = ({ permit_age }: { permit_age: string }) => {
   return (
@@ -167,7 +168,9 @@ export const Info: React.FC<IInfoProps> = ({
         >
           {wishlistButtonStateMessage}
         </Button>
+        
       </Box>
+     
     </Box>
   );
 };
