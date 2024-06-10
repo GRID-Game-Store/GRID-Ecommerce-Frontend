@@ -6,13 +6,9 @@ const mockData = {
 };
 
 const getResponseFromGemini = async (text: string) => {
-  // return await new Promise((resolve, reject) => {
-  //   setInterval(() => {
-  //     resolve(mockData);
-  //   }, 1000);
-  // }).then((data) => data);
 
-  return text &&  fetch(`http://localhost:8082/chat/${text}`).then((res) => res.json());
+
+  return text &&  fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL_BACKEND}chat/${text}`).then((res) => res.json());
 };
 
 export const useGetResponseFromGemini = (visible: boolean, text: string) => {
