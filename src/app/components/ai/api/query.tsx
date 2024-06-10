@@ -8,7 +8,7 @@ const mockData = {
 const getResponseFromGemini = async (text: string) => {
 
 
-  return text &&  fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL_BACKEND}chat/${text}`).then((res) => res.json());
+  return text &&  fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL_FOR_AI}chat/${text}`).then((res) => res.json());
 };
 
 export const useGetResponseFromGemini = (visible: boolean, text: string) => {
