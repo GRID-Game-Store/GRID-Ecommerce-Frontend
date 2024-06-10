@@ -19,12 +19,12 @@ export const getAllGamesBySorting = async (
   return game.data ;
 };
 export const getAllFilters = async (filterBy: string) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL_BACKEND}${filterBy}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL_SERVER}${filterBy}`);
   const game = res.json();
   return game;
 };
 export const getGameFullInfo = async (activeHover: number) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL_BACKEND}games/${activeHover}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL_SERVER}games/${activeHover}`);
   const game = res.json();
   return game;
 };
