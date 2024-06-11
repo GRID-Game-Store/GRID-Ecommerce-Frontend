@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   title: "GRID",
   description:
     "We're committed to providing our customers with the best possible gaming experience",
+  
 };
 
 export default function RootLayout({
