@@ -1,9 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 
 const getResponseFromGemini = async (text: string) => {
-  const res = await fetch(`/api/chat/${text}`,)
-  const resAI = await res.json();
-  return resAI.data;
+  if (text) {
+    const res = await fetch(`/api/chat/${text}`);
+    const resAI = await res.json();
+    return resAI.data;
+  } else {
+    return null;
+  }
 };
 
 export const useGetResponseFromGemini = (visible: boolean, text: string) => {
