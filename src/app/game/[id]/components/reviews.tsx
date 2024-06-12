@@ -211,7 +211,7 @@ const Reviews: React.FC<IReviewsProps> = ({ gameID, myReview, allReviews, ownedB
   );
 
   return (
-    <Box width={"860px"} mt={"20px"} mr={"0px"} height={"400px"}>
+    <Box width={"860px"} mt={"20px"} mr={"0px"} >
       {ownedByCurrentUser && <AddNewAndChangeReview
         value={value}
         setValue={setValue}

@@ -38,7 +38,7 @@ const WrapperGamePage: React.FC<IWrapperGamePageProps> = ({
   useSetRecentGames(fullInfo?.id);
 
   return (
-    <Box display={"grid"} justifyContent={"center"} sx={{ gridGap: "40px" }}>
+    <Box display={"grid"} justifyContent={"center"} sx={{ gridGap: "40px" }} overflow={"hidden"}  >
       <Box
         display={"flex"}
         flexDirection={flexDirection}
@@ -54,23 +54,25 @@ const WrapperGamePage: React.FC<IWrapperGamePageProps> = ({
           />
         </Hydrate>
       </Box>
-      <Box display={"flex"} flexDirection={"row"} > 
-        { fullInfo && fullInfo.description &&  <Box width={"700px"} ml={"20px"}>
-          <Typography variant="h3">About game</Typography>
-          <Typography variant="body1">
-              {fullInfo.description}
-          </Typography>
-        </Box>}
+      <Box display={"flex"} flexDirection={"row"}>
+        {fullInfo && fullInfo.description && (
+          <Box width={"700px"} ml={"0px"} >
+            <Box mb={"20px"}>
+              <Typography variant="h3">About game</Typography>
+              <Typography variant="body1">{fullInfo.description}</Typography>
+            </Box>
+            <Reviews
+              gameID={fullInfo?.id}
+              ownedByCurrentUser={ownedByCurrentUser}
+              myReview={myReview}
+              allReviews={allReviews}
+            />
+          </Box>
+        )}
         {fullInfo && fullInfo.systemRequirements && (
           <SysReq sysReq={fullInfo.systemRequirements} />
         )}
       </Box>
-      <Reviews
-        gameID={fullInfo?.id}
-        ownedByCurrentUser={ownedByCurrentUser}
-        myReview={myReview}
-        allReviews={allReviews}
-      />
     </Box>
   );
 };

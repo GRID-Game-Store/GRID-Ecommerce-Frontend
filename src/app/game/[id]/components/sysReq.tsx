@@ -55,7 +55,7 @@ const SysReqItems: React.FC<ISysReqItemsProps> = ({
           {SysReqItems.map((item, itemIndex) => {
             return (
               <Typography
-                width={600}
+                width={450}
                 key={`${index}_${item}`}
                 fontSize={"19px"}
               >
