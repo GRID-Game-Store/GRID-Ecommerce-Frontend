@@ -1,40 +1,86 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Project GRID
+
+This is frontend part of educational GRID project. Instruction describes how to clone and run the project on your local
+machine.
 
 ## Getting Started
 
-First, run the development server:
+These instructions will help you get a copy of the project and running it on your local machine for development and
+testing purposes.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## How to Run
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
+This application requires
+- [Node js](https://nextjs.org/docs) - Node js 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* Clone this repository
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+git clone https://github.com/GRID-Game-Store/backend
+```
+### Run Next.js app:
+```bash
+npm run dev
+```
 
-## Deploy on Vercel
+Now you can launch the server 3000.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-## Generete Types
+## GRID Demo Video
 
-`npx openapi-typescript http://localhost:8082/v3/api-docs  -o ./src/app/types/shema.d.ts`
+Check out our demo video showcasing the main features of the GRID project:
+
+### Main Page
+
+https://github.com/user-attachments/assets/540fdc0d-b89e-4ab5-b09a-98554d3e0f59
+
+### AI Chat Consultant
+
+https://github.com/user-attachments/assets/48e87a2d-fe04-44a7-b9c8-6060a6840901
+
+### Authentication, Authorization 
+
+https://github.com/user-attachments/assets/759e81ef-abc9-462f-bc86-2146ac7ed2e6
+
+### Payment Abilities
+
+https://github.com/user-attachments/assets/8648e341-3ea2-4f1c-968f-13e65f6395f2
+
+
+The demo includes:
+- Overview of the main page
+- AI-powered chat consultant using Vertext Gemini
+- Registration and authorization process with Keycloak
+- Payment integration with Stripe and PayPal
+- Admin panel walkthrough
+
+## Features
+
+- **AI Chat Consultant**: Powered by Vertext Gemini, providing intelligent customer support.
+- **Secure Authentication**: Implemented using Keycloak for robust user management.
+- **Multiple Payment Options**: Integrated with Stripe and PayPal for flexible payment processing.
+- **Admin Panel**: Comprehensive admin interface for easy management of the platform with a help of Astro.js and Spring Boot
+
+## Built With
+### Backend 
+* [Maven](https://maven.apache.org/) - Dependency Management
+* [Spring Boot](https://spring.io/projects/spring-boot) - Server Framework
+* [JUnit](https://junit.org/junit5/) - Testing Framework
+* [Keycloak](https://www.keycloak.org/) - Identity and Access Management
+* [Swagger](https://swagger.io/) - API Documentation
+* [Docker](https://www.docker.com/) - Containerization Platform
+### Frontend
+* [Next.js (App route)](https://nextjs.org/docs) - SSR framework  
+* [MUI](https://mui.com/) - UI library 
+* [TypeScript](https://www.typescriptlang.org/) - Strongly typed JavaScript
+* [Playwrigth](https://playwright.dev/) - Testing library
+* [Next-auth](https://next-auth.js.org/) - Authentication Library
+## Authors:
+
+* [SEM24](https://github.com/SEM24)
+* [kirillserebrykov](https://github.com/kirillserebrykov)
+
+[Link to backend repository](https://github.com/GRID-Game-Store/GRID-Ecommerce-Backend)
+
